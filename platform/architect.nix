@@ -33,6 +33,10 @@
     }
   ];
 
+  systemd.tmpfiles.rules = [
+    "L+ /etc/shadow - - - - /persist/etc/shadow"
+  ];
+
   fileSystems."/boot" = {
     device = "/dev/nvme1n1p1";
     fsType = "vfat";
