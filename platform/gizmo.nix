@@ -7,6 +7,12 @@ Machine specific settings for Gizmo.
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
+  boot.loader.grub.enable = true;
+  boot.loader.grub.efiSupport = true;
+  boot.loader.grub.zfsSupport = true;
+  boot.loader.grub.useOSProber = true;
+  boot.loader.grub.efiInstallAsRemovable = true;
+  boot.loader.grub.device = "nodev";
   boot.supportedFilesystems = [ "zfs" ];
   boot.initrd.postDeviceCommands = lib.mkAfter ''
     zfs rollback -r pool/scratch@blank

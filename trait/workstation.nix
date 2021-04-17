@@ -47,7 +47,6 @@
     gnome3.gnome-tweaks
     kicad
     inkscape
-    gimp
     freecad
   ];
 

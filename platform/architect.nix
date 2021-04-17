@@ -5,6 +5,12 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
+  boot.loader.grub.enable = true;
+  boot.loader.grub.efiSupport = true;
+  boot.loader.grub.zfsSupport = true;
+  boot.loader.grub.useOSProber = true;
+  boot.loader.grub.efiInstallAsRemovable = true;
+  boot.loader.grub.device = "nodev";
   boot.supportedFilesystems = [ "zfs" ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
