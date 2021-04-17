@@ -55,7 +55,7 @@ Requires:
 Build a recovery image:
 
 ```bash
-nix build github:hoverbear-consulting/flake#packages.x86_64-linux.architect-isoImage --out-link isoImage
+nix build github:hoverbear-consulting/flake#packages.x86_64-linux.architectIsoImage --out-link isoImage
 ```
 
 Flash it to a USB:
@@ -156,8 +156,8 @@ Requires:
 Build the UEFI and the recovery image:
 
 ```bash
-nix build github:hoverbear-consulting/flake#packages.aarch64-linux.gizmo-isoImage --out-link isoImage
-nix build github:hoverbear-consulting/flake#packages.aarch64-linux.gizmo-uefi --out-link uefi.img
+nix build github:hoverbear-consulting/flake#packages.aarch64-linux.gizmoIsoImage --out-link isoImage
+nix build github:hoverbear-consulting/flake#packages.aarch64-linux.gizmoUefi --out-link uefi.img
 ```
 
 Flash them:

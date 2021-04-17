@@ -9,81 +9,90 @@
   outputs = { self, nixos, lx2k-nix }: {
 
     packages = {
-      "aarch64-linux" = {
-        gizmo-uefi = lx2k-nix.packages.aarch64-linux.lx2k-3200.uefi;
-        gizmo-isoImage = self.nixosConfigurations.gizmo-isoImage.config.system.build.isoImage;
+      "aarch64-linux" = let
+        pkgs = import nixos {
+          system = "aarch64-linux";
+        };
+      in {
+        gizmoUefi = lx2k-nix.packages.aarch64-linux.lx2k-3200.uefi;
+        gizmoIsoImage = self.nixosConfigurations.gizmoIsoImage.config.system.build.isoImage;
       };
-      "x86_64-linux" = {
-        architect-isoImage = self.nixosConfigurations.architect-isoImage.config.system.build.isoImage;
+      "x86_64-linux" = let
+        pkgs = import nixos {
+          system = "x86_64-linux";
+        };
+      in {
+        architectIsoImage = self.nixosConfigurations.architectIsoImage.config.system.build.isoImage;
       };
     };
 
     nixosConfigurations = let
-      gizmo-base = {
+      gizmoBase = {
         system = "aarch64-linux";
         modules = with self.nixosModules; [
           lx2k-nix.nixosModules.lx2k
-          trait-base
-          trait-hardened
-          trait-machine
-          trait-ide
-          trait-postgres
-          user-ana
+          trait.base
+          trait.hardened
+          trait.machine
+          trait.ide
+          trait.postgres
+          user.ana
           # container-postgres
         ];
       };
-      architect-base = {
+      architectBase = {
         system = "x86_64-linux";
         modules = with self.nixosModules; [
-          trait-base
-          trait-hardened
-          trait-machine
-          trait-workstation
-          trait-ide
-          trait-postgres
-          user-ana
+          trait.base
+          trait.hardened
+          trait.machine
+          trait.ide
+          trait.postgres
+          user.ana
         ];
       };
     in with self.nixosModules; {
       gizmo = nixos.lib.nixosSystem {
-        inherit (gizmo-base) system;
-        modules = gizmo-base.modules ++ [
-          platform-gizmo
+        inherit (gizmoBase) system;
+        modules = gizmoBase.modules ++ [
+          platform.gizmo
         ];
       };
-      gizmo-isoImage = nixos.lib.nixosSystem {
-        inherit (gizmo-base) system;
-        modules = gizmo-base.modules ++ [
-          platform-iso-minimal
+      gizmoIsoImage = nixos.lib.nixosSystem {
+        inherit (gizmoBase) system;
+        modules = gizmoBase.modules ++ [
+          platform.iso-minimal
         ];
       };
       architect = nixos.lib.nixosSystem {
-        inherit (architect-base) system;
-        modules = architect-base.modules ++ [
-          platform-architect
+        inherit (architectBase) system;
+        modules = architectBase.modules ++ [
+          platform.architect
+          trait.workstation
         ];
       };
-      architect-isoImage = nixos.lib.nixosSystem {
-        inherit (architect-base) system;
-        modules = architect-base.modules ++ [
-          platform-iso
+      architectIsoImage = nixos.lib.nixosSystem {
+        inherit (architectBase) system;
+        modules = architectBase.modules ++ [
+          platform.iso
         ];
       };
     };
 
     nixosModules = let pkgs = nixos; in {
-      platform-container = ./platform/container.nix;
-      platform-gizmo = ./platform/gizmo.nix;
-      platform-architect = ./platform/architect.nix;
-      platform-iso-minimal = { imports = [ "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix" ]; };
-      platform-iso = { imports = [ "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-graphical-base.nix" ]; };
-      trait-base = ./trait/base.nix;
-      trait-machine = ./trait/machine.nix;
-      trait-ide = ./trait/ide.nix;
-      trait-workstation = ./trait/workstation.nix;
-      trait-hardened = ./trait/hardened.nix;
-      trait-postgres = ./trait/postgres.nix;
-      user-ana = ./user/ana.nix;
+      platform.container = ./platform/container.nix;
+      platform.gizmo = ./platform/gizmo.nix;
+      platform.architect = ./platform/architect.nix;
+      platform.iso-minimal = "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
+      platform.iso = "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix";
+      trait.base = ./trait/base.nix;
+      trait.machine = ./trait/machine.nix;
+      trait.ide = ./trait/ide.nix;
+      trait.hardened = ./trait/hardened.nix;
+      trait.postgres = ./trait/postgres.nix;
+      # This trait is unfriendly to being bundled with platform-iso
+      trait.workstation = ./trait/workstation.nix;
+      user.ana = ./user/ana.nix;
       # container-postgres = import ./container/postgres.nix { inherit self; };
     };
   };
