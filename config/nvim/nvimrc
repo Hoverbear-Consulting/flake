@@ -82,9 +82,23 @@ function! RipgrepFzf(query, fullscreen)
 endfunction
 command! -nargs=* -bang Rg call RipgrepFzf(<q-args>, <bang>0)
 
+" Ensure fzf exits with escape
+augroup fzf
+  autocmd!
+  autocmd! FileType fzf
+  autocmd  FileType fzf set laststatus=0 noshowmode noruler
+    \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+augroup END
+
+tnoremap <expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<c-\><c-n>"
+if has("nvim")
+  au TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
+  au FileType fzf tunmap <buffer> <Esc>
+endif
+
 " Hotkeys
-nnoremap <silent> <C-f> :Files<CR>
-nnoremap <silent> <C-r> :Rg<CR>
+nnoremap <silent> <C-f> :Rg<CR>
+nnoremap <silent> <C-g> :Files<CR>
 
 let g:LanguageClient_serverCommands = {
             \ 'rust': ['rust-analyzer'],
