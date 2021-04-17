@@ -7,7 +7,8 @@ in {
     extraGroups = [ "wheel" "disk" ];
     openssh.authorizedKeys.keys = keysFromGithub {
       username = "hoverbear";
-      sha256 = "vlQBLCFRUEQT6F+HEZ42YfILu8Fu7if4an2beaFdeWI=";
+      # sha256 = lib.fakeSha256;
+      sha256 = "hHUVZ5xWZqLffeb9soyCwXA1wcCSy5lpyeKPHhlDl08=";
     };
   };
 }
