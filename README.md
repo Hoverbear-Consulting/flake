@@ -232,6 +232,45 @@ Install the system:
 nixos-install --flake github:hoverbear-consulting/flake#gizmo --impure
 ```
 
+## WSL
+
+A system for on Windows (WSL2).
+
+### Preparation
+
+Build the tarball:
+
+```bash
+nix build github:hoverbear-consulting/flake#packages.x86_64-linux.wslTarball --out-link tarBall
+```
+
+Ensure the Windows install has WSL(2) enabled:
+
+```powershell
+Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux"
+Enable-WindowsOptionalFeature -Online -FeatureName "VirtualMachinePlatform" 
+wsl --set-default-version 2
+```
+
+### Bootstrap
+
+Import the tarball:
+
+
+```powershell
+wsl --import nixos .\nixos\ tarBall/tarball/nixos-system-x86_64-linux.tar.gz --version 2
+wsl --set-default nixos
+```
+
+Then, inside the WSL container:
+
+```bash
+/nix/var/nix/profiles/system/activate
+```
+
+Ctrl+D to log out, then re-enter with `wsl -d nixos`. This should result in a working user shell.
+
+
 [hoverbear-consulting]: https://hoverbear.org
 [chips-amd3950x]: https://en.wikichip.org/wiki/amd/ryzen_9/3950x
 [chips-arm-cortex-a72]: https://en.wikichip.org/wiki/arm_holdings/microarchitectures/cortex-a72

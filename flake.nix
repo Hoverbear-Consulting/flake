@@ -4,9 +4,10 @@
   inputs = {
     nixos.url = "github:NixOS/nixpkgs/nixos-unstable";
     lx2k-nix.url = "github:hoverbear/lx2k-nix";
+    nixos-wsl.url = "github:hoverbear/NixOS-WSL/modularize";
   };
 
-  outputs = { self, nixos, lx2k-nix }: {
+  outputs = { self, nixos, lx2k-nix, nixos-wsl }: {
 
     packages = {
       "aarch64-linux" = let
@@ -23,6 +24,7 @@
         };
       in {
         architectIsoImage = self.nixosConfigurations.architectIsoImage.config.system.build.isoImage;
+        wslTarball = self.nixosConfigurations.wsl.config.system.build.tarball;
       };
     };
 
@@ -77,9 +79,21 @@
           platform.iso
         ];
       };
+      wsl = nixos.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          trait.base
+          trait.ide
+          nixos-wsl.nixosModule
+          {
+            config.boot.wsl.enable = true;
+            config.boot.wsl.user = "ana";
+          }
+        ];
+      };
     };
 
-    nixosModules = let pkgs = nixos; in {
+    nixosModules = {
       platform.container = ./platform/container.nix;
       platform.gizmo = ./platform/gizmo.nix;
       platform.architect = ./platform/architect.nix;
