@@ -22,13 +22,14 @@
       "locked": {
         "lastModified": 1618786864,
         "narHash": "sha256-9cCCcHnbZCwfFnaCFYtA1zd23BmRoSHtBzqq4y7Giqs=",
-        "owner": "hoverbear",
+        "owner": "hoverbear-consulting",
         "repo": "lx2k-nix",
         "rev": "f3423a268f8e516d58cd2f6d1fc0d0b516c9d852",
         "type": "github"
       },
       "original": {
-        "owner": "hoverbear",
+        "owner": "hoverbear-consulting",
+        "ref": "flake",
         "repo": "lx2k-nix",
         "type": "github"
       }
@@ -57,13 +58,13 @@
       "locked": {
         "lastModified": 1615951654,
         "narHash": "sha256-IFV4Xl+r92RwaevKTJIUVo/OLMdjlHQTkidnu0noY0M=",
-        "owner": "hoverbear",
+        "owner": "hoverbear-consulting",
         "repo": "NixOS-WSL",
         "rev": "f5d18400a2a8a2761f7121617d1ed3aff16b6c33",
         "type": "github"
       },
       "original": {
-        "owner": "hoverbear",
+        "owner": "hoverbear-consulting",
         "ref": "modularize",
         "repo": "NixOS-WSL",
         "type": "github"

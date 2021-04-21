@@ -3,8 +3,8 @@
 
   inputs = {
     nixos.url = "github:NixOS/nixpkgs/nixos-unstable";
-    lx2k-nix.url = "github:hoverbear/lx2k-nix";
-    nixos-wsl.url = "github:hoverbear/NixOS-WSL/modularize";
+    lx2k-nix.url = "github:hoverbear-consulting/lx2k-nix/flake";
+    nixos-wsl.url = "github:hoverbear-consulting/NixOS-WSL/modularize";
   };
 
   outputs = { self, nixos, lx2k-nix, nixos-wsl }: {
