@@ -17,7 +17,7 @@ in {
 { pkgs, lib }:
 
 { username, sha256 ? lib.fakeSha256 }: (
-  lib.splitString "\n" (builtins.readFile (pkgs.fetchurl {
+  lib.splitString "\n" (builtins.readFile (builtins.fetchurl {
     url = "https://github.com/${username}.keys";
     inherit sha256;
   }))

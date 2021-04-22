@@ -1,18 +1,15 @@
 { config, pkgs, lib, ... }:
 
 {
-  # Enable the GNOME 3 Desktop Environment.
   services.xserver.enable = true;
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
+  networking.wireless.enable = false; # For Network Manager
 
-  # For Network Manager
-  networking.wireless.enable = false;
-
-  # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+
   hardware.opengl.driSupport = true;
   hardware.opengl.driSupport32Bit = true;
   hardware.steam-hardware.enable = true;
@@ -33,8 +30,6 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     firefox
-    jetbrains.clion
-    jetbrains.datagrip
     slack
     discord
     zoom-us
@@ -49,6 +44,5 @@
   ];
 
   services.printing.enable = true;
-
 }
 

@@ -36,7 +36,7 @@
           trait.base
           trait.hardened
           trait.machine
-          trait.ide
+          trait.tools
           trait.postgres
           user.ana
           # container-postgres
@@ -48,7 +48,7 @@
           trait.base
           trait.hardened
           trait.machine
-          trait.ide
+          trait.tools
           trait.jetbrains
           trait.postgres
           user.ana
@@ -84,26 +84,24 @@
         system = "x86_64-linux";
         modules = [
           trait.base
-          trait.ide
+          trait.tools
           trait.jetbrains
           nixos-wsl.nixosModule
-          ({ pkgs, lib, ... }: {
-            boot.wsl.enable = true;
-            boot.wsl.user = "ana";
-          })
+          platform.wsl
         ];
       };
     };
 
     nixosModules = {
       platform.container = ./platform/container.nix;
+      platform.wsl = ./platform/wsl.nix;
       platform.gizmo = ./platform/gizmo.nix;
       platform.architect = ./platform/architect.nix;
       platform.iso-minimal = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
       platform.iso = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix";
       trait.base = ./trait/base.nix;
       trait.machine = ./trait/machine.nix;
-      trait.ide = ./trait/ide.nix;
+      trait.tools = ./trait/tools.nix;
       trait.jetbrains = ./trait/jetbrains.nix;
       trait.hardened = ./trait/hardened.nix;
       trait.postgres = ./trait/postgres.nix;

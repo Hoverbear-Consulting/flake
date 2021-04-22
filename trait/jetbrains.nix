@@ -3,7 +3,7 @@
 {
   environment.systemPackages = with pkgs; [
     jetbrains.clion
-    #jetbrains.datagrip
+    jetbrains.datagrip
   ];
   
   fonts.fontconfig.enable = true;
@@ -17,6 +17,7 @@
     fira-code-symbols
   ];
 
+  # CLion requires cargo-xlib.
   environment.noXlibs = lib.mkForce false;
   
   nixpkgs.config.allowUnfree = true;
