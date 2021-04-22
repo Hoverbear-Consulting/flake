@@ -5,7 +5,9 @@
     cargo
     rustc
     clang
+    rustfmt
     cargo-cross
+    cargo-edit
     cargo-flamegraph
     cargo-asm
     cargo-expand

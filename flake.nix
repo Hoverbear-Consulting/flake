@@ -2,16 +2,16 @@
   description = "Hoverbear's Flake";
 
   inputs = {
-    nixos.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     lx2k-nix.url = "github:hoverbear-consulting/lx2k-nix/flake";
     nixos-wsl.url = "github:hoverbear-consulting/NixOS-WSL/modularize";
   };
 
-  outputs = { self, nixos, lx2k-nix, nixos-wsl }: {
+  outputs = { self, nixpkgs, lx2k-nix, nixos-wsl }: {
 
     packages = {
       "aarch64-linux" = let
-        pkgs = import nixos {
+        pkgs = import nixpkgs {
           system = "aarch64-linux";
         };
       in {
@@ -19,7 +19,7 @@
         gizmoIsoImage = self.nixosConfigurations.gizmoIsoImage.config.system.build.isoImage;
       };
       "x86_64-linux" = let
-        pkgs = import nixos {
+        pkgs = import nixpkgs {
           system = "x86_64-linux";
         };
       in {
@@ -49,46 +49,48 @@
           trait.hardened
           trait.machine
           trait.ide
+          trait.jetbrains
           trait.postgres
           user.ana
         ];
       };
     in with self.nixosModules; {
-      gizmo = nixos.lib.nixosSystem {
+      gizmo = nixpkgs.lib.nixosSystem {
         inherit (gizmoBase) system;
         modules = gizmoBase.modules ++ [
           platform.gizmo
         ];
       };
-      gizmoIsoImage = nixos.lib.nixosSystem {
+      gizmoIsoImage = nixpkgs.lib.nixosSystem {
         inherit (gizmoBase) system;
         modules = gizmoBase.modules ++ [
           platform.iso-minimal
         ];
       };
-      architect = nixos.lib.nixosSystem {
+      architect = nixpkgs.lib.nixosSystem {
         inherit (architectBase) system;
         modules = architectBase.modules ++ [
           platform.architect
           trait.workstation
         ];
       };
-      architectIsoImage = nixos.lib.nixosSystem {
+      architectIsoImage = nixpkgs.lib.nixosSystem {
         inherit (architectBase) system;
         modules = architectBase.modules ++ [
           platform.iso
         ];
       };
-      wsl = nixos.lib.nixosSystem {
+      wsl = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           trait.base
           trait.ide
+          trait.jetbrains
           nixos-wsl.nixosModule
-          {
-            config.boot.wsl.enable = true;
-            config.boot.wsl.user = "ana";
-          }
+          ({ pkgs, lib, ... }: {
+            boot.wsl.enable = true;
+            boot.wsl.user = "ana";
+          })
         ];
       };
     };
@@ -97,11 +99,12 @@
       platform.container = ./platform/container.nix;
       platform.gizmo = ./platform/gizmo.nix;
       platform.architect = ./platform/architect.nix;
-      platform.iso-minimal = "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
-      platform.iso = "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix";
+      platform.iso-minimal = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
+      platform.iso = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix";
       trait.base = ./trait/base.nix;
       trait.machine = ./trait/machine.nix;
       trait.ide = ./trait/ide.nix;
+      trait.jetbrains = ./trait/jetbrains.nix;
       trait.hardened = ./trait/hardened.nix;
       trait.postgres = ./trait/postgres.nix;
       # This trait is unfriendly to being bundled with platform-iso
