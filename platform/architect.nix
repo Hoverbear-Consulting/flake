@@ -26,7 +26,7 @@
   networking.domain = "hoverbear.dev";
   networking.interfaces.enp6s0.useDHCP = true;
   networking.interfaces.wlp5s0.useDHCP = true;
-  
+
   services.openssh.hostKeys = [
     {
       path = "/persist/ssh/ssh_host_ed25519_key";
@@ -61,12 +61,12 @@
   fileSystems."/home" = {
     device = "pool/home";
     fsType = "zfs";
-  };  
+  };
 
   fileSystems."/persist" = {
     device = "pool/persist";
     fsType = "zfs";
-  };  
+  };
 
   swapDevices = [ ];
 }

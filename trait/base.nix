@@ -5,7 +5,7 @@
 
   time.timeZone = "America/Vancouver";
   i18n.defaultLocale = "en_CA.UTF-8";
-  
+
   environment.systemPackages = with pkgs; [
     # Shell utilities
     patchelf
@@ -40,8 +40,7 @@
     fio
     smartmontools
   ];
-  environment.shellAliases = {
-  };
+  environment.shellAliases = { };
   environment.variables = {
     EDITOR = "${pkgs.neovim-remote}/bin/nvr -s";
   };
@@ -91,9 +90,9 @@
     experimental-features = nix-command flakes
   '';
   nix.package = pkgs.nixUnstable;
-  
+
   nixpkgs.config.allowUnfree = true;
-  
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

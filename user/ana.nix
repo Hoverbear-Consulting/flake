@@ -1,7 +1,8 @@
 { lib, pkgs, ... }:
 let
   keysFromGithub = import ../function/keys-from-github.nix { inherit lib pkgs; };
-in {
+in
+{
   users.users.ana = {
     isNormalUser = true;
     extraGroups = [ "wheel" "disk" ];

@@ -1,5 +1,5 @@
 /*
-Machine specific settings for Gizmo.
+  Machine specific settings for Gizmo.
 */
 { config, pkgs, lib, modulesPath, ... }:
 {
@@ -56,12 +56,12 @@ Machine specific settings for Gizmo.
   fileSystems."/home" = {
     device = "pool/home";
     fsType = "zfs";
-  };  
+  };
 
   fileSystems."/persist" = {
     device = "pool/persist";
     fsType = "zfs";
-  };  
+  };
 
   swapDevices = [ ];
 

@@ -5,7 +5,7 @@
     jetbrains.clion
     jetbrains.datagrip
   ];
-  
+
   fonts.fontconfig.enable = true;
   fonts.enableDefaultFonts = true;
   fonts.fonts = with pkgs; [
@@ -19,6 +19,6 @@
 
   # CLion requires cargo-xlib.
   environment.noXlibs = lib.mkForce false;
-  
+
   nixpkgs.config.allowUnfree = true;
 }
