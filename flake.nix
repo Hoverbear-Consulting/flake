@@ -115,7 +115,7 @@
         trait.jetbrains = ./trait/jetbrains.nix;
         trait.vscode = ./trait/vscode.nix;
         trait.hardened = ./trait/hardened.nix;
-        trait.postgres = ./trait/postgres.nix;
+        service.postgres = ./service/postgres.nix;
         # This trait is unfriendly to being bundled with platform-iso
         trait.workstation = ./trait/workstation.nix;
         user.ana = ./user/ana.nix;
