@@ -6,11 +6,13 @@
       vscodeExtensions = with vscode-extensions; [
         bbenoist.Nix
         ms-vscode-remote.remote-ssh
-        matklad.rust-analyzer
-        vadimcn.vscode-lldb
         ms-vsliveshare.vsliveshare
         github.vscode-pull-request-github
         editorconfig.editorconfig
+        /* TODO: These cause a segfault in `nix flake check`
+          matklad.rust-analyzer
+          vadimcn.vscode-lldb
+        */
       ] ++ vscode-utils.extensionsFromVscodeMarketplace [
         {
           name = "rainglow";
@@ -27,20 +29,6 @@
       ];
     })
   ];
-
-  fonts.fontconfig.enable = true;
-  fonts.enableDefaultFonts = true;
-  fonts.fonts = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    jetbrains-mono
-    fira-code
-    fira-code-symbols
-  ];
-
-  # CLion requires cargo-xlib.
-  environment.noXlibs = lib.mkForce false;
 
   nixpkgs.config.allowUnfree = true;
 }

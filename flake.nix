@@ -33,7 +33,7 @@
             };
           in
           {
-            #architectIsoImage = self.nixosConfigurations.architectIsoImage.config.system.build.isoImage;
+            architectIsoImage = self.nixosConfigurations.architectIsoImage.config.system.build.isoImage;
             wslTarball = self.nixosConfigurations.wsl.config.system.build.tarball;
           };
       };
