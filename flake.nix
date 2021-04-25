@@ -13,9 +13,19 @@
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
     in
     {
-      overlay = final: prev: { };
+      overlay = final: prev: {
+        neovimConfigured = final.callPackage ./packages/neovim.nix { };
+      };
 
-      packages = { };
+      packages = forAllSystems (system:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [ self.overlay ];
+          };
+        in {
+          inherit (pkgs) neovimConfigured;
+        });
 
       nixosConfigurations =
         let
@@ -23,6 +33,7 @@
             system = "aarch64-linux";
             modules = with self.nixosModules; [
               lx2k-nix.nixosModules.lx2k
+              trait.overlay
               trait.base
               trait.hardened
               trait.machine
@@ -33,6 +44,7 @@
           architectBase = {
             system = "x86_64-linux";
             modules = with self.nixosModules; [
+              trait.overlay
               trait.base
               trait.hardened
               trait.machine
@@ -72,6 +84,7 @@
           wsl = nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
+              trait.overlay
               trait.base
               trait.tools
               trait.jetbrains
@@ -81,13 +94,14 @@
           };
         };
 
-      nixosModules = {
+    nixosModules = {
         platform.container = ./platform/container.nix;
         platform.wsl = ./platform/wsl.nix;
         platform.gizmo = ./platform/gizmo.nix;
         platform.architect = ./platform/architect.nix;
         platform.iso-minimal = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
         platform.iso = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix";
+        trait.overlay = { nixpkgs.overlays = [ self.overlay ]; };
         trait.base = ./trait/base.nix;
         trait.machine = ./trait/machine.nix;
         trait.tools = ./trait/tools.nix;

@@ -39,32 +39,16 @@
     gptfdisk
     fio
     smartmontools
+    neovimConfigured
   ];
   environment.shellAliases = { };
   environment.variables = {
-    EDITOR = "${pkgs.neovim-remote}/bin/nvr -s";
+    EDITOR = "${pkgs.neovimConfigured}";
   };
   environment.pathsToLink = [
     "/share/nix-direnv"
   ];
 
-  programs.neovim.enable = true;
-  programs.neovim.defaultEditor = true;
-  programs.neovim.viAlias = true;
-  programs.neovim.vimAlias = true;
-  programs.neovim.configure = {
-    customRC = builtins.readFile ../config/nvim/nvimrc;
-    packages.myVimPackage = with pkgs.vimPlugins; {
-      start = [
-        LanguageClient-neovim
-        awesome-vim-colorschemes
-        fugitive
-        rust-vim
-        vim-nix
-        fzf-vim
-      ];
-    };
-  };
   programs.bash.promptInit = ''
     eval "$(${pkgs.starship}/bin/starship init bash)"
   '';
