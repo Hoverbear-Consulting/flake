@@ -21,6 +21,8 @@
 
   time.timeZone = "America/Vancouver";
 
+  hardware.bluetooth.enable = true;
+
   networking.hostId = "938c2500";
   networking.hostName = "architect";
   networking.domain = "hoverbear.dev";

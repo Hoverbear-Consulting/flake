@@ -33,7 +33,7 @@
             };
           in
           {
-            architectIsoImage = self.nixosConfigurations.architectIsoImage.config.system.build.isoImage;
+            #architectIsoImage = self.nixosConfigurations.architectIsoImage.config.system.build.isoImage;
             wslTarball = self.nixosConfigurations.wsl.config.system.build.tarball;
           };
       };
@@ -48,9 +48,7 @@
               trait.hardened
               trait.machine
               trait.tools
-              trait.postgres
               user.ana
-              # container-postgres
             ];
           };
           architectBase = {
@@ -61,7 +59,7 @@
               trait.machine
               trait.tools
               trait.jetbrains
-              trait.postgres
+              trait.vscode
               user.ana
             ];
           };
@@ -115,12 +113,12 @@
         trait.machine = ./trait/machine.nix;
         trait.tools = ./trait/tools.nix;
         trait.jetbrains = ./trait/jetbrains.nix;
+        trait.vscode = ./trait/vscode.nix;
         trait.hardened = ./trait/hardened.nix;
         trait.postgres = ./trait/postgres.nix;
         # This trait is unfriendly to being bundled with platform-iso
         trait.workstation = ./trait/workstation.nix;
         user.ana = ./user/ana.nix;
-        # container-postgres = import ./container/postgres.nix { inherit self; };
       };
 
       checks = forAllSystems (system:

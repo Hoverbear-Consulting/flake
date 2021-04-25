@@ -35,9 +35,7 @@
     zoom-us
     spotify
     zotero
-    vscode
     slack
-    gnome3.gnome-tweaks
     kicad
     inkscape
     freecad
