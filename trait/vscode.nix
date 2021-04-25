@@ -9,10 +9,8 @@
         ms-vsliveshare.vsliveshare
         github.vscode-pull-request-github
         editorconfig.editorconfig
-        /* TODO: These cause a segfault in `nix flake check`
-          matklad.rust-analyzer
-          vadimcn.vscode-lldb
-        */
+        matklad.rust-analyzer
+        vadimcn.vscode-lldb
       ] ++ vscode-utils.extensionsFromVscodeMarketplace [
         {
           name = "rainglow";

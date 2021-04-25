@@ -55,7 +55,7 @@ Requires:
 Build a recovery image:
 
 ```bash
-nix build github:hoverbear-consulting/flake#packages.x86_64-linux.architectIsoImage --out-link isoImage
+nix build github:hoverbear-consulting/flake#nixosConfigurations.architectIsoImage.config.system.build.isoImage --out-link isoImage
 ```
 
 Flash it to a USB:
@@ -156,7 +156,7 @@ Requires:
 Build the UEFI and the recovery image:
 
 ```bash
-nix build github:hoverbear-consulting/flake#packages.aarch64-linux.gizmoIsoImage --out-link isoImage
+nix build github:hoverbear-consulting/flake#nixosConfigurations.gizmoIsoImage.config.system.build.isoImage --out-link isoImage
 nix build github:hoverbear-consulting/flake#packages.aarch64-linux.gizmoUefi --out-link uefi.img
 ```
 
@@ -241,7 +241,7 @@ A system for on Windows (WSL2).
 Build the tarball:
 
 ```bash
-nix build github:hoverbear-consulting/flake#packages.x86_64-linux.wslTarball --out-link tarBall
+nix build github:hoverbear-consulting/flake#nixosConfigurations.wsl.system.build.tarball --out-link tarBall
 ```
 
 Ensure the Windows install has WSL(2) enabled:

@@ -15,28 +15,7 @@
     {
       overlay = final: prev: { };
 
-      packages = {
-        "aarch64-linux" =
-          let
-            pkgs = import nixpkgs {
-              system = "aarch64-linux";
-            };
-          in
-          {
-            gizmoUefi = lx2k-nix.packages.aarch64-linux.lx2k-3200.uefi;
-            gizmoIsoImage = self.nixosConfigurations.gizmoIsoImage.config.system.build.isoImage;
-          };
-        "x86_64-linux" =
-          let
-            pkgs = import nixpkgs {
-              system = "x86_64-linux";
-            };
-          in
-          {
-            architectIsoImage = self.nixosConfigurations.architectIsoImage.config.system.build.isoImage;
-            wslTarball = self.nixosConfigurations.wsl.config.system.build.tarball;
-          };
-      };
+      packages = { };
 
       nixosConfigurations =
         let
