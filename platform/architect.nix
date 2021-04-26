@@ -19,15 +19,18 @@
     zfs rollback -r pool/scratch@blank
   '';
 
-  time.timeZone = "America/Vancouver";
-
-  hardware.bluetooth.enable = true;
-
   networking.hostId = "938c2500";
   networking.hostName = "architect";
   networking.domain = "hoverbear.dev";
   networking.interfaces.enp6s0.useDHCP = true;
   networking.interfaces.wlp5s0.useDHCP = true;
+
+  time.timeZone = "America/Vancouver";
+
+  hardware.bluetooth.enable = true;
+
+  services.zfs.autoScrub.enable = true;
+  services.zfs.autoSnapshot.enable = true;
 
   services.openssh.hostKeys = [
     {

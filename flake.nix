@@ -15,6 +15,7 @@
     {
       overlay = final: prev: {
         neovimConfigured = final.callPackage ./packages/neovim.nix { };
+        vscodeConfigured = final.callPackage ./packages/vscode.nix { };
       };
 
       packages = forAllSystems (system:
@@ -22,9 +23,11 @@
           pkgs = import nixpkgs {
             inherit system;
             overlays = [ self.overlay ];
+            config.allowUnfree = true;
           };
-        in {
-          inherit (pkgs) neovimConfigured;
+        in
+        {
+          inherit (pkgs) neovimConfigured vscodeConfigured;
         });
 
       nixosConfigurations =
@@ -50,7 +53,6 @@
               trait.machine
               trait.tools
               trait.jetbrains
-              trait.vscode
               user.ana
             ];
           };
@@ -94,7 +96,7 @@
           };
         };
 
-    nixosModules = {
+      nixosModules = {
         platform.container = ./platform/container.nix;
         platform.wsl = ./platform/wsl.nix;
         platform.gizmo = ./platform/gizmo.nix;
@@ -106,7 +108,6 @@
         trait.machine = ./trait/machine.nix;
         trait.tools = ./trait/tools.nix;
         trait.jetbrains = ./trait/jetbrains.nix;
-        trait.vscode = ./trait/vscode.nix;
         trait.hardened = ./trait/hardened.nix;
         service.postgres = ./service/postgres.nix;
         # This trait is unfriendly to being bundled with platform-iso

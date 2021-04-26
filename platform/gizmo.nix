@@ -19,6 +19,13 @@
   '';
   boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
 
+  networking.hostId = "05dc175e";
+  networking.hostName = "gizmo";
+  networking.domain = "hoverbear.dev";
+  networking.interfaces.eth0.useDHCP = true;
+
+  time.timeZone = "America/Vancouver";
+
   services.openssh.hostKeys = [
     {
       path = "/persist/ssh/ssh_host_ed25519_key";
@@ -33,10 +40,12 @@
 
   services.postgresql.dataDir = "/persist/postgresql";
 
-  networking.hostId = "05dc175e";
-  networking.hostName = "gizmo";
-  networking.domain = "hoverbear.dev";
-  networking.interfaces.eth0.useDHCP = true;
+  services.zfs.autoScrub.enable = true;
+  services.zfs.autoSnapshot.enable = true;
+
+  systemd.tmpfiles.rules = [
+    "L+ /etc/shadow - - - - /persist/etc/shadow"
+  ];
 
   fileSystems."/boot" = {
     device = "/dev/nvme0n1p1";

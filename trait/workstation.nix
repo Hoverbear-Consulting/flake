@@ -39,6 +39,7 @@
     kicad
     inkscape
     freecad
+    vscodeConfigured
   ];
 
   services.printing.enable = true;
