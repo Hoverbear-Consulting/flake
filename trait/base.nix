@@ -43,7 +43,7 @@
   ];
   environment.shellAliases = { };
   environment.variables = {
-    EDITOR = "${pkgs.neovimConfigured}";
+    EDITOR = "${pkgs.neovimConfigured}/bin/nvim";
   };
   environment.pathsToLink = [
     "/share/nix-direnv"
