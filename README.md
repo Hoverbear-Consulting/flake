@@ -109,18 +109,20 @@ mount -t zfs pool/persist /mnt/persist
 Bootstrap the persistence directories:
 
 ```bash
-mkdir -p /mnt/persist/postgresql
-chown postgres:postgres -R /mnt/persist/postgresql
-
 mkdir -p /mnt/persist/ssh
-mkdir -p /mnt/persist/etc/shadow
-cp /etc/shadow /mnt/persist/etc/shadow
+mkdir -p /mnt/persist/etc
 ```
 
 Install the system:
 
 ```bash
 nixos-install --flake github:hoverbear-consulting/flake#architect --impure
+```
+
+Finally, copy over the shadow before rebooting:
+
+```bash
+cp /etc/shadow /mnt/persist/etc/shadow
 ```
 
 ## Gizmo
@@ -218,18 +220,20 @@ mount -t zfs pool/persist /mnt/persist
 Bootstrap the persistence directories:
 
 ```bash
-mkdir -p /mnt/persist/postgresql
-chown postgres:postgres -R /mnt/persist/postgresql
-
 mkdir -p /mnt/persist/ssh
-mkdir -p /mnt/persist/etc/shadow
-cp /etc/shadow /mnt/persist/etc/shadow
+mkdir -p /mnt/persist/etc/
 ```
 
 Install the system:
 
 ```bash
 nixos-install --flake github:hoverbear-consulting/flake#gizmo --impure
+```
+
+Finally, copy over the shadow before rebooting:
+
+```bash
+cp /etc/shadow /mnt/persist/etc/shadow
 ```
 
 ## WSL
