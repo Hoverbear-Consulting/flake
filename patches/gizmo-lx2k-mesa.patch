@@ -1,0 +1,16 @@
+diff --git a/src/gallium/drivers/radeonsi/si_buffer.c b/src/gallium/drivers/radeonsi/si_buffer.c
+index f44f3fd2e32..89149697e41 100644
+--- a/src/gallium/drivers/radeonsi/si_buffer.c
++++ b/src/gallium/drivers/radeonsi/si_buffer.c
+@@ -151,6 +151,11 @@ void si_init_resource_fields(struct si_screen *sscreen, struct si_resource *res,
+        */
+       if (!sscreen->info.kernel_flushes_hdp_before_ib || !sscreen->info.is_amdgpu)
+          res->domains = RADEON_DOMAIN_GTT;
++
++#if defined(PIPE_ARCH_AARCH64)
++      if ( size <= 1024 * 1024 )
++         res->domains = RADEON_DOMAIN_GTT;
++#endif
+    }
+ 
+    /* Tiled textures are unmappable. Always put them in VRAM. */

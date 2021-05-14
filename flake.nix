@@ -62,6 +62,7 @@
             inherit (gizmoBase) system;
             modules = gizmoBase.modules ++ [
               platform.gizmo
+              trait.workstation
             ];
           };
           gizmoIsoImage = nixpkgs.lib.nixosSystem {

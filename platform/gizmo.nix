@@ -7,6 +7,12 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
+  boot.kernelParams = [
+    # PCIE scaling tends to lock GPUs, jnettlet suggests...
+    "amdgpu.pcie_gen_cap=0x4"
+    "radeon.si_support=0"
+    "amdgpu.si_support=1"
+  ];
   boot.loader.grub.enable = true;
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.zfsSupport = true;
@@ -14,10 +20,19 @@
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.grub.device = "nodev";
   boot.supportedFilesystems = [ "zfs" ];
+  boot.initrd.kernelModules = [ "amdgpu" ];
   boot.initrd.postDeviceCommands = lib.mkAfter ''
     zfs rollback -r pool/scratch@blank
   '';
   boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
+
+  hardware.opengl.package =
+    let
+      myMesa = (pkgs.mesa.override {
+        galliumDrivers = [ "radeonsi" "swrast" ];
+      }).overrideAttrs (attrs: { patches = attrs.patches ++ [ ../patches/gizmo-lx2k-mesa.patch ]; });
+    in
+    lib.mkForce myMesa.drivers;
 
   networking.hostId = "05dc175e";
   networking.hostName = "gizmo";
@@ -74,5 +89,5 @@
 
   swapDevices = [ ];
 
-  nixpkgs.config.allowUnsupportedSystem = true;
+  #nixpkgs.config.allowUnsupportedSystem = true;
 }

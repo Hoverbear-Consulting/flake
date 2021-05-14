@@ -11,9 +11,8 @@
   hardware.pulseaudio.enable = true;
 
   hardware.opengl.driSupport = true;
-  hardware.opengl.driSupport32Bit = true;
-  hardware.steam-hardware.enable = true;
-  hardware.xpadneo.enable = true;
+  #hardware.steam-hardware.enable = true;
+  #hardware.xpadneo.enable = true;
 
   fonts.fontconfig.enable = true;
   fonts.enableDefaultFonts = true;
@@ -26,21 +25,25 @@
     fira-code-symbols
   ];
 
+  systemd.services.spotifyd.enable = true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     firefox
-    slack
+    vscodeConfigured
+    spotify-qt
+    spotifyd
+  ] ++ (lib.optional stdenv.isx86_64 [
     discord
+    slack
     zoom-us
     spotify
     zotero
-    slack
     kicad
     inkscape
     freecad
-    vscodeConfigured
-  ];
+  ]);
 
   services.printing.enable = true;
 }
