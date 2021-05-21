@@ -4,6 +4,7 @@
   environment.systemPackages = with pkgs; [
     cargo
     rustc
+    rustup
     clang
     rustfmt
     cargo-cross

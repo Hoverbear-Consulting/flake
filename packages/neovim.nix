@@ -9,7 +9,6 @@ neovim.override {
       start = [
         LanguageClient-neovim
         awesome-vim-colorschemes
-        fugitive
         rust-vim
         vim-nix
         fzf-vim

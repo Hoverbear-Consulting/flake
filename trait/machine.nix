@@ -21,6 +21,6 @@
   networking.firewall.allowedTCPPorts = [ 22 ];
   networking.firewall.allowedUDPPorts = [ 22 ];
 
-  services.tlp.enable = true;
+  #services.tlp.enable = true;
   powerManagement.cpuFreqGovernor = "ondemand";
 }

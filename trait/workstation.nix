@@ -34,6 +34,7 @@
     vscodeConfigured
     spotify-qt
     spotifyd
+    element-desktop
   ] ++ (lib.optional stdenv.isx86_64 [
     discord
     slack

@@ -39,6 +39,8 @@
   networking.domain = "hoverbear.dev";
   networking.interfaces.eth0.useDHCP = true;
 
+  hardware.bluetooth.enable = true;
+
   time.timeZone = "America/Vancouver";
 
   services.openssh.hostKeys = [
@@ -89,5 +91,20 @@
 
   swapDevices = [ ];
 
+  nixpkgs.overlays = [
+    /*
+    (self: super: {
+      stdenv = super.stdenv // {
+        mkDerivation = args: super.stdenv.mkDerivation (args // {
+          NIX_CFLAGS_COMPILE = toString (args.NIX_CFLAGS_COMPILE or "") + " -march=armv8-a+crc+crypto -ftree-vectorize";
+          NIX_ENFORCE_NO_NATIVE = false;
+
+          preferLocalBuild = true;
+          allowSubstitutes = false;
+        });
+      };
+    })
+    */
+  ];
   #nixpkgs.config.allowUnsupportedSystem = true;
 }

@@ -110,6 +110,7 @@
         trait.tools = ./trait/tools.nix;
         trait.jetbrains = ./trait/jetbrains.nix;
         trait.hardened = ./trait/hardened.nix;
+        trait.sourceBuild = ./trait/source-build.nix;
         service.postgres = ./service/postgres.nix;
         # This trait is unfriendly to being bundled with platform-iso
         trait.workstation = ./trait/workstation.nix;
