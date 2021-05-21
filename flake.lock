@@ -20,11 +20,11 @@
         "nixos": "nixos"
       },
       "locked": {
-        "lastModified": 1618786864,
-        "narHash": "sha256-9cCCcHnbZCwfFnaCFYtA1zd23BmRoSHtBzqq4y7Giqs=",
+        "lastModified": 1621570568,
+        "narHash": "sha256-7sT/jxV7Z6AuZrrStM6J6jefmQ5IthFlNp036WYT6/Q=",
         "owner": "hoverbear-consulting",
         "repo": "lx2k-nix",
-        "rev": "f3423a268f8e516d58cd2f6d1fc0d0b516c9d852",
+        "rev": "593f9d5651c49714a66e2e6eca3b566f64f73523",
         "type": "github"
       },
       "original": {
@@ -53,7 +53,9 @@
     "nixos-wsl": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1615951654,
@@ -71,21 +73,6 @@
       }
     },
     "nixpkgs": {
-      "locked": {
-        "lastModified": 1610124236,
-        "narHash": "sha256-jLUcft5MxVuYL0gQIgS55cPLdF2R7p736zpXecZNLes=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "0cfd08f4881bbfdaa57e68835b923d4290588d98",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-20.09",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_2": {
       "locked": {
         "lastModified": 1620838695,
         "narHash": "sha256-Eb3xr6aWt3lF8BgmZCgVJXy/ArmudeJXONGSqaSLfP0=",
@@ -105,7 +92,7 @@
       "inputs": {
         "lx2k-nix": "lx2k-nix",
         "nixos-wsl": "nixos-wsl",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs"
       }
     }
   },

@@ -4,7 +4,9 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     lx2k-nix.url = "github:hoverbear-consulting/lx2k-nix/flake";
+    lx2k-nix.inputs.nixpkgs.follows = "nixpkgs";
     nixos-wsl.url = "github:hoverbear-consulting/NixOS-WSL/modularize";
+    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, lx2k-nix, nixos-wsl }:
@@ -33,7 +35,6 @@
       nixosConfigurations =
         let
           gizmoBase = {
-            system = "aarch64-linux";
             modules = with self.nixosModules; [
               lx2k-nix.nixosModules.lx2k
               trait.overlay
@@ -45,7 +46,6 @@
             ];
           };
           architectBase = {
-            system = "x86_64-linux";
             modules = with self.nixosModules; [
               trait.overlay
               trait.base

@@ -90,20 +90,32 @@
   };
 
   swapDevices = [ ];
+  
+  nixpkgs.localSystem = lib.recursiveUpdate (lib.systems.elaborate { system = "aarch64-linux"; }) {
+    system = "aarch64-linux";
+    config = "lx2k";
+    platform.gcc = {
+      fpu = "neon";
+      cpu = "cortex-a72";
+      arch = "armv8-a+crc+crypto";
+      tune = "armv8-a+crc+crypto";
+      extraFlags = [ "-ftree-vectorize" ];
+    };
+  };
 
   nixpkgs.overlays = [
     /*
-    (self: super: {
+      (self: super: {
       stdenv = super.stdenv // {
-        mkDerivation = args: super.stdenv.mkDerivation (args // {
-          NIX_CFLAGS_COMPILE = toString (args.NIX_CFLAGS_COMPILE or "") + " -march=armv8-a+crc+crypto -ftree-vectorize";
-          NIX_ENFORCE_NO_NATIVE = false;
+      mkDerivation = args: super.stdenv.mkDerivation (args // {
+      NIX_CFLAGS_COMPILE = toString (args.NIX_CFLAGS_COMPILE or "") + " -march=armv8-a+crc+crypto -ftree-vectorize";
+      NIX_ENFORCE_NO_NATIVE = false;
 
-          preferLocalBuild = true;
-          allowSubstitutes = false;
-        });
+      preferLocalBuild = true;
+      allowSubstitutes = false;
+      });
       };
-    })
+      })
     */
   ];
   #nixpkgs.config.allowUnsupportedSystem = true;
