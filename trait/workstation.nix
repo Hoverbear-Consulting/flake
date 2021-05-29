@@ -2,8 +2,8 @@
 
 {
   services.xserver.enable = true;
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.desktopManager.xfce.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
   networking.wireless.enable = false; # For Network Manager
 
@@ -32,18 +32,17 @@
   environment.systemPackages = with pkgs; [
     firefox
     vscodeConfigured
-    spotify-qt
     spotifyd
-    element-desktop
+    spotify-qt
+    zotero
+    kicad
+    #chromium
   ] ++ (lib.optional stdenv.isx86_64 [
     discord
+    element-desktop
     slack
     zoom-us
     spotify
-    zotero
-    kicad
-    inkscape
-    freecad
   ]);
 
   services.printing.enable = true;

@@ -24,15 +24,8 @@
   boot.initrd.postDeviceCommands = lib.mkAfter ''
     zfs rollback -r pool/scratch@blank
   '';
-  boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
 
-  hardware.opengl.package =
-    let
-      myMesa = (pkgs.mesa.override {
-        galliumDrivers = [ "radeonsi" "swrast" ];
-      }).overrideAttrs (attrs: { patches = attrs.patches ++ [ ../patches/gizmo-lx2k-mesa.patch ]; });
-    in
-    lib.mkForce myMesa.drivers;
+  # boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
 
   networking.hostId = "05dc175e";
   networking.hostName = "gizmo";
@@ -90,10 +83,43 @@
   };
 
   swapDevices = [ ];
+
+
+  # This works around some 'glitching' in many GTK applications (and, importantly, Firefox)
+  # jnettlet suggested the following patch:
+  hardware.opengl.package =
+    let
+      myMesa = (pkgs.mesa.override {
+        galliumDrivers = [ "radeonsi" "swrast" ];
+      }).overrideAttrs (attrs: { patches = attrs.patches ++ [ ../patches/gizmo-lx2k-mesa.patch ]; });
+    in
+    lib.mkForce myMesa.drivers;
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      # The default flags used in Nix builds are rather suboptimal for the LX2K.
+      # Additionally the `../trait/source-build.nix` trick won't work with Clang since it won't 
+      # accept `-march=native` with the LX2K.
+      /*
+      stdenv = prev.stdenv // {
+        mkDerivation = args: prev.stdenv.mkDerivation (args // {
+          NIX_CFLAGS_COMPILE = toString (args.NIX_CFLAGS_COMPILE or "") + " -march=armv8-a+crc+crypto -ftree-vectorize";
+        });
+      };
+      */
+      # Because the above option changes the hash of stdnenv, and the current
+      # `rustPlatform.buildRustPackage`'s build proces includes creating a SHA checked
+      # `${name}-vendor` derivation, we must unfortunately opt out of the optimization
+      # in the Rust platform.
+      # inherit (prev) rustPlatform fetchCargoTarball cargo rustc rustup nix nixUnstable;
+    })
+  ];
   
-  nixpkgs.localSystem = lib.recursiveUpdate (lib.systems.elaborate { system = "aarch64-linux"; }) {
+  # nixpkgs.config.allowUnsupportedSystem = true;
+  
+  /* This seems to be a no-op??
+  nixpkgs.system = lib.recursiveUpdate (lib.systems.elaborate { system = "aarch64-linux"; }) {
     system = "aarch64-linux";
-    config = "lx2k";
     platform.gcc = {
       fpu = "neon";
       cpu = "cortex-a72";
@@ -102,21 +128,5 @@
       extraFlags = [ "-ftree-vectorize" ];
     };
   };
-
-  nixpkgs.overlays = [
-    /*
-      (self: super: {
-      stdenv = super.stdenv // {
-      mkDerivation = args: super.stdenv.mkDerivation (args // {
-      NIX_CFLAGS_COMPILE = toString (args.NIX_CFLAGS_COMPILE or "") + " -march=armv8-a+crc+crypto -ftree-vectorize";
-      NIX_ENFORCE_NO_NATIVE = false;
-
-      preferLocalBuild = true;
-      allowSubstitutes = false;
-      });
-      };
-      })
-    */
-  ];
-  #nixpkgs.config.allowUnsupportedSystem = true;
+  */
 }
