@@ -50,7 +50,7 @@
     zoom-us
     spotify
     obs-studio
-  ] else []);
+  ] else [ ]);
 
   services.printing.enable = true;
 }

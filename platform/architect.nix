@@ -24,7 +24,7 @@
   networking.domain = "hoverbear.home";
   #networking.interfaces.enp6s0.useDHCP = true;
   #networking.interfaces.wlp5s0.useDHCP = true;
-  
+
   networking.networkmanager.enable = true;
   programs.nm-applet.enable = true;
 
