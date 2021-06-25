@@ -20,11 +20,11 @@
         "nixos": "nixos"
       },
       "locked": {
-        "lastModified": 1621570568,
-        "narHash": "sha256-7sT/jxV7Z6AuZrrStM6J6jefmQ5IthFlNp036WYT6/Q=",
+        "lastModified": 1621571704,
+        "narHash": "sha256-5kL+g5l85mIOhVA5cYVkt3fYR1kIGoglwqXKUyUBHzc=",
         "owner": "hoverbear-consulting",
         "repo": "lx2k-nix",
-        "rev": "593f9d5651c49714a66e2e6eca3b566f64f73523",
+        "rev": "0e5f7a31babc73463f27b9081336d45dcec80eeb",
         "type": "github"
       },
       "original": {
@@ -74,11 +74,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1620838695,
-        "narHash": "sha256-Eb3xr6aWt3lF8BgmZCgVJXy/ArmudeJXONGSqaSLfP0=",
+        "lastModified": 1622059058,
+        "narHash": "sha256-t1/ZMtyxClVSfcV4Pt5C1YpkeJ/UwFF3oitLD7Ch/UA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "acd49fab8ece11a89ef8ee49903e1cd7bb50f4b7",
+        "rev": "84aa23742f6c72501f9cc209f29c438766f5352d",
         "type": "github"
       },
       "original": {

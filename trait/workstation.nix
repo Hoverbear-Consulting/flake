@@ -4,6 +4,9 @@
   services.xserver.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.desktopManager.xfce.enable = true;
+  services.xserver.desktopManager.xfce.thunarPlugins = with pkgs; [
+    xfce.thunar-archive-plugin
+  ];
   services.xserver.videoDrivers = [ "amdgpu" ];
   networking.wireless.enable = false; # For Network Manager
 
@@ -32,18 +35,22 @@
   environment.systemPackages = with pkgs; [
     firefox
     vscodeConfigured
+    neovimConfigured
     spotifyd
     spotify-qt
     zotero
     kicad
-    #chromium
-  ] ++ (lib.optional stdenv.isx86_64 [
+    inkscape
+    gimp
+    xlockmore
+  ] ++ (if stdenv.isx86_64 then [
     discord
     element-desktop
     slack
     zoom-us
     spotify
-  ]);
+    obs-studio
+  ] else []);
 
   services.printing.enable = true;
 }

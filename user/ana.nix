@@ -3,7 +3,7 @@
 {
   users.users.ana = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "disk" ];
+    extraGroups = [ "wheel" "disk" "networkmanager" ];
     openssh.authorizedKeys.keys = [
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDY0XcmEJNdUOVg6xONb8Nr1jSjUnt7M6jSYPPSKPMYD08gW3tDCgXS2p8DJXXxb7mVoyciY56/UJT2GsBvHgC+dSaE6J4rX0AIdwMOwxOrRyENmT3olu2POu5clhvsewlSHIJaJo809TdhtPMywvKTk3WDp+pdoTfBzz+jbvJ61X8PBTKltxI838yE4Jd+rMHeIemXnDjuNiNeCl8vhvzfAolgharhGqafWqD/YiPWqiGZDOiybtxjior2tCBmmB4daJgxF5logEdh7rWYjKOzPrTwoxvFQ/s1eSq3BTcyJNh+DR+hgls+Z5EqvcMKOIb0qkOoxtqr3ASMUc/9SCT9 ana@nomad"
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/uGH1pFZx4221lTvR6tdcdFVsNC1YElPpPm9OYP5cW+h3+K/a/QStcatNAFJzr80cIg61bLVdULy/FTgT58R/gb922QV2Lnz6ZCnzUwT6bDpvmpcMXzUGYGtdUDXLR/Km7fyLSzuxmeGRkRLZxNcntZcrmjVTq1UBl57xgWpWB3Aa+L5/c5X8qaES8+B7x8/8/abtbL7QQe4JxJUZXHjomSiEjFyn2kyMjdZYuaUi6OCZD/ttGQr/zL19ur+ZlgyqCkDM7V6aFKzWxJL4NfJqoepFISDTWrppVvczttzRaifqjK8jcOZ266G2ZnYJJ2GIJCmnALiw+6hmai9hgjo42axMzaEFuwWYKKLKRr4jBLCj5uaF8ZjHqNshiE5LaJ5BZOFMkbkTd+Xf4Q9VVvLNHLu/2rKl7ndoyHMdN4gsZYFl/Papk2zMWFcbZULpAp6XYn/tet1fNfTEa4oO7qs4dOXhVn5j23b68u6tFqLY8eM5a5dOvbmprFxvnb6C/r8= ana@architect"

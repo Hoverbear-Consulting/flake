@@ -21,9 +21,12 @@
 
   networking.hostId = "938c2500";
   networking.hostName = "architect";
-  networking.domain = "hoverbear.dev";
-  networking.interfaces.enp6s0.useDHCP = true;
-  networking.interfaces.wlp5s0.useDHCP = true;
+  networking.domain = "hoverbear.home";
+  #networking.interfaces.enp6s0.useDHCP = true;
+  #networking.interfaces.wlp5s0.useDHCP = true;
+  
+  networking.networkmanager.enable = true;
+  programs.nm-applet.enable = true;
 
   time.timeZone = "America/Vancouver";
 

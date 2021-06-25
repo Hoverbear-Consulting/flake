@@ -101,11 +101,11 @@
       # Additionally the `../trait/source-build.nix` trick won't work with Clang since it won't 
       # accept `-march=native` with the LX2K.
       /*
-      stdenv = prev.stdenv // {
+        stdenv = prev.stdenv // {
         mkDerivation = args: prev.stdenv.mkDerivation (args // {
-          NIX_CFLAGS_COMPILE = toString (args.NIX_CFLAGS_COMPILE or "") + " -march=armv8-a+crc+crypto -ftree-vectorize";
+        NIX_CFLAGS_COMPILE = toString (args.NIX_CFLAGS_COMPILE or "") + " -march=armv8-a+crc+crypto -ftree-vectorize";
         });
-      };
+        };
       */
       # Because the above option changes the hash of stdnenv, and the current
       # `rustPlatform.buildRustPackage`'s build proces includes creating a SHA checked
@@ -114,19 +114,19 @@
       # inherit (prev) rustPlatform fetchCargoTarball cargo rustc rustup nix nixUnstable;
     })
   ];
-  
+
   # nixpkgs.config.allowUnsupportedSystem = true;
-  
+
   /* This seems to be a no-op??
-  nixpkgs.system = lib.recursiveUpdate (lib.systems.elaborate { system = "aarch64-linux"; }) {
+    nixpkgs.system = lib.recursiveUpdate (lib.systems.elaborate { system = "aarch64-linux"; }) {
     system = "aarch64-linux";
     platform.gcc = {
-      fpu = "neon";
-      cpu = "cortex-a72";
-      arch = "armv8-a+crc+crypto";
-      tune = "armv8-a+crc+crypto";
-      extraFlags = [ "-ftree-vectorize" ];
+    fpu = "neon";
+    cpu = "cortex-a72";
+    arch = "armv8-a+crc+crypto";
+    tune = "armv8-a+crc+crypto";
+    extraFlags = [ "-ftree-vectorize" ];
     };
-  };
+    };
   */
 }

@@ -35,6 +35,7 @@
       nixosConfigurations =
         let
           gizmoBase = {
+            system = "aarch64-linux";
             modules = with self.nixosModules; [
               lx2k-nix.nixosModules.lx2k
               trait.overlay
@@ -46,6 +47,7 @@
             ];
           };
           architectBase = {
+            system = "x86_64-linux";
             modules = with self.nixosModules; [
               trait.overlay
               trait.base
@@ -54,6 +56,12 @@
               trait.tools
               trait.jetbrains
               user.ana
+              # plrust.nixosModule
+              # ({pkgs, ...}: { 
+              #   services.postgresql.enable = true;
+              #   services.postgresql.plrust.enable = true;
+              #   services.postgresql.plrust.workDir = "/tmp/plrust";
+              # })
             ];
           };
         in

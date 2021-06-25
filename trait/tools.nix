@@ -5,6 +5,8 @@
     cargo
     rustc
     clang
+    openssl
+    pkg-config
     rustfmt
     cargo-cross
     cargo-edit
