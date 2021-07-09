@@ -21,5 +21,17 @@ vscode-with-extensions.override {
       version = "1.0.7";
       sha256 = "DnaIXJ27bcpOrIp1hm7DcrlIzGSjo4RTJ9fD72ukKlc=";
     }
+    {
+      name = "better-toml";
+      publisher = "bungcip";
+      version = "0.3.2";
+      sha256 = "g+LfgjAnSuSj/nSmlPdB0t29kqTmegZB5B1cYzP8kCI=";
+    }
+    {
+      name = "gitlens";
+      publisher = "eamodio";
+      version = "11.5.1";
+      sha256 = "Ic7eT8WX2GDYIj/aTu1d4m+fgPtXe4YQx04G0awbwnM=";
+    }
   ];
 }
