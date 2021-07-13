@@ -33,5 +33,17 @@ vscode-with-extensions.override {
       version = "11.5.1";
       sha256 = "Ic7eT8WX2GDYIj/aTu1d4m+fgPtXe4YQx04G0awbwnM=";
     }
+    {
+      name = "sqltools";
+      publisher = "mtxr";
+      version = "0.23.0";
+      sha256 = "Obo/u2shO6UkOG9V6LDOHrLFFapMGSiu8EVoLU8NdT4=";
+    }
+    {
+      name = "Bookmarks";
+      publisher = "alefragnani";
+      version = "13.0.1";
+      sha256 = "4IZCPNk7uBqPw/FKT5ypU2QxadQzYfwbGxxT/bUnKdE=";
+    }
   ];
 }

@@ -34,6 +34,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     firefox
+    chromium
     vscodeConfigured
     neovimConfigured
     spotifyd
