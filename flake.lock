@@ -17,11 +17,11 @@
     },
     "flake-utils_2": {
       "locked": {
-        "lastModified": 1610051610,
-        "narHash": "sha256-U9rPz/usA1/Aohhk7Cmc2gBrEEKRzcW4nwPWMPwja4Y=",
+        "lastModified": 1617631617,
+        "narHash": "sha256-PARRCz55qN3gy07VJZIlFeOX420d0nGF0RzGI/9hVlw=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "3982c9903e93927c2164caa727cd3f6a0e6d14cc",
+        "rev": "b2c27d1a81b0dc266270fa8aeecebbd1807fc610",
         "type": "github"
       },
       "original": {
@@ -95,27 +95,27 @@
         ]
       },
       "locked": {
-        "lastModified": 1615951654,
-        "narHash": "sha256-IFV4Xl+r92RwaevKTJIUVo/OLMdjlHQTkidnu0noY0M=",
+        "lastModified": 1628228455,
+        "narHash": "sha256-ACBIshBjkZXqYGcq6uNOni03zUn3T/JYWJiNG+kZMEQ=",
         "owner": "hoverbear-consulting",
         "repo": "NixOS-WSL",
-        "rev": "f5d18400a2a8a2761f7121617d1ed3aff16b6c33",
+        "rev": "94448f48f06fa9b0af0472b35affd012c5ecf233",
         "type": "github"
       },
       "original": {
         "owner": "hoverbear-consulting",
-        "ref": "modularize",
+        "ref": "master",
         "repo": "NixOS-WSL",
         "type": "github"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1625704207,
-        "narHash": "sha256-y7pnPYrc9NKhWMDtM1eucGYQoDd/H33/6DL1sjGosr0=",
+        "lastModified": 1628144860,
+        "narHash": "sha256-cEBTjXuZVHCeCnQaZILI7mAiCWwX9nJ4dkup64zu8Lc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "7b4ff2184e4cab274ecb2b2eb49d20ef2142ddf1",
+        "rev": "6dc0549183672acd39d735a465098ca9deeff6ad",
         "type": "github"
       },
       "original": {

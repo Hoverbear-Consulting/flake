@@ -7,7 +7,7 @@
     nix-direnv.inputs.nixpkgs.follows = "nixpkgs";
     lx2k-nix.url = "github:hoverbear-consulting/lx2k-nix/flake";
     lx2k-nix.inputs.nixpkgs.follows = "nixpkgs";
-    nixos-wsl.url = "github:hoverbear-consulting/NixOS-WSL/modularize";
+    nixos-wsl.url = "github:hoverbear-consulting/NixOS-WSL/master";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
   };
 
