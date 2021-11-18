@@ -13,7 +13,7 @@
 
   outputs = { self, nixpkgs, nix-direnv, lx2k-nix, nixos-wsl }:
     let
-      supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
+      supportedSystems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
     in
     {
