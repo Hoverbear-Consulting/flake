@@ -2,12 +2,12 @@
 
 vscode-with-extensions.override {
   vscodeExtensions = with vscode-extensions; [
-    bbenoist.Nix
+    bbenoist.nix
     ms-vscode-remote.remote-ssh
     github.vscode-pull-request-github
     editorconfig.editorconfig
     matklad.rust-analyzer
-    vadimcn.vscode-lldb
+    # vadimcn.vscode-lldb
   ] ++ vscode-utils.extensionsFromVscodeMarketplace [
     {
       name = "rainglow";
