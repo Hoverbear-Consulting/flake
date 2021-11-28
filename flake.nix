@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-direnv.url = "github:hoverbear/nix-direnv/merged";
     nix-direnv.inputs.nixpkgs.follows = "nixpkgs";
-    lx2k-nix.url = "github:hoverbear-consulting/lx2k-nix/flake";
+    lx2k-nix.url = "github:hoverbear-consulting/lx2k-nix/flake-bump";
     lx2k-nix.inputs.nixpkgs.follows = "nixpkgs";
     nixos-wsl.url = "github:hoverbear-consulting/NixOS-WSL/master";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
@@ -26,12 +26,13 @@
         let
           pkgs = import nixpkgs {
             inherit system;
-            overlays = [ self.overlay nix-direnv.overlay ];
+            overlays = [ self.overlay nix-direnv.overlay lx2k-nix.overlay ];
             config.allowUnfree = true;
           };
         in
         {
           inherit (pkgs) neovimConfigured vscodeConfigured;
+          gizmoUefi = pkgs.lx2k-3200.uefi;
         });
 
       nixosConfigurations =

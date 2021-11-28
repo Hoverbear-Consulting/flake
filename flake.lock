@@ -35,16 +35,16 @@
         "nixos": "nixos"
       },
       "locked": {
-        "lastModified": 1638071838,
-        "narHash": "sha256-QnJRJyBJHi2GfpWL8SCb+vUniqLC1mAyzev3cZxX+Mw=",
+        "lastModified": 1638123457,
+        "narHash": "sha256-6q++PWMwsuVazpCeZpqc2fAz0n0EVU0h4QyY+YPUyL4=",
         "owner": "hoverbear-consulting",
         "repo": "lx2k-nix",
-        "rev": "fc4f17aa4a468ca34d144a2849794ad62bc5b0e5",
+        "rev": "6486498f90c0f587d55118e799698d557ba37a8a",
         "type": "github"
       },
       "original": {
         "owner": "hoverbear-consulting",
-        "ref": "flake",
+        "ref": "flake-bump",
         "repo": "lx2k-nix",
         "type": "github"
       }
