@@ -22,18 +22,18 @@
         vscodeConfigured = final.callPackage ./packages/vscode.nix { };
       };
 
-      packages = forAllSystems (system:
-        let
-          pkgs = import nixpkgs {
-            inherit system;
-            overlays = [ self.overlay nix-direnv.overlay lx2k-nix.overlay ];
-            config.allowUnfree = true;
-          };
-        in
-        {
-          inherit (pkgs) neovimConfigured vscodeConfigured;
-          gizmoUefi = pkgs.lx2k-3200.uefi;
-        });
+      packages = forAllSystems
+        (system:
+          let
+            pkgs = import nixpkgs {
+              inherit system;
+              overlays = [ self.overlay nix-direnv.overlay ];
+              config.allowUnfree = true;
+            };
+          in
+          {
+            inherit (pkgs) neovimConfigured vscodeConfigured;
+          });
 
       nixosConfigurations =
         let
