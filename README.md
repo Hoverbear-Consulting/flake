@@ -14,7 +14,8 @@ You can use this in your own flakes:
 
 # Packages
 
-> Currently, only NixOS configurations, their artifacts, and modules exist. Packages are coming!
+* `neovimConfigured`: A configured `nvim` with plugins.
+* `vscodeConfigured`: A `vscode` with extensions.
 
 # NixOS Configurations
 
