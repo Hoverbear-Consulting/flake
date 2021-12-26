@@ -17,6 +17,8 @@ neovim.override {
         plenary-nvim
         popup-nvim
         nvim-lspconfig
+        nvim-cmp
+        cmp-nvim-lsp
       ];
     };
   };
