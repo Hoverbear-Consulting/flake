@@ -16,6 +16,7 @@
     cargo-outdated
     rust-analyzer
     nodejs-12_x
+    fd
     #zola
     graphviz
   ];

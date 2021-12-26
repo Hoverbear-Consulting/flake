@@ -56,4 +56,6 @@ cmd([[autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe
 -- Remaps
 local keymap = vim.api.nvim_set_keymap
 keymap('t', '<Esc>', [[<C-\><C-n>]], {})
+keymap('n', [[<C-g>]], [[<cmd>lua require('telescope.builtin').find_files()<cr>]], {})
+keymap('n', [[<C-f>]], [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], {})
 

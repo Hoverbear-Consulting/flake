@@ -13,7 +13,9 @@ neovim.override {
         awesome-vim-colorschemes
         rust-vim
         vim-nix
-        fzf-vim
+        telescope-nvim
+        plenary-nvim
+        popup-nvim
       ];
     };
   };
