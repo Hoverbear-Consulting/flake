@@ -14,7 +14,8 @@ You can use this in your own flakes:
 
 # Packages
 
-> Currently, only NixOS configurations, their artifacts, and modules exist. Packages are coming!
+* `neovimConfigured`: A configured `nvim` with plugins.
+* `vscodeConfigured`: A `vscode` with extensions.
 
 # NixOS Configurations
 
@@ -155,12 +156,19 @@ Requires:
 * A microSD card. ([Ex][parts-microsd-card-ex])
 * A USB stick, 4+ GB preferred. ([Ex][parts-usb-stick-ex])
 
-Build the UEFI and the recovery image:
+Build the recovery image:
 
 ```bash
 nix build github:hoverbear-consulting/flake#nixosConfigurations.gizmoIsoImage.config.system.build.isoImage --out-link isoImage
-nix build github:hoverbear-consulting/flake#packages.aarch64-linux.gizmoUefi --out-link uefi.img
 ```
+
+Fetch the SolidRun provided UEFI:
+
+```bash
+curl https://solid-run-images.sos-de-fra-1.exo.io/LX2k/lx2160a_uefi/lx2160acex7_2000_700_3200_8_5_2_sd_ee5c233.img.xz -o uefi.img.xz
+xz --decompress uefi.img.xz
+```
+
 
 Flash them:
 
