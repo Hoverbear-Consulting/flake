@@ -16,6 +16,7 @@ neovim.override {
         telescope-nvim
         plenary-nvim
         popup-nvim
+        nvim-lspconfig
       ];
     };
   };
