@@ -1,4 +1,4 @@
-{ neovim, vimPlugins }:
+{ neovim, vimPlugins, tree-sitter }:
 
 neovim.override {
   vimAlias = true;
@@ -19,6 +19,8 @@ neovim.override {
         nvim-lspconfig
         nvim-cmp
         cmp-nvim-lsp
+        vim-gitgutter
+        (nvim-treesitter.withPlugins (plugins: tree-sitter.allGrammars))
       ];
     };
   };
