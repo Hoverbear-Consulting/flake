@@ -50,7 +50,7 @@ end
 local cmd = vim.api.nvim_command
 cmd('filetype plugin indent on')
 cmd('colorscheme dogrun')
-cmd('autocmd ColorScheme * highlight Normal guibg=NONE ctermbg=NONE')
+cmd('highlight Normal guibg=NONE ctermbg=NONE')
 -- Return to last edit position when opening files
 cmd([[autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif]])
 
