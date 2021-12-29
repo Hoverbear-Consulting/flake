@@ -19,7 +19,7 @@ neovim.override {
         nvim-lspconfig
         nvim-cmp
         cmp-nvim-lsp
-        vim-gitgutter
+        gitsigns-nvim
         (nvim-treesitter.withPlugins (plugins: tree-sitter.allGrammars))
       ];
     };
