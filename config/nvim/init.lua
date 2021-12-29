@@ -118,6 +118,10 @@ for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup { capabilities = capabilities, on_attach = on_attach }
 end
 
+-- Whichkey
+local wk = require("which-key")
+wk.register({ }, { })
+
 -- cmp setup
 local cmp = require 'cmp'
 cmp.setup {
