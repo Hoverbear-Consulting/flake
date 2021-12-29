@@ -60,6 +60,9 @@ keymap('t', '<Esc>', [[<C-\><C-n>]], {})
 keymap('n', [[<C-g>]], [[<cmd>lua require('telescope.builtin').find_files()<cr>]], {})
 keymap('n', [[<C-f>]], [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], {})
 
+-- Gitsigns
+require('gitsigns').setup()
+
 -- LSP settings
 local lspconfig = require('lspconfig')
 
@@ -110,7 +113,10 @@ end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-lspconfig.rust_analyzer.setup { capabilities = capabilities, on_attach = on_attach }
+local servers = { "rust_analyzer", "rnix" }
+for _, lsp in ipairs(servers) do
+    lspconfig[lsp].setup { capabilities = capabilities, on_attach = on_attach }
+end
 
 -- cmp setup
 local cmp = require 'cmp'

@@ -15,6 +15,7 @@
     cargo-expand
     cargo-outdated
     rust-analyzer
+    rnix-lsp
     nodejs-12_x
     fd
     #zola
