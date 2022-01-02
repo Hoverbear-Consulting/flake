@@ -7,25 +7,57 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [
     # PCIE scaling tends to lock GPUs, jnettlet suggests...
-    "amdgpu.pcie_gen_cap=0x4"
+    # "amdgpu.pcie_gen_cap=0x4"
     "radeon.si_support=0"
     "amdgpu.si_support=1"
+    # https://discord.com/channels/620838168794497044/665456384971767818/913331830290284544
+    "arm-smmu.disable_bypass=0"
+    "iommu.passthrough=1"
+    "amdgpu.pcie_gen_cap=0x4"
+    "usbcore.autosuspend=-1"
+    # Serial port
+    #"console=ttyAMA0,115200"
+    #"earlycon=pl011,mmio32,0x21c0000"
+    #"pci=pcie_bus_perf"
+    #"arm-smmu.disable_bypass=0" # TODO: remove once firmware supports it
+  ];
+  boot.kernelModules = [
+    "amc6821" # via sensors-detect
   ];
   boot.loader.grub.enable = true;
   boot.loader.grub.efiSupport = true;
-  boot.loader.grub.zfsSupport = true;
   boot.loader.grub.useOSProber = true;
+  boot.loader.grub.enableCryptodisk = true;
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.grub.device = "nodev";
-  boot.supportedFilesystems = [ "zfs" ];
+  boot.initrd.luks.devices = {
+    gizmo = {
+      device = "/dev/disk/by-uuid/f74df5fc-7632-4e47-a481-9fd346cfad71";
+    };
+  };
   boot.initrd.kernelModules = [ "amdgpu" ];
-  boot.initrd.postDeviceCommands = lib.mkAfter ''
-    zfs rollback -r pool/scratch@blank
-  '';
-
   # boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
+
+  fileSystems."/" = {
+    device = "/dev/mapper/gizmo";
+    fsType = "f2fs";
+    encrypted.enable = true;
+    encrypted.label = "gizmo";
+    encrypted.blkDev = "/dev/disk/by-uuid/f74df5fc-7632-4e47-a481-9fd346cfad71";
+    options = [
+      "compress_algorithm=zstd"
+      "whint_mode=fs-based"
+      "atgc"
+      "lazytime"
+    ];
+  };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/D41A-2BB7";
+    fsType = "vfat";
+  };
 
   networking.hostId = "05dc175e";
   networking.hostName = "gizmo";
@@ -36,64 +68,28 @@
 
   time.timeZone = "America/Vancouver";
 
-  services.openssh.hostKeys = [
-    {
-      path = "/persist/ssh/ssh_host_ed25519_key";
-      type = "ed25519";
-    }
-    {
-      path = "/persist/ssh/ssh_host_rsa_key";
-      type = "rsa";
-      bits = 4096;
-    }
-  ];
-
-  services.postgresql.dataDir = "/persist/postgresql";
-
-  services.zfs.autoScrub.enable = true;
-  services.zfs.autoSnapshot.enable = true;
-
-  systemd.tmpfiles.rules = [
-    "L+ /etc/shadow - - - - /persist/etc/shadow"
-  ];
-
-  fileSystems."/boot" = {
-    device = "/dev/nvme0n1p1";
-    fsType = "vfat";
-  };
-
-  fileSystems."/" = {
-    device = "pool/scratch";
-    fsType = "zfs";
-  };
-
-  fileSystems."/nix" = {
-    device = "pool/nix";
-    fsType = "zfs";
-  };
-
-  fileSystems."/home" = {
-    device = "pool/home";
-    fsType = "zfs";
-  };
-
-  fileSystems."/persist" = {
-    device = "pool/persist";
-    fsType = "zfs";
-  };
-
   swapDevices = [ ];
 
 
   # This works around some 'glitching' in many GTK applications (and, importantly, Firefox)
   # jnettlet suggested the following patch:
-  hardware.opengl.package =
+  /*hardware.opengl.package =
     let
-      myMesa = (pkgs.mesa.override {
-        galliumDrivers = [ "radeonsi" "swrast" ];
-      }).overrideAttrs (attrs: { patches = attrs.patches ++ [ ../patches/gizmo-lx2k-mesa.patch ]; });
+    myMesa = (pkgs.mesa.override {
+    galliumDrivers = [ "radeonsi" "swrast" ];
+    }).overrideAttrs (attrs: { patches = attrs.patches ++ [ ../patches/gizmo-lx2k-mesa.patch ]; });
     in
     lib.mkForce myMesa.drivers;
+  */
+
+  nixpkgs.localSystem.system = "aarch64-linux";
+  nixpkgs.localSystem.platform = (lib.systems.elaborate "aarch64-linux") // {
+    sys.gcc = {
+      fpu = "neon";
+      cpu = "cortex-a72";
+      arch = "armv8-a+crc+crypto";
+    };
+  };
 
   nixpkgs.overlays = [
     (final: prev: {

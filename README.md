@@ -202,46 +202,28 @@ sgdisk /dev/nvme0n1 -c 1:EFI /dev/nvme0n1
 
 sgdisk /dev/nvme0n1 -n 2:0:0 /dev/nvme0n1
 sgdisk /dev/nvme0n1 -t 2:8300 /dev/nvme0n1
-sgdisk /dev/nvme0n1 -c 2:pool /dev/nvme0n1
+sgdisk /dev/nvme0n1 -c 2:gizmo /dev/nvme0n1
 
-mkfs.vfat -F 32 /dev/nvme0n1p1
-zpool create -f pool /dev/nvme0n1p2
+export BOOT_DEVICE=/dev/nvme0n1p1
+export ROOT_DEVICE=/dev/nvme0n1p2
+export CRYPT_NAME=gizmo
 
-zfs create -p -o mountpoint=legacy pool/scratch
-zfs snapshot pool/scratch@blank
+cryptsetup luksFormat --type luks1 ${ROOT_DEVICE}
+cryptsetup open ${ROOT_DEVICE} ${CRYPT_NAME}
 
-zfs create -p -o mountpoint=legacy pool/nix
-zfs create -p -o mountpoint=legacy pool/home
-zfs create -p -o mountpoint=legacy pool/persist
+mkfs.f2fs -l root -O extra_attr,inode_checksum,sb_checksum,compression,encrypt /dev/mapper/${CRYPT_NAME} -f
+mount -o compress_algorithm=zstd,whint_mode=fs-based,atgc,lazytime /dev/mapper/${CRYPT_NAME} /mnt/ -v
 
-mount -t zfs pool/scratch /mnt
+mkfs.vfat -F 32 ${BOOT_DEVICE}
 mkdir -p /mnt/boot
-mount /dev/nvme0n1p1 /mnt/boot
-mkdir -p /mnt/nix
-mount -t zfs pool/nix /mnt/nix
-mkdir -p /mnt/home
-mount -t zfs pool/home /mnt/home
-mkdir -p /mnt/persist
-mount -t zfs pool/persist /mnt/persist
+mount ${BOOT_DEVICE} /mnt/boot
 ```
 
-Bootstrap the persistence directories:
-
-```bash
-mkdir -p /mnt/persist/ssh
-mkdir -p /mnt/persist/etc/
-```
 
 Install the system:
 
 ```bash
 nixos-install --flake github:hoverbear-consulting/flake#gizmo --impure
-```
-
-Finally, copy over the shadow before rebooting:
-
-```bash
-cp /etc/shadow /mnt/persist/etc/shadow
 ```
 
 ## WSL

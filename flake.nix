@@ -40,7 +40,6 @@
           gizmoBase = {
             system = "aarch64-linux";
             modules = with self.nixosModules; [
-              lx2k-nix.nixosModules.lx2k
               trait.overlay
               trait.base
               trait.hardened
