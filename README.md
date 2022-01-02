@@ -22,15 +22,9 @@ You can use this in your own flakes:
 General dogma:
 
 * Only UEFI, with a 512MB+ FAT32 partition on the `/boot` block device.
-* ZFS pool (called `pool`) over the root block devices.
+* F2FS based root block devices (in a `dm-crypt`).
 * Firewalled except port 22.
-* Machines [erase their darlings][references-erase-your-darlings].
-  + User homes, Nix store, and and service state persisted under `/persist`.
-  + Root is wiped blank each reboot.
 * Preconfigured, ready to use, global (`nvim`) editor and shell (`sh`) configuration.
-* Minimal services:
-  + OpenSSH running, keys automatically provisioned from Github usernames.
-  + Postgres running on UNIX socket.
 * Somewhat hardened hardware nodes.
 * Relaxed user access control.
 * `nix-direnv`/`envrc` support for `use nix`/`use flake`.
@@ -86,25 +80,19 @@ sgdisk /dev/nvme1n1 -n 2:0:0 /dev/nvme1n1
 sgdisk /dev/nvme1n1 -t 2:8300 /dev/nvme1n1
 sgdisk /dev/nvme1n1 -c 2:pool /dev/nvme1n1
 
-mkfs.vfat -F 32 /dev/nvme1n1p1
-zpool create -f pool /dev/nvme1n1p2
+export BOOT_DEVICE=/dev/nvme1n1p1
+export ROOT_DEVICE=/dev/nvme1n1p2
+export CRYPT_NAME=architect
 
-zfs create -p -o mountpoint=legacy pool/scratch
-zfs snapshot pool/scratch@blank
+cryptsetup luksFormat --type luks1 ${ROOT_DEVICE}
+cryptsetup open ${ROOT_DEVICE} ${CRYPT_NAME}
 
-zfs create -p -o mountpoint=legacy pool/nix
-zfs create -p -o mountpoint=legacy pool/home
-zfs create -p -o mountpoint=legacy pool/persist
+mkfs.f2fs -l root -O extra_attr,inode_checksum,sb_checksum,compression,encrypt /dev/mapper/${CRYPT_NAME} -f
+mount -o compress_algorithm=zstd,whint_mode=fs-based,atgc,lazytime /dev/mapper/${CRYPT_NAME} /mnt/ -v
 
-mount -t zfs pool/scratch /mnt
+mkfs.vfat -F 32 ${BOOT_DEVICE}
 mkdir -p /mnt/boot
-mount /dev/nvme1n1p1 /mnt/boot
-mkdir -p /mnt/nix
-mount -t zfs pool/nix /mnt/nix
-mkdir -p /mnt/home
-mount -t zfs pool/home /mnt/home
-mkdir -p /mnt/persist
-mount -t zfs pool/persist /mnt/persist
+mount ${BOOT_DEVICE} /mnt/boot
 ```
 
 Bootstrap the persistence directories:

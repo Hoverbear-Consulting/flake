@@ -5,18 +5,37 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.grub.enable = true;
   boot.loader.grub.efiSupport = true;
-  boot.loader.grub.zfsSupport = true;
   boot.loader.grub.useOSProber = true;
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.grub.device = "nodev";
-  boot.supportedFilesystems = [ "zfs" ];
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  boot.initrd.luks.devices = {
+    architect = {
+      device = "/dev/disk/by-uuid/9a3c5794-2edf-430a-9a21-177da3fddcc2";
+    };
+  };
   boot.initrd.kernelModules = [ "amdgpu" ];
-  boot.initrd.postDeviceCommands = lib.mkAfter ''
-    zfs rollback -r pool/scratch@blank
-  '';
+
+  fileSystems."/" = {
+    device = "/dev/mapper/architect";
+    fsType = "f2fs";
+    encrypted.enable = true;
+    encrypted.label = "architect";
+    encrypted.blkDev = "/dev/disk/by-uuid/9a3c5794-2edf-430a-9a21-177da3fddcc2";
+    options = [
+      "compress_algorithm=zstd"
+      "whint_mode=fs-based"
+      "atgc"
+      "lazytime"
+    ];
+  };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/4FD4-E75A";
+    fsType = "vfat";
+  };
 
   networking.hostId = "938c2500";
   networking.hostName = "architect";
@@ -30,50 +49,6 @@
   time.timeZone = "America/Vancouver";
 
   hardware.bluetooth.enable = true;
-
-  services.zfs.autoScrub.enable = true;
-  services.zfs.autoSnapshot.enable = true;
-
-  services.openssh.hostKeys = [
-    {
-      path = "/persist/ssh/ssh_host_ed25519_key";
-      type = "ed25519";
-    }
-    {
-      path = "/persist/ssh/ssh_host_rsa_key";
-      type = "rsa";
-      bits = 4096;
-    }
-  ];
-
-  systemd.tmpfiles.rules = [
-    "L+ /etc/shadow - - - - /persist/etc/shadow"
-  ];
-
-  fileSystems."/boot" = {
-    device = "/dev/nvme1n1p1";
-    fsType = "vfat";
-  };
-
-  fileSystems."/" = {
-    device = "pool/scratch";
-    fsType = "zfs";
-  };
-
-  fileSystems."/nix" = {
-    device = "pool/nix";
-    fsType = "zfs";
-  };
-
-  fileSystems."/home" = {
-    device = "pool/home";
-    fsType = "zfs";
-  };
-
-  fileSystems."/persist" = {
-    device = "pool/persist";
-    fsType = "zfs";
-  };
 
   swapDevices = [ ];
 }

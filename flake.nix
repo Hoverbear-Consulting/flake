@@ -3,15 +3,11 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-direnv.url = "github:hoverbear/nix-direnv/merged";
-    nix-direnv.inputs.nixpkgs.follows = "nixpkgs";
-    lx2k-nix.url = "github:hoverbear-consulting/lx2k-nix/flake-bump";
-    lx2k-nix.inputs.nixpkgs.follows = "nixpkgs";
     nixos-wsl.url = "github:hoverbear-consulting/NixOS-WSL/master";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nix-direnv, lx2k-nix, nixos-wsl }:
+  outputs = { self, nixpkgs, nixos-wsl }:
     let
       supportedSystems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
@@ -27,7 +23,7 @@
           let
             pkgs = import nixpkgs {
               inherit system;
-              overlays = [ self.overlay nix-direnv.overlay ];
+              overlays = [ self.overlay ];
               config.allowUnfree = true;
             };
           in
@@ -114,7 +110,7 @@
         platform.architect = ./platform/architect.nix;
         platform.iso-minimal = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
         platform.iso = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix";
-        trait.overlay = { nixpkgs.overlays = [ self.overlay nix-direnv.overlay ]; };
+        trait.overlay = { nixpkgs.overlays = [ self.overlay ]; };
         trait.base = ./trait/base.nix;
         trait.machine = ./trait/machine.nix;
         trait.tools = ./trait/tools.nix;
