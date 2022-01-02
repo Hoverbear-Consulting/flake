@@ -3,10 +3,13 @@
 {
   services.xserver.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.displayManager.autoLogin.enable = true;
+  services.xserver.displayManager.autoLogin.user = "ana";
   services.xserver.desktopManager.xfce.enable = true;
   services.xserver.desktopManager.xfce.thunarPlugins = with pkgs; [
     xfce.thunar-archive-plugin
   ];
+
   services.xserver.videoDrivers = [ "amdgpu" ];
   networking.wireless.enable = false; # For Network Manager
 
