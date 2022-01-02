@@ -30,25 +30,6 @@
         "type": "github"
       }
     },
-    "lx2k-nix": {
-      "inputs": {
-        "nixos": "nixos"
-      },
-      "locked": {
-        "lastModified": 1638123457,
-        "narHash": "sha256-6q++PWMwsuVazpCeZpqc2fAz0n0EVU0h4QyY+YPUyL4=",
-        "owner": "hoverbear-consulting",
-        "repo": "lx2k-nix",
-        "rev": "6486498f90c0f587d55118e799698d557ba37a8a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hoverbear-consulting",
-        "ref": "flake-bump",
-        "repo": "lx2k-nix",
-        "type": "github"
-      }
-    },
     "nix-direnv": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -68,22 +49,6 @@
         "owner": "hoverbear",
         "ref": "merged",
         "repo": "nix-direnv",
-        "type": "github"
-      }
-    },
-    "nixos": {
-      "locked": {
-        "lastModified": 1617899217,
-        "narHash": "sha256-gd5JHH7IkeoIQ/oiGZSqDpGdGt7DMRJTQ8JiD8+hdOQ=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "9e377a6ce42dccd9b624ae4ce8f978dc892ba0e2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
         "type": "github"
       }
     },
@@ -127,7 +92,6 @@
     },
     "root": {
       "inputs": {
-        "lx2k-nix": "lx2k-nix",
         "nix-direnv": "nix-direnv",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs"

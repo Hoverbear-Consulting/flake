@@ -5,13 +5,11 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-direnv.url = "github:hoverbear/nix-direnv/merged";
     nix-direnv.inputs.nixpkgs.follows = "nixpkgs";
-    lx2k-nix.url = "github:hoverbear-consulting/lx2k-nix/flake-bump";
-    lx2k-nix.inputs.nixpkgs.follows = "nixpkgs";
     nixos-wsl.url = "github:hoverbear-consulting/NixOS-WSL/master";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nix-direnv, lx2k-nix, nixos-wsl }:
+  outputs = { self, nixpkgs, nix-direnv, nixos-wsl }:
     let
       supportedSystems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
