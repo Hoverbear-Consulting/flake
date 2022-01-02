@@ -2,21 +2,6 @@
   "nodes": {
     "flake-utils": {
       "locked": {
-        "lastModified": 1620759905,
-        "narHash": "sha256-WiyWawrgmyN0EdmiHyG2V+fqReiVi8bM9cRdMaKQOFg=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "b543720b25df6ffdfcf9227afafc5b8c1fabfae8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "flake-utils_2": {
-      "locked": {
         "lastModified": 1617631617,
         "narHash": "sha256-PARRCz55qN3gy07VJZIlFeOX420d0nGF0RzGI/9hVlw=",
         "owner": "numtide",
@@ -30,31 +15,9 @@
         "type": "github"
       }
     },
-    "nix-direnv": {
-      "inputs": {
-        "flake-utils": "flake-utils",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1624636962,
-        "narHash": "sha256-5g50wkRDtaePhKb0IbCSmGrjtrmw0qxpWYakuCh4w7I=",
-        "owner": "hoverbear",
-        "repo": "nix-direnv",
-        "rev": "d3ac9914f2d6a53d6ae30b1c3df92b77968386d4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hoverbear",
-        "ref": "merged",
-        "repo": "nix-direnv",
-        "type": "github"
-      }
-    },
     "nixos-wsl": {
       "inputs": {
-        "flake-utils": "flake-utils_2",
+        "flake-utils": "flake-utils",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -92,7 +55,6 @@
     },
     "root": {
       "inputs": {
-        "nix-direnv": "nix-direnv",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs"
       }
