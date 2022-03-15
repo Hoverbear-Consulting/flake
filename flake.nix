@@ -96,7 +96,6 @@
               trait.overlay
               trait.base
               trait.tools
-              trait.jetbrains
               nixos-wsl.nixosModule
               platform.wsl
             ];
