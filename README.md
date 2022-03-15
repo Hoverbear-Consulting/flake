@@ -223,7 +223,7 @@ A system for on Windows (WSL2).
 Build the tarball:
 
 ```bash
-nix build github:hoverbear-consulting/flake#nixosConfigurations.wsl.system.build.tarball --out-link tarBall
+nix build github:hoverbear-consulting/flake#nixosConfigurations.wsl.config.system.build.tarball --out-link tarBall
 ```
 
 Ensure the Windows install has WSL(2) enabled:

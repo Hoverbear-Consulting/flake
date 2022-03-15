@@ -21,6 +21,7 @@ neovim.override {
         cmp-nvim-lsp
         gitsigns-nvim
         which-key-nvim
+        nvim-treesitter-context
         (nvim-treesitter.withPlugins (plugins: tree-sitter.allGrammars))
       ];
     };
