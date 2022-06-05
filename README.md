@@ -88,18 +88,11 @@ cryptsetup luksFormat --type luks1 ${ROOT_DEVICE}
 cryptsetup open ${ROOT_DEVICE} ${CRYPT_NAME}
 
 mkfs.f2fs -l root -O extra_attr,inode_checksum,sb_checksum,compression,encrypt /dev/mapper/${CRYPT_NAME} -f
-mount -o compress_algorithm=zstd,whint_mode=fs-based,atgc,lazytime /dev/mapper/${CRYPT_NAME} /mnt/ -v
+mount -o compress_algorithm=zstd,atgc,lazytime /dev/mapper/${CRYPT_NAME} /mnt/ -v
 
 mkfs.vfat -F 32 ${BOOT_DEVICE}
 mkdir -p /mnt/boot
 mount ${BOOT_DEVICE} /mnt/boot
-```
-
-Bootstrap the persistence directories:
-
-```bash
-mkdir -p /mnt/persist/ssh
-mkdir -p /mnt/persist/etc
 ```
 
 Install the system:
@@ -108,11 +101,6 @@ Install the system:
 nixos-install --flake github:hoverbear-consulting/flake#architect --impure
 ```
 
-Finally, copy over the shadow before rebooting:
-
-```bash
-cp /etc/shadow /mnt/persist/etc/shadow
-```
 
 ## Gizmo
 
