@@ -46,6 +46,8 @@
   programs.nm-applet.enable = true;
 
   time.timeZone = "America/Vancouver";
+  # Windows wants hardware clock in local time instead of UTC
+  time.hardwareClockInLocalTime = true;
 
   hardware.bluetooth.enable = true;
 

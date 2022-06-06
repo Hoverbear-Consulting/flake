@@ -2,7 +2,7 @@
   description = "Hoverbear's Flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-wsl.url = "github:hoverbear-consulting/NixOS-WSL/master";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
   };

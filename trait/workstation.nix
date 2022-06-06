@@ -5,10 +5,10 @@
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "ana";
-  services.xserver.desktopManager.xfce.enable = true;
-  services.xserver.desktopManager.xfce.thunarPlugins = with pkgs; [
-    xfce.thunar-archive-plugin
-  ];
+  services.xserver.desktopManager.gnome.enable = true;
+  # services.xserver.desktopManager.xfce.thunarPlugins = with pkgs; [
+  #   xfce.thunar-archive-plugin
+  # ];
 
   services.xserver.videoDrivers = [ "amdgpu" ];
   networking.wireless.enable = false; # For Network Manager
@@ -41,16 +41,12 @@
     vscodeConfigured
     neovimConfigured
     spotifyd
-    spotify-qt
     zotero
     kicad
     inkscape
     gimp
     xlockmore
   ] ++ (if stdenv.isx86_64 then [
-    discord
-    element-desktop
-    slack
     zoom-us
     spotify
     obs-studio
