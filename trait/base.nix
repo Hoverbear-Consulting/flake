@@ -31,10 +31,9 @@
     abduco
     dvtm
     neovim-remote
-    # System utilities
-    nvme-cli
-    nvmet-cli
-    libhugetlbfs
+    # nvme-cli
+    # nvmet-cli
+    # libhugetlbfs # This has a build failure.
     killall
     gptfdisk
     fio

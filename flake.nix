@@ -52,7 +52,7 @@
               trait.hardened
               trait.machine
               trait.tools
-              trait.jetbrains
+              # trait.jetbrains
               user.ana
               # plrust.nixosModule
               # ({pkgs, ...}: { 
