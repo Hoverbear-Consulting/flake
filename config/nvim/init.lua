@@ -21,6 +21,8 @@ o.clipboard = 'unnamedplus'
 o.lazyredraw = true
 o.mouse = 'a'
 o.completeopt = 'menuone,noselect'
+o.grepprg = "rg --vimgrep"
+o.grepformat = "%f:%l:%c:%M"
 
 -- Window options
 local wo = vim.wo
@@ -59,6 +61,24 @@ local keymap = vim.api.nvim_set_keymap
 keymap('t', '<Esc>', [[<C-\><C-n>]], {})
 keymap('n', [[<C-g>]], [[<cmd>lua require('telescope.builtin').find_files()<cr>]], {})
 keymap('n', [[<C-f>]], [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], {})
+
+-- Telescope
+require('telescope').setup{
+    defaults = {
+        -- ...
+    },
+    pickers = {
+        find_files = {
+            theme = "ivy",
+        },
+        live_grep = {
+            theme = "ivy",
+        },
+    },
+    extensions = {
+        -- ...
+    }
+}
 
 -- Gitsigns
 require('gitsigns').setup()
