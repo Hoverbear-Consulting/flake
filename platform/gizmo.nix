@@ -49,7 +49,6 @@
     encrypted.blkDev = "/dev/disk/by-uuid/f74df5fc-7632-4e47-a481-9fd346cfad71";
     options = [
       "compress_algorithm=zstd"
-      "whint_mode=fs-based"
       "atgc"
       "lazytime"
     ];
