@@ -33,6 +33,7 @@
   boot.loader.grub.enableCryptodisk = true;
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.grub.device = "nodev";
+  boot.loader.grub.configurationLimit = 10;
   boot.initrd.luks.devices = {
     gizmo = {
       device = "/dev/disk/by-uuid/f74df5fc-7632-4e47-a481-9fd346cfad71";
@@ -68,7 +69,13 @@
   time.timeZone = "America/Vancouver";
 
   swapDevices = [ ];
-
+  # Disable the GNOME3/GDM auto-suspend feature that cannot be disabled in GUI!
+  # If no user is logged in, the machine will power down after 20 minutes.
+  systemd.targets.sleep.enable = false;
+  systemd.targets.suspend.enable = false;
+  systemd.targets.hibernate.enable = false;
+  systemd.targets.hybrid-sleep.enable = false;
+  services.xserver.displayManager.gdm.autoSuspend = false;
 
   # This works around some 'glitching' in many GTK applications (and, importantly, Firefox)
   # jnettlet suggested the following patch:
