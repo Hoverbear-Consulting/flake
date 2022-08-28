@@ -4,12 +4,10 @@ let
   devices = {
     encrypted = rec {
       uuid = "102d36f0-1c99-43d3-855b-e448a57ca4e3";
-      path = "/dev/disk/by-uuid/${uuid}";
       label = "architect";
     };
     boot = rec {
       uuid = "9B3C-1A78";
-      path = "/dev/disk/by-uuid/${uuid}";
       label = "boot";
     };
   };
@@ -25,10 +23,11 @@ in
   boot.loader.grub.useOSProber = true;
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.grub.device = "nodev";
+  boot.loader.grub.configurationLimit = 10;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.initrd.luks.devices = {
     architect = {
-      device = devices.encrypted.path;
+      device = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
     };
   };
 
@@ -40,7 +39,7 @@ in
     fsType = "f2fs";
     encrypted.enable = true;
     encrypted.label = devices.encrypted.label;
-    encrypted.blkDev = devices.encrypted.path;
+    encrypted.blkDev = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
     options = [
       "compress_algorithm=zstd"
       "atgc"
@@ -48,7 +47,7 @@ in
     ];
   };
   fileSystems."/boot" = {
-    device = devices.boot.path;
+    device = "/dev/disk/by-uuid/${devices.boot.uuid}";
     fsType = "vfat";
   };
 

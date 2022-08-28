@@ -4,12 +4,10 @@ let
   devices = {
     encrypted = rec {
       uuid = "f74df5fc-7632-4e47-a481-9fd346cfad71";
-      path = "/dev/disk/by-uuid/${uuid}";
       label = "gizmo";
     };
     boot = rec {
       uuid = "D41A-2BB7";
-      path = "/dev/disk/by-uuid/${uuid}";
       label = "boot";
     };
   };
@@ -59,7 +57,7 @@ in
     device = "/dev/mapper/${devices.encrypted.label}";
     fsType = "f2fs";
     encrypted.enable = true;
-    encrypted.label = devices.encrypted.label;
+    encrypted.label = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
     encrypted.blkDev = devices.encrypted.path;
     options = [
       "compress_algorithm=zstd"
@@ -68,7 +66,7 @@ in
     ];
   };
   fileSystems."/boot" = {
-    device = devices.boot.path;
+    device = "/dev/disk/by-uuid/${devices.boot.uuid}";
     fsType = "vfat";
   };
 
@@ -84,6 +82,7 @@ in
   swapDevices = [ ];
   # Disable the GNOME3/GDM auto-suspend feature that cannot be disabled in GUI!
   # If no user is logged in, the machine will power down after 20 minutes.
+  # This results in a `wall` style message which disrupts console users.
   systemd.targets.sleep.enable = false;
   systemd.targets.suspend.enable = false;
   systemd.targets.hibernate.enable = false;
