@@ -113,15 +113,15 @@
             ];
           };
           nomad = nixpkgs.lib.nixosSystem {
-            inherit (architectBase) system;
-            modules = architectBase.modules ++ [
-              platform.architect
+            inherit (nomadBase) system;
+            modules = nomadBase.modules ++ [
+              platform.nomad
               trait.workstation
             ];
           };
           nomadIsoImage = nixpkgs.lib.nixosSystem {
-            inherit (architectBase) system;
-            modules = architectBase.modules ++ [
+            inherit (nomadBase) system;
+            modules = nomadBase.modules ++ [
               platform.iso
             ];
           };
