@@ -24,7 +24,7 @@
     fsType = "btrfs";
     encrypted.enable = true;
     encrypted.label = "nomad";
-    encrypted.blkDev = "/dev/disk/by-uuid/f615c534-dbe6-4c01-96ad-a21bf6c7b792";
+    encrypted.blkDev = "/dev/disk/by-uuid/aece3690-cfbb-480e-8598-1074074563d2";
     options = [
       "compress=zstd"
       "lazytime"
