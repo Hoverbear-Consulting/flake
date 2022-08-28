@@ -13,7 +13,7 @@
   boot.loader.grub.device = "nodev";
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.initrd.luks.devices = {
-    architect = {
+    nomad = {
       device = "/dev/disk/by-uuid/aece3690-cfbb-480e-8598-1074074563d2";
     };
   };
