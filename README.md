@@ -104,7 +104,7 @@ nixos-install --flake github:hoverbear-consulting/flake#architect --impure
 
 ## Gizmo
 
-Gizmo, a headless aarch64 server.
+A headless aarch64 server.
 
 * [SolidRun HoneyComb LX2K][parts-lx2k]
   + [16 core Cortex A72][chips-arm-cortex-a72]
@@ -204,7 +204,9 @@ nixos-install --flake github:hoverbear-consulting/flake#gizmo --impure
 
 ## Nomad
 
-A laptop.
+An x86_84 laptop.
+
+* [HP Spectre x360 13-ae013dx][machines-hp-spectre-x360]
 
 ## Preparation
 
@@ -321,4 +323,5 @@ Ctrl+D to log out, then re-enter with `wsl -d nixos`. This should result in a wo
 [parts-gigabyte-x5700-xt]: https://www.gigabyte.com/ca/Graphics-Card/GV-R57XTGAMING-OC-8GD-rev-10#kf
 [parts-corsair-vengance-32gb-3200mgz-ddr4-dimm]: https://www.memoryexpress.com/Products/MX00115415
 [parts-intel-optane-P4800X]: https://www.intel.com/content/www/us/en/products/memory-storage/solid-state-drives/data-center-ssds/optane-dc-ssd-series/optane-dc-p4800x-series/p4800x-375gb-aic-20nm.html
+[machines-hp-spectre-x360]: https://support.hp.com/rs-en/document/c05809809
 [references-erase-your-darlings]: https://grahamc.com/blog/erase-your-darlings
