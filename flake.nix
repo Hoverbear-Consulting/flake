@@ -73,7 +73,7 @@
               user.ana
             ];
           };
-          nommadBase = {
+          nomadBase = {
             system = "x86_64-linux";
             modules = with self.nixosModules; [
               trait.overlay
