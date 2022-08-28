@@ -70,14 +70,18 @@
               trait.hardened
               trait.machine
               trait.tools
-              # trait.jetbrains
               user.ana
-              # plrust.nixosModule
-              # ({pkgs, ...}: { 
-              #   services.postgresql.enable = true;
-              #   services.postgresql.plrust.enable = true;
-              #   services.postgresql.plrust.workDir = "/tmp/plrust";
-              # })
+            ];
+          };
+          nommadBase = {
+            system = "x86_64-linux";
+            modules = with self.nixosModules; [
+              trait.overlay
+              trait.base
+              trait.hardened
+              trait.machine
+              trait.tools
+              user.ana
             ];
           };
         in
@@ -108,6 +112,19 @@
               platform.iso
             ];
           };
+          nomad = nixpkgs.lib.nixosSystem {
+            inherit (architectBase) system;
+            modules = architectBase.modules ++ [
+              platform.architect
+              trait.workstation
+            ];
+          };
+          nomadIsoImage = nixpkgs.lib.nixosSystem {
+            inherit (architectBase) system;
+            modules = architectBase.modules ++ [
+              platform.iso
+            ];
+          };
           wsl = nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
@@ -125,6 +142,7 @@
         platform.wsl = ./platform/wsl.nix;
         platform.gizmo = ./platform/gizmo.nix;
         platform.architect = ./platform/architect.nix;
+        platform.nomad = ./platform/nomad.nix;
         platform.iso-minimal = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
         platform.iso = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix";
         trait.overlay = { nixpkgs.overlays = [ self.overlays.default ]; };

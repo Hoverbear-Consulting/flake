@@ -202,6 +202,72 @@ Install the system:
 nixos-install --flake github:hoverbear-consulting/flake#gizmo --impure
 ```
 
+## Nomad
+
+A laptop.
+
+## Preparation
+
+Requires:
+
+* An `x86_64-linux` based `nix`.
+* A USB stick, 8+ GB preferred. ([Ex][parts-usb-stick-ex])
+
+Build a recovery image:
+
+```bash
+nix build github:hoverbear-consulting/flake#nixosConfigurations.nomadIsoImage.config.system.build.isoImage --out-link isoImage
+```
+
+Flash it to a USB:
+
+```bash
+NOMAD_USB=/dev/null
+umount $NOMAD_USB
+sudo cp -vi isoImage/iso/*.iso $NOMAD_USB
+```
+
+## Bootstrap
+
+
+Start the machine, or reboot it. Once logged in, partion, format, and mount the NVMe disk:
+
+```bash
+umount /dev/nvme0n1
+sgdisk -Z /dev/nvme0n1
+sgdisk -o /dev/nvme0n1
+partprobe
+
+sgdisk /dev/nvme0n1 -n 1:0:+512M
+sgdisk /dev/nvme0n1 -t 1:ef00
+sgdisk /dev/nvme0n1 -c 1:EFI /dev/nvme0n1
+
+sgdisk /dev/nvme0n1 -n 2:0:0 /dev/nvme0n1
+sgdisk /dev/nvme0n1 -t 2:8300 /dev/nvme0n1
+sgdisk /dev/nvme0n1 -c 2:nomad /dev/nvme0n1
+
+export BOOT_DEVICE=/dev/nvme0n1p1
+export ROOT_DEVICE=/dev/nvme0n1p2
+export CRYPT_NAME=nomad
+
+cryptsetup luksFormat --type luks1 ${ROOT_DEVICE}
+cryptsetup open ${ROOT_DEVICE} ${CRYPT_NAME}
+
+mkfs.btrfs -L nomad /dev/mapper/${CRYPT_NAME}
+mount -o compress=zstd,lazytime /dev/mapper/${CRYPT_NAME} /mnt/ -v
+
+mkfs.vfat -F 32 ${BOOT_DEVICE}
+mkdir -p /mnt/boot
+mount ${BOOT_DEVICE} /mnt/boot
+```
+
+Install the system:
+
+```bash
+nixos-install --flake github:hoverbear-consulting/flake#nomad --impure
+```
+
+
 ## WSL
 
 A system for on Windows (WSL2).
