@@ -54,34 +54,34 @@
           gizmoBase = {
             system = "aarch64-linux";
             modules = with self.nixosModules; [
-              trait.overlay
-              trait.base
-              trait.hardened
-              trait.machine
-              trait.tools
-              user.ana
+              traits.overlay
+              traits.base
+              traits.hardened
+              traits.machine
+              traits.tools
+              users.ana
             ];
           };
           architectBase = {
             system = "x86_64-linux";
             modules = with self.nixosModules; [
-              trait.overlay
-              trait.base
-              trait.hardened
-              trait.machine
-              trait.tools
-              user.ana
+              traits.overlay
+              traits.base
+              traits.hardened
+              traits.machine
+              traits.tools
+              users.ana
             ];
           };
           nomadBase = {
             system = "x86_64-linux";
             modules = with self.nixosModules; [
-              trait.overlay
-              trait.base
-              trait.hardened
-              trait.machine
-              trait.tools
-              user.ana
+              traits.overlay
+              traits.base
+              traits.hardened
+              traits.machine
+              traits.tools
+              users.ana
             ];
           };
         in
@@ -89,73 +89,73 @@
           gizmo = nixpkgs.lib.nixosSystem {
             inherit (gizmoBase) system;
             modules = gizmoBase.modules ++ [
-              platform.gizmo
-              trait.workstation
+              platforms.gizmo
+              traits.workstation
             ];
           };
           gizmoIsoImage = nixpkgs.lib.nixosSystem {
             inherit (gizmoBase) system;
             modules = gizmoBase.modules ++ [
-              platform.iso-minimal
+              platforms.iso-minimal
             ];
           };
           architect = nixpkgs.lib.nixosSystem {
             inherit (architectBase) system;
             modules = architectBase.modules ++ [
-              platform.architect
-              trait.workstation
+              platforms.architect
+              traits.workstation
             ];
           };
           architectIsoImage = nixpkgs.lib.nixosSystem {
             inherit (architectBase) system;
             modules = architectBase.modules ++ [
-              platform.iso
+              platforms.iso
             ];
           };
           nomad = nixpkgs.lib.nixosSystem {
             inherit (nomadBase) system;
             modules = nomadBase.modules ++ [
-              platform.nomad
-              trait.workstation
+              platforms.nomad
+              traits.workstation
             ];
           };
           nomadIsoImage = nixpkgs.lib.nixosSystem {
             inherit (nomadBase) system;
             modules = nomadBase.modules ++ [
-              platform.iso
+              platforms.iso
             ];
           };
           wsl = nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
-              trait.overlay
-              trait.base
-              trait.tools
+              traits.overlay
+              traits.base
+              traits.tools
               nixos-wsl.nixosModule
-              platform.wsl
+              platforms.wsl
             ];
           };
         };
 
       nixosModules = {
-        platform.container = ./platform/container.nix;
-        platform.wsl = ./platform/wsl.nix;
-        platform.gizmo = ./platform/gizmo.nix;
-        platform.architect = ./platform/architect.nix;
-        platform.nomad = ./platform/nomad.nix;
-        platform.iso-minimal = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
-        platform.iso = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix";
-        trait.overlay = { nixpkgs.overlays = [ self.overlays.default ]; };
-        trait.base = ./trait/base.nix;
-        trait.machine = ./trait/machine.nix;
-        trait.tools = ./trait/tools.nix;
-        trait.jetbrains = ./trait/jetbrains.nix;
-        trait.hardened = ./trait/hardened.nix;
-        trait.sourceBuild = ./trait/source-build.nix;
-        service.postgres = ./service/postgres.nix;
+        platforms.container = ./platforms/container.nix;
+        platforms.wsl = ./platforms/wsl.nix;
+        platforms.gizmo = ./platforms/gizmo.nix;
+        platforms.architect = ./platforms/architect.nix;
+        platforms.nomad = ./platforms/nomad.nix;
+        platforms.iso-minimal = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
+        platforms.iso = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix";
+        traits.overlay = { nixpkgs.overlays = [ self.overlays.default ]; };
+        traits.base = ./traits/base.nix;
+        traits.machine = ./traits/machine.nix;
+        traits.tools = ./traits/tools.nix;
+        traits.jetbrains = ./traits/jetbrains.nix;
+        traits.hardened = ./traits/hardened.nix;
+        traits.sourceBuild = ./traits/source-build.nix;
+        services.postgres = ./services/postgres.nix;
         # This trait is unfriendly to being bundled with platform-iso
-        trait.workstation = ./trait/workstation.nix;
-        user.ana = ./user/ana.nix;
+        traits.workstation = ./traits/workstation.nix;
+        users.ana = ./users/ana.nix;
       };
 
       checks = forAllSystems (system:
