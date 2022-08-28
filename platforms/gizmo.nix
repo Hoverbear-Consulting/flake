@@ -1,7 +1,19 @@
-/*
-  Machine specific settings for Gizmo.
-*/
 { config, pkgs, lib, modulesPath, ... }:
+
+let
+  devices = {
+    encrypted = rec {
+      uuid = "f74df5fc-7632-4e47-a481-9fd346cfad71";
+      path = "/dev/disk/by-uuid/${uuid}";
+      label = "gizmo";
+    };
+    boot = rec {
+      uuid = "D41A-2BB7";
+      path = "/dev/disk/by-uuid/${uuid}";
+      label = "boot";
+    };
+  };
+in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -36,7 +48,7 @@
   boot.loader.grub.configurationLimit = 10;
   boot.initrd.luks.devices = {
     gizmo = {
-      device = "/dev/disk/by-uuid/f74df5fc-7632-4e47-a481-9fd346cfad71";
+      device = devices.encrypted.path;
     };
   };
   boot.initrd.kernelModules = [ "amdgpu" ];
@@ -44,11 +56,11 @@
   # boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
 
   fileSystems."/" = {
-    device = "/dev/mapper/gizmo";
+    device = "/dev/mapper/${devices.encrypted.label}";
     fsType = "f2fs";
     encrypted.enable = true;
-    encrypted.label = "gizmo";
-    encrypted.blkDev = "/dev/disk/by-uuid/f74df5fc-7632-4e47-a481-9fd346cfad71";
+    encrypted.label = devices.encrypted.label;
+    encrypted.blkDev = devices.encrypted.path;
     options = [
       "compress_algorithm=zstd"
       "atgc"
@@ -56,7 +68,7 @@
     ];
   };
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/D41A-2BB7";
+    device = devices.boot.path;
     fsType = "vfat";
   };
 

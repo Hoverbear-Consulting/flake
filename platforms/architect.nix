@@ -1,5 +1,19 @@
 { config, pkgs, lib, modulesPath, ... }:
 
+let
+  devices = {
+    encrypted = rec {
+      uuid = "102d36f0-1c99-43d3-855b-e448a57ca4e3";
+      path = "/dev/disk/by-uuid/${uuid}";
+      label = "architect";
+    };
+    boot = rec {
+      uuid = "9B3C-1A78";
+      path = "/dev/disk/by-uuid/${uuid}";
+      label = "boot";
+    };
+  };
+in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -14,7 +28,7 @@
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.initrd.luks.devices = {
     architect = {
-      device = "/dev/disk/by-uuid/102d36f0-1c99-43d3-855b-e448a57ca4e3";
+      device = devices.encrypted.path;
     };
   };
 
@@ -22,11 +36,11 @@
   services.xserver.videoDrivers = [ "amdgpu" ];
 
   fileSystems."/" = {
-    device = "/dev/mapper/architect";
+    device = "/dev/mapper/${devices.encrypted.label}";
     fsType = "f2fs";
     encrypted.enable = true;
-    encrypted.label = "architect";
-    encrypted.blkDev = "/dev/disk/by-uuid/102d36f0-1c99-43d3-855b-e448a57ca4e3";
+    encrypted.label = devices.encrypted.label;
+    encrypted.blkDev = devices.encrypted.path;
     options = [
       "compress_algorithm=zstd"
       "atgc"
@@ -34,7 +48,7 @@
     ];
   };
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/9B3C-1A78";
+    device = devices.boot.path;
     fsType = "vfat";
   };
 
