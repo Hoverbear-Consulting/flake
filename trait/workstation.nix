@@ -2,10 +2,10 @@
 
 {
   services.xserver.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
   services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "ana";
-  services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
   # services.xserver.desktopManager.xfce.thunarPlugins = with pkgs; [
   #   xfce.thunar-archive-plugin
   # ];
@@ -37,7 +37,6 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     firefox
-    chromium
     vscodeConfigured
     neovimConfigured
     spotifyd
@@ -48,6 +47,7 @@
     xlockmore
   ] ++ (if stdenv.isx86_64 then [
     zoom-us
+    chromium
     spotify
     obs-studio
   ] else [ ]);
