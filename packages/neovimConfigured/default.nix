@@ -5,7 +5,7 @@ neovim.override {
   viAlias = true;
   configure = {
     customRC = ''
-      luafile ${../config/nvim/init.lua}
+      luafile ${./init.lua}
     '';
     packages.myVimPackage = with vimPlugins; {
       start = [

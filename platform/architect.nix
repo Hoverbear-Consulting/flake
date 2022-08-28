@@ -17,7 +17,7 @@
       device = "/dev/disk/by-uuid/102d36f0-1c99-43d3-855b-e448a57ca4e3";
     };
   };
-  
+
   boot.initrd.kernelModules = [ "amdgpu" ];
   services.xserver.videoDrivers = [ "amdgpu" ];
 

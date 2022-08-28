@@ -14,7 +14,7 @@
     in
     {
       overlays.default = final: prev: {
-        neovimConfigured = final.callPackage ./packages/neovim.nix { };
+        neovimConfigured = final.callPackage ./packages/neovimConfigured { };
         vscodeConfigured = final.callPackage ./packages/vscode.nix { };
       };
 
