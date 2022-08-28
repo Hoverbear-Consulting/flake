@@ -145,6 +145,11 @@ wk.register({ }, { })
 -- cmp setup
 local cmp = require 'cmp'
 cmp.setup {
+  snippet = {
+    expand = function(args)
+      require("snippy").expand_snippet(args.body)
+    end,
+  },
   mapping = {
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-n>'] = cmp.mapping.select_next_item(),

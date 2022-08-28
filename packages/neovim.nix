@@ -18,6 +18,8 @@ neovim.override {
         popup-nvim
         nvim-lspconfig
         nvim-cmp
+        nvim-snippy
+        cmp-snippy
         cmp-nvim-lsp
         gitsigns-nvim
         which-key-nvim
