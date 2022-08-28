@@ -1,5 +1,19 @@
 { config, pkgs, lib, modulesPath, ... }:
 
+let
+  devices = {
+    encrypted = rec {
+      uuid = "aece3690-cfbb-480e-8598-1074074563d2";
+      path = "/dev/disk/by-uuid/${uuid}";
+      label = "nomad";
+    };
+    boot = rec {
+      uuid = "0059-6D54";
+      path = "/dev/disk/by-uuid/${uuid}";
+      label = "boot";
+    };
+  };
+in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -14,23 +28,23 @@
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.initrd.luks.devices = {
     nomad = {
-      device = "/dev/disk/by-uuid/aece3690-cfbb-480e-8598-1074074563d2";
+      device = devices.encrypted.path;
     };
   };
 
   fileSystems."/" = {
-    device = "/dev/mapper/nomad";
+    device = "/dev/mapper/${devices.encrypted.label}";
     fsType = "btrfs";
     encrypted.enable = true;
-    encrypted.label = "nomad";
-    encrypted.blkDev = "/dev/disk/by-uuid/aece3690-cfbb-480e-8598-1074074563d2";
+    encrypted.label = devices.encrypted.label;
+    encrypted.blkDev = devices.encrypted.path;
     options = [
       "compress=zstd"
       "lazytime"
     ];
   };
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/0059-6D54";
+    device = devices.boot.path;
     fsType = "vfat";
   };
 
