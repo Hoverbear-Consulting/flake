@@ -10,7 +10,6 @@
   #   xfce.thunar-archive-plugin
   # ];
 
-  services.xserver.videoDrivers = [ "amdgpu" ];
   networking.wireless.enable = false; # For Network Manager
 
   sound.enable = true;
@@ -46,7 +45,6 @@
     gimp
     xlockmore
   ] ++ (if stdenv.isx86_64 then [
-    zoom-us
     chromium
     spotify
     obs-studio

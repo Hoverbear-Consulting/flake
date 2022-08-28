@@ -40,6 +40,7 @@
     };
   };
   boot.initrd.kernelModules = [ "amdgpu" ];
+  services.xserver.videoDrivers = [ "amdgpu" ];
   # boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
 
   fileSystems."/" = {

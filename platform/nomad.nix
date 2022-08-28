@@ -17,7 +17,6 @@
       device = "/dev/disk/by-uuid/aece3690-cfbb-480e-8598-1074074563d2";
     };
   };
-  boot.initrd.kernelModules = [ "amdgpu" ];
 
   fileSystems."/" = {
     device = "/dev/mapper/nomad";
