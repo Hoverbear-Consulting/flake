@@ -46,7 +46,7 @@ in
   boot.loader.grub.configurationLimit = 10;
   boot.initrd.luks.devices = {
     gizmo = {
-      device = devices.encrypted.path;
+      device = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
     };
   };
   boot.initrd.kernelModules = [ "amdgpu" ];
@@ -57,8 +57,8 @@ in
     device = "/dev/mapper/${devices.encrypted.label}";
     fsType = "f2fs";
     encrypted.enable = true;
-    encrypted.label = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
-    encrypted.blkDev = devices.encrypted.path;
+    encrypted.label = devices.encrypted.label;
+    encrypted.blkDev = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
     options = [
       "compress_algorithm=zstd"
       "atgc"
