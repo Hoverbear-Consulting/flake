@@ -1,5 +1,8 @@
-{ neovim, vimPlugins, tree-sitter }:
+{ neovim, vimPlugins, tree-sitter, gcc, }:
 
+let treesitter-parsers = 
+  (vimPlugins.nvim-treesitter.withPlugins (plugins: tree-sitter.allGrammars));
+in
 neovim.override {
   vimAlias = true;
   viAlias = true;
@@ -24,7 +27,7 @@ neovim.override {
         gitsigns-nvim
         which-key-nvim
         nvim-treesitter-context
-        (nvim-treesitter.withPlugins (plugins: tree-sitter.allGrammars))
+        treesitter-parsers
       ];
     };
   };
