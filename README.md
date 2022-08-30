@@ -61,8 +61,8 @@ mkfs.btrfs -L ${PERSIST_NAME} /dev/mapper/${CRYPT_NAME}
 mount -o compress=zstd,lazytime /dev/mapper/${CRYPT_NAME} /mnt/ -v
 
 mkfs.vfat -F 32 ${EFI_PARTITION}
-mkdir -p /mnt/efi
-mount ${EFI_PARTITION} /mnt/efi
+mkdir -p /mnt/EFI
+mount ${EFI_PARTITION} /mnt/EFI
 ```
 
 ## Architect

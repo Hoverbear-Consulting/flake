@@ -1,6 +1,7 @@
 { config, pkgs, lib, modulesPath, ... }:
 
 let
+  grub_device = "nvme-SAMSUNG_MZVLW512HMJP-000H1_S36ENB0JC10667";
   devices = {
     encrypted = {
       uuid = "4421ebea-f08f-449c-a2bc-e0e8369da94d";
@@ -22,10 +23,10 @@ in
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.useOSProber = true;
   boot.loader.grub.efiInstallAsRemovable = true;
-  boot.loader.grub.device = "/dev/disk/by-uuid/${devices.efi.uuid}";
+  boot.loader.grub.device = "/dev/disk/by_id/${grub_device}";
   boot.loader.grub.configurationLimit = 10;
   boot.loader.grub.enableCryptodisk = true;
-  boot.loader.efi.efiSysMountPoint = "/efi";
+  boot.loader.efi.efiSysMountPoint = "/EFI";
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.initrd.luks.devices = {
     nomad = {
