@@ -1,3 +1,6 @@
+/*
+A trait for headed boxxen
+*/
 { config, pkgs, lib, ... }:
 
 {
@@ -7,11 +10,6 @@
     services.xserver.displayManager.autoLogin.enable = true;
     services.xserver.displayManager.autoLogin.user = "ana";
     services.xserver.desktopManager.gnome.enable = true;
-
-    networking.wireless.enable = false; # For Network Manager
-
-    sound.enable = true;
-    hardware.pulseaudio.enable = true;
 
     hardware.opengl.driSupport = true;
     #hardware.steam-hardware.enable = true;
@@ -30,8 +28,7 @@
 
     systemd.services.spotifyd.enable = true;
 
-    # List packages installed in system profile. To search, run:
-    # $ nix search wget
+    # These should only be GUI applications that are desired systemwide
     environment.systemPackages = with pkgs; [
       firefox
       vscodeConfigured
@@ -41,7 +38,6 @@
       kicad
       inkscape
       gimp
-      xlockmore
     ] ++ (if stdenv.isx86_64 then [
       chromium
       spotify

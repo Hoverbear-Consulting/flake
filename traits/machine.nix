@@ -32,6 +32,18 @@
     powerManagement.cpuFreqGovernor = "ondemand";
     
     networking.networkmanager.enable = true;
+    networking.wireless.enable = false; # For Network Manager
+
+    sound.enable = true;
+    services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
+    security.rtkit.enable = true;
+    hardware.pulseaudio.enable = false;
+
     
     programs.nm-applet.enable = true;
     
