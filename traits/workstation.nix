@@ -31,18 +31,19 @@ A trait for headed boxxen
     # These should only be GUI applications that are desired systemwide
     environment.systemPackages = with pkgs; [
       firefox
-      vscodeConfigured
       neovimConfigured
-      spotifyd
       zotero
-      kicad
       inkscape
       gimp
     ] ++ (if stdenv.isx86_64 then [
+      kicad
+      vscodeConfigured
       chromium
       spotify
       obs-studio
-    ] else [ ]);
+    ] else if stdenv.isaarch64 then [
+      spotifyd
+    ] else []);
 
     services.printing.enable = true;
   };

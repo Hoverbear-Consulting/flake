@@ -14,7 +14,8 @@ Make a mount tree for adding to `fileSystems`, eg:
 */
 { encryptedDeviceUuid, efiDeviceUuid, keyFile }:
 
-let 
+let
+  # Don't forget to change traits.machine to check the right mapper
   encryptLabel = "encrypt";
 in {
   "/" = {
