@@ -135,6 +135,7 @@
               traits.machine
               traits.workstation
               traits.hardened
+              traits.gaming
             ];
           };
           nomadIsoImage = nixpkgs.lib.nixosSystem {
@@ -163,6 +164,7 @@
         traits.overlay = { nixpkgs.overlays = [ self.overlays.default ]; };
         traits.base = ./traits/base.nix;
         traits.machine = ./traits/machine.nix;
+        traits.gaming = ./traits/gaming.nix;
         traits.jetbrains = ./traits/jetbrains.nix;
         traits.hardened = ./traits/hardened.nix;
         traits.sourceBuild = ./traits/source-build.nix;

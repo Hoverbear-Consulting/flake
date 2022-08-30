@@ -11,6 +11,9 @@ in
   ];
 
   config = {
+    boot.kernel.sysctl = {
+      "dev.i915.perf_stream_paranoid" = 0;
+    };
     boot.loader.efi.efiSysMountPoint = "/boot/efi";
     boot.initrd.luks.devices = {
       encrypt = {
