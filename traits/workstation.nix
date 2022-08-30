@@ -1,5 +1,5 @@
 /*
-A trait for headed boxxen
+  A trait for headed boxxen
 */
 { config, pkgs, lib, ... }:
 
@@ -43,7 +43,7 @@ A trait for headed boxxen
       obs-studio
     ] else if stdenv.isaarch64 then [
       spotifyd
-    ] else []);
+    ] else [ ]);
 
     services.printing.enable = true;
   };

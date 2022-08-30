@@ -73,7 +73,7 @@
           }
         );
 
-        nixosConfigurations =
+      nixosConfigurations =
         let
           # Shared config between both the liveimage and real system
           aarch64Base = {

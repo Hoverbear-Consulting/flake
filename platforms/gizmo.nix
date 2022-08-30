@@ -86,14 +86,14 @@ in
     */
 
     /*
-    nixpkgs.localSystem.system = "aarch64-linux";
-    nixpkgs.localSystem.platform = (lib.systems.elaborate "aarch64-linux") // {
+      nixpkgs.localSystem.system = "aarch64-linux";
+      nixpkgs.localSystem.platform = (lib.systems.elaborate "aarch64-linux") // {
       sys.gcc = {
         fpu = "neon";
         cpu = "cortex-a72";
         arch = "armv8-a+crc+crypto";
       };
-    };
+      };
     */
 
     nixpkgs.overlays = [

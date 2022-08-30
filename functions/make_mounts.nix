@@ -1,15 +1,15 @@
 /*
-Make a mount tree for adding to `fileSystems`, eg:
+  Make a mount tree for adding to `fileSystems`, eg:
 
-```nix
-{
+  ```nix
+  {
   fileSystems = (import make_mounts.nix) {
-    encryptedDeviceUuid: "boop";
-    efiDeviceUuid: "swoop";
-    keyFile: "/beep";
+  encryptedDeviceUuid: "boop";
+  efiDeviceUuid: "swoop";
+  keyFile: "/beep";
   };
-}
-```
+  }
+  ```
 
 */
 { encryptedDeviceUuid, efiDeviceUuid, keyFile }:
@@ -17,7 +17,8 @@ Make a mount tree for adding to `fileSystems`, eg:
 let
   # Don't forget to change traits.machine to check the right mapper
   encryptLabel = "encrypt";
-in {
+in
+{
   "/" = {
     device = "/dev/mapper/${encryptLabel}";
     fsType = "btrfs";

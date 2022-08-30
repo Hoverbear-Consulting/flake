@@ -1,5 +1,5 @@
 /*
-A trait for configurations which are most definitely machines
+  A trait for configurations which are most definitely machines
 */
 { pkgs, ... }:
 
@@ -30,10 +30,10 @@ A trait for configurations which are most definitely machines
       "aarch64-linux"
     ] else if pkgs.stdenv.is_aarch64 then [
       # "x86_64-linux"
-    ] else []);
+    ] else [ ]);
 
     powerManagement.cpuFreqGovernor = "ondemand";
-    
+
     networking.networkmanager.enable = true;
     networking.wireless.enable = false; # For Network Manager
     programs.nm-applet.enable = true;
