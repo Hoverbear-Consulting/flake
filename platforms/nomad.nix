@@ -142,7 +142,7 @@ in
     nixos.source = "/persist/etc/nixos";
     "NetworkManager/system-connections".source = "/persist/etc/NetworkManager/system-connections";
     adjtime.source = "/persist/etc/adjtime";
-    NIXOS.source = "/persist/etc/NIXOS";
+    # NIXOS.source = "/persist/etc/NIXOS";
     machine-id.source = "/persist/etc/machine-id";
   };
   systemd.tmpfiles.rules = [
@@ -150,6 +150,7 @@ in
     "L /var/lib/NetworkManager/seen-bssids - - - - /persist/var/lib/NetworkManager/seen-bssids"
     "L /var/lib/NetworkManager/timestamps - - - - /persist/var/lib/NetworkManager/timestamps"
     "L /etc/secrets - - - - /persist/secrets"
+    "L /var/lib/bluetooth - - - - /persist/var/lib/bluetooth"
   ];
   security.sudo.extraConfig = ''
     # rollback results in sudo lectures after each reboot
@@ -194,6 +195,18 @@ in
     # we can unmount /mnt and continue on the boot process.
     umount /mnt
   '';
+  services.openssh.hostKeys = [
+    {
+      path = "/persist/ssh/ssh_host_ed25519_key";
+      type = "ed25519";
+    }
+    {
+      path = "/persist/ssh/ssh_host_rsa_key";
+      type = "rsa";
+      bits = 4096;
+    }
+  ];
+
 
   #networking.hostId = "938c2500";
   networking.hostName = "nomad";

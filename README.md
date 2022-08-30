@@ -81,9 +81,17 @@ mount -o subvol=boot,compress=zstd,lazytime /dev/mapper/encrypt /mnt/boot
 mkfs.vfat -F 32 ${EFI_PARTITION}
 mkdir -p /mnt/boot/efi
 mount ${EFI_PARTITION} /mnt/boot/efi
+
 mkdir -p /mnt/etc/secrets/initrd/
 mv ./keyfile.bin /mnt/etc/secrets/initrd/keyfile.bin
 chmod 000 /mnt/etc/secrets/initrd/keyfile.bin
+
+touch /mnt/persist/var/lib/NetworkManager/secret_key
+touch /mnt/persist/var/lib/NetworkManager/seen-bssids
+touch /mnt/persist/var/lib/NetworkManager/timestamps
+mkdir -p /mnt/persist/etc/NetworkManager/system-connections
+mkdir -p /mnt/persist/var/lib/bluetooth
+mkdir -p /mnt/persist/etc/ssh
 ```
 
 ## Architect
