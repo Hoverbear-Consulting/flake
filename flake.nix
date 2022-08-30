@@ -3,11 +3,17 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixos-wsl.url = "github:hoverbear-consulting/NixOS-WSL/master";
-    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-wsl = {
+      url = "github:hoverbear-consulting/NixOS-WSL/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixos-wsl }:
+  outputs = { self, nixpkgs, nixos-wsl, home-manager }:
     let
       supportedSystems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
@@ -49,6 +55,24 @@
               };
           });
 
+      homeConfigurations = forAllSystems
+        (system:
+          let
+            pkgs = import nixpkgs {
+              inherit system;
+              overlays = [ self.overlays.default ];
+            };
+          in
+          {
+            ana = home-manager.lib.homeManagerConfiguration {
+              inherit pkgs;
+              modules = [
+                ./users/ana/home.nix
+              ];
+            };
+          }
+        );
+
       nixosConfigurations =
         let
           gizmoBase = {
@@ -76,6 +100,14 @@
           nomadBase = {
             system = "x86_64-linux";
             modules = with self.nixosModules; [
+              home-manager.nixosModules.home-manager
+              {
+                config = {
+                  home-manager.useGlobalPkgs = true;
+                  home-manager.useUserPackages = true;
+                  home-manager.users.ana = ./users/ana/home.nix;
+                };
+              }
               traits.overlay
               traits.base
               traits.hardened
@@ -155,7 +187,7 @@
         services.postgres = ./services/postgres.nix;
         # This trait is unfriendly to being bundled with platform-iso
         traits.workstation = ./traits/workstation.nix;
-        users.ana = ./users/ana.nix;
+        users.ana = ./users/ana/system.nix;
       };
 
       checks = forAllSystems (system:

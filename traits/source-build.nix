@@ -3,9 +3,11 @@
 { ... }:
 
 {
-  nixpkgs.overlays = [
-    (self: super: {
-      stdenv = super.impureUseNativeOptimizations super.stdenv;
-    })
-  ];
+  config = {
+    nixpkgs.overlays = [
+      (self: super: {
+        stdenv = super.impureUseNativeOptimizations super.stdenv;
+      })
+    ];
+  };
 }

@@ -1,13 +1,15 @@
 { config, pkgs, lib, ... }:
 
 {
-  environment.systemPackages = with pkgs; [
-    jetbrains.clion
-    jetbrains.datagrip
-  ];
+  config = {
+    environment.systemPackages = with pkgs; [
+      jetbrains.clion
+      jetbrains.datagrip
+    ];
 
-  # CLion requires cargo-xlib.
-  environment.noXlibs = lib.mkForce false;
+    # CLion requires cargo-xlib.
+    environment.noXlibs = lib.mkForce false;
 
-  nixpkgs.config.allowUnfree = true;
+    nixpkgs.config.allowUnfree = true;
+  };
 }
