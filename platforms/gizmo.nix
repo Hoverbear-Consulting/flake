@@ -16,7 +16,7 @@ in
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
-  
+
   config = {
     boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.kernelParams = [
@@ -144,5 +144,5 @@ in
       };
       };
       */
-    };
+  };
 }

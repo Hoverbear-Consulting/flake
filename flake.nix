@@ -83,6 +83,7 @@
               traits.hardened
               traits.machine
               traits.tools
+              services.openssh
               users.ana
             ];
           };
@@ -94,6 +95,7 @@
               traits.hardened
               traits.machine
               traits.tools
+              services.openssh
               users.ana
             ];
           };
@@ -113,6 +115,7 @@
               traits.hardened
               traits.machine
               traits.tools
+              services.openssh
               users.ana
             ];
           };
@@ -185,6 +188,7 @@
         traits.hardened = ./traits/hardened.nix;
         traits.sourceBuild = ./traits/source-build.nix;
         services.postgres = ./services/postgres.nix;
+        services.openssh = ./services/openssh.nix;
         # This trait is unfriendly to being bundled with platform-iso
         traits.workstation = ./traits/workstation.nix;
         users.ana = ./users/ana/system.nix;

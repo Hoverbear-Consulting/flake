@@ -17,8 +17,6 @@
     services.openssh.enable = true;
     services.openssh.passwordAuthentication = false;
 
-    #virtualisation.docker.enable = true;  
-
     networking.firewall.allowedTCPPorts = [ 22 ];
     networking.firewall.allowedUDPPorts = [ 22 ];
 
