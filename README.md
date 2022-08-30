@@ -38,9 +38,6 @@ export TARGET_DEVICE=/dev/null
 export EFI_PARTITION=/dev/null
 export ROOT_PARTITION=/dev/null
 
-export CRYPT_NAME=encrypt
-export PERSIST_NAME=persist
-
 umount ${TARGET_DEVICE}
 sgdisk -Z ${TARGET_DEVICE}
 sgdisk -o ${TARGET_DEVICE}
@@ -54,15 +51,31 @@ sgdisk ${TARGET_DEVICE} -n 2:0:0
 sgdisk ${TARGET_DEVICE} -t 2:8309
 sgdisk ${TARGET_DEVICE} -c 2:encrypt
 
-cryptsetup luksFormat --type luks1 ${ROOT_PARTITION}
-
 dd if=/dev/urandom of=./keyfile.bin bs=1024 count=4
+cryptsetup luksFormat --type luks1 ${ROOT_PARTITION}
 cryptsetup luksAddKey ${ROOT_PARTITION} ./keyfile.bin
+cryptsetup luksOpen ${ROOT_PARITION} encrypt -d keyfile.bin
 
-cryptsetup luksOpen ${ROOT_PARITION} ${CRYPT_NAME} -d keyfile.bin
+mkfs.btrfs /dev/mapper/encrypt
+mount -o compress=zstd,lazytime /dev/mapper/encrypt /mnt/ -v
+btrfs subvolume create /mnt/root
+btrfs subvolume create /mnt/home
+btrfs subvolume create /mnt/nix
+btrfs subvolume create /mnt/persist
+btrfs subvolume create /mnt/log
+mkdir -p /mnt/snapshots/root/
+btrfs subvolume snapshot -r /mnt/root /mnt/snapshots/root/blank
+umount -R /mnt
+mount -o subvol=root,compress=zstd,lazytime /dev/mapper/encrypt /mnt
+mkdir -p /mnt/home
+mount -o subvol=home,compress=zstd,lazytime /dev/mapper/encrypt /mnt/home
+mkdir -p /mnt/nix
+mount -o subvol=nix,compress=zstd,lazytime /dev/mapper/encrypt /mnt/nix
+mkdir -p /mnt/persist
+mount -o subvol=persist,compress=zstd,lazytime /dev/mapper/encrypt /mnt/persist
+mkdir -p /mnt/var/log
+mount -o subvol=log,compress=zstd,lazytime /dev/mapper/encrypt /mnt/var/log
 
-mkfs.btrfs -L ${PERSIST_NAME} /dev/mapper/${CRYPT_NAME}
-mount -o compress=zstd,lazytime /dev/mapper/${CRYPT_NAME} /mnt/ -v
 
 mkfs.vfat -F 32 ${EFI_PARTITION}
 mkdir -p /mnt/boot/efi
