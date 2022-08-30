@@ -37,7 +37,9 @@ The machines share a common partitioning strategy, once setting the required env
 export TARGET_DEVICE=/dev/null
 export EFI_PARTITION=/dev/null
 export ROOT_PARTITION=/dev/null
-export CRYPT_NAME=null
+
+export CRYPT_NAME=encrypt
+export PERSIST_NAME=persist
 
 umount ${TARGET_DEVICE}
 sgdisk -Z ${TARGET_DEVICE}
@@ -46,16 +48,16 @@ partprobe
 
 sgdisk ${TARGET_DEVICE} -n 1:0:+1G
 sgdisk ${TARGET_DEVICE} -t 1:ef00
-sgdisk ${TARGET_DEVICE} -c 1:EFI
+sgdisk ${TARGET_DEVICE} -c 1:efi
 
 sgdisk ${TARGET_DEVICE} -n 2:0:0
 sgdisk ${TARGET_DEVICE} -t 2:8309
-sgdisk ${TARGET_DEVICE} -c 2:${CRYPT_NAME}
+sgdisk ${TARGET_DEVICE} -c 2:encrypt
 
 cryptsetup luksFormat ${ROOT_PARTITION}
 cryptsetup open ${ROOT_PARITION} ${CRYPT_NAME}
 
-mkfs.btrfs -L ${CRYPT_NAME} /dev/mapper/${CRYPT_NAME}
+mkfs.btrfs -L ${PERSIST_NAME} /dev/mapper/${CRYPT_NAME}
 mount -o compress=zstd,lazytime /dev/mapper/${CRYPT_NAME} /mnt/ -v
 
 mkfs.vfat -F 32 ${EFI_PARTITION}
@@ -103,7 +105,6 @@ Start the machine, or reboot it. Once logged in, partion, format, and mount the 
 export TARGET_DEVICE=/dev/nvme1n1
 export EFI_PARTITION=/dev/nvme1n1p1
 export ROOT_PARTITION=/dev/nvme1n1p2
-export CRYPT_NAME=architect
 ```
 
 Then, **follow the [Partitioning](#partitioning) section.**
@@ -184,7 +185,6 @@ Start the machine, or reboot it. Once logged in, partion, format, and mount the 
 export TARGET_DEVICE=/dev/nvme0n1
 export EFI_PARTITION=/dev/nvme0n1p1
 export ROOT_PARTITION=/dev/nvme0n1p2
-export CRYPT_NAME=gizmo
 ```
 
 Then, **follow the [Partitioning](#partitioning) section.**
@@ -231,7 +231,6 @@ Start the machine, or reboot it. Once logged in, partion, format, and mount the 
 export TARGET_DEVICE=/dev/nvme0n1
 export EFI_PARTITION=/dev/nvme0n1p1
 export ROOT_PARTITION=/dev/nvme0n1p2
-export CRYPT_NAME=crypt
 ```
 Then, **follow the [Partitioning](#partitioning) section.**
 
