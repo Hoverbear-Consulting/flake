@@ -1,7 +1,8 @@
 { neovim, vimPlugins, tree-sitter, gcc, }:
 
-let treesitter-parsers = 
-  (vimPlugins.nvim-treesitter.withPlugins (plugins: tree-sitter.allGrammars));
+let
+  treesitter-parsers =
+    (vimPlugins.nvim-treesitter.withPlugins (plugins: tree-sitter.allGrammars));
 in
 neovim.override {
   vimAlias = true;
