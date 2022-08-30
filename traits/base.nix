@@ -1,3 +1,6 @@
+/*
+A trait for all boxxen
+*/
 { config, pkgs, lib, ... }:
 
 {

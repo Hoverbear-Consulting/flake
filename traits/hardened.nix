@@ -1,11 +1,13 @@
+/*
+Given that I am a developer, and use my machines for dev, I skip a lot of things that
+might impact my ability to work.
+
+See:
+* https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/hardened.nix
+* https://tails.boum.org/contribute/design/kernel_hardening/
+*/
 { pkgs, lib, ... }:
 
-# Given that I am a developer, and use my machines for dev, I skip a lot of things that
-# might impact my ability to work.
-#
-# See:
-# * https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/hardened.nix
-# * https://tails.boum.org/contribute/design/kernel_hardening/
 {
   config = {
     # Ignore ICMP broadcasts to avoid participating in Smurf attacks

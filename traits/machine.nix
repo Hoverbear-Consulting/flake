@@ -26,7 +26,7 @@
     boot.binfmt.emulatedSystems = (if pkgs.stdenv.isx86_64 then [
       "aarch64-linux"
     ] else if pkgs.stdenv.is_aarch64 then [
-      "x86_64-linux"
+      # "x86_64-linux"
     ] else []);
 
     powerManagement.cpuFreqGovernor = "ondemand";

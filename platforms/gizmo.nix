@@ -18,7 +18,6 @@ in
   ];
 
   config = {
-    boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.kernelParams = [
       # PCIE scaling tends to lock GPUs, jnettlet suggests...
       # "amdgpu.pcie_gen_cap=0x4"
@@ -38,13 +37,6 @@ in
     boot.kernelModules = [
       "amc6821" # via sensors-detect
     ];
-    boot.loader.grub.enable = true;
-    boot.loader.grub.efiSupport = true;
-    boot.loader.grub.useOSProber = true;
-    boot.loader.grub.enableCryptodisk = true;
-    boot.loader.grub.efiInstallAsRemovable = true;
-    boot.loader.grub.device = "nodev";
-    boot.loader.grub.configurationLimit = 10;
     boot.initrd.luks.devices = {
       gizmo = {
         device = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
@@ -52,7 +44,6 @@ in
     };
     boot.initrd.kernelModules = [ "amdgpu" ];
     services.xserver.videoDrivers = [ "amdgpu" ];
-    # boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
 
     fileSystems."/" = {
       device = "/dev/mapper/${devices.encrypted.label}";
@@ -71,16 +62,9 @@ in
       fsType = "vfat";
     };
 
-    networking.hostId = "05dc175e";
     networking.hostName = "gizmo";
-    networking.domain = "hoverbear.dev";
-    networking.interfaces.eth0.useDHCP = true;
+    networking.domain = "hoverbear.home";
 
-    hardware.bluetooth.enable = true;
-
-    time.timeZone = "America/Vancouver";
-
-    swapDevices = [ ];
     # Disable the GNOME3/GDM auto-suspend feature that cannot be disabled in GUI!
     # If no user is logged in, the machine will power down after 20 minutes.
     # This results in a `wall` style message which disrupts console users.
@@ -101,6 +85,7 @@ in
       lib.mkForce myMesa.drivers;
     */
 
+    /*
     nixpkgs.localSystem.system = "aarch64-linux";
     nixpkgs.localSystem.platform = (lib.systems.elaborate "aarch64-linux") // {
       sys.gcc = {
@@ -109,6 +94,7 @@ in
         arch = "armv8-a+crc+crypto";
       };
     };
+    */
 
     nixpkgs.overlays = [
       (final: prev: {

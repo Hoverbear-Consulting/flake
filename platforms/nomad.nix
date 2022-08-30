@@ -10,6 +10,7 @@ let
       uuid = "9805-1C26";
     };
   };
+  makeMounts = import ./../functions/make_mounts.nix;
 in
 {
   imports = [
@@ -29,101 +30,10 @@ in
       "keyfile.bin" = "/etc/secrets/initrd/keyfile.bin";
     };
 
-    fileSystems."/" = {
-      device = "/dev/mapper/${devices.encrypted.label}";
-      fsType = "btrfs";
-      encrypted = {
-        enable = true;
-        label = devices.encrypted.label;
-        blkDev = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
-        keyFile = "/keyfile.bin";
-      };
-      options = [
-        "subvol=root"
-        "compress=zstd"
-        "lazytime"
-      ];
-    };
-    fileSystems."/home" = {
-      device = "/dev/mapper/${devices.encrypted.label}";
-      fsType = "btrfs";
-      encrypted = {
-        enable = true;
-        label = devices.encrypted.label;
-        blkDev = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
-        keyFile = "/keyfile.bin";
-      };
-      options = [
-        "subvol=home"
-        "compress=zstd"
-        "lazytime"
-      ];
-    };
-    fileSystems."/nix" = {
-      device = "/dev/mapper/${devices.encrypted.label}";
-      fsType = "btrfs";
-      encrypted = {
-        enable = true;
-        label = devices.encrypted.label;
-        blkDev = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
-        keyFile = "/keyfile.bin";
-      };
-      options = [
-        "subvol=nix"
-        "compress=zstd"
-        "lazytime"
-      ];
-    };
-    fileSystems."/persist" = {
-      device = "/dev/mapper/${devices.encrypted.label}";
-      fsType = "btrfs";
-      encrypted = {
-        enable = true;
-        label = devices.encrypted.label;
-        blkDev = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
-        keyFile = "/keyfile.bin";
-      };
-      options = [
-        "subvol=persist"
-        "compress=zstd"
-        "lazytime"
-      ];
-    };
-    fileSystems."/boot" = {
-      device = "/dev/mapper/${devices.encrypted.label}";
-      fsType = "btrfs";
-      encrypted = {
-        enable = true;
-        label = devices.encrypted.label;
-        blkDev = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
-        keyFile = "/keyfile.bin";
-      };
-      neededForBoot = true;
-      options = [
-        "subvol=boot"
-        "compress=zstd"
-        "lazytime"
-      ];
-    };
-    fileSystems."/var/log" = {
-      device = "/dev/mapper/${devices.encrypted.label}";
-      fsType = "btrfs";
-      encrypted = {
-        enable = true;
-        label = devices.encrypted.label;
-        blkDev = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
-        keyFile = "/keyfile.bin";
-      };
-      neededForBoot = true;
-      options = [
-        "subvol=log"
-        "compress=zstd"
-        "lazytime"
-      ];
-    };
-    fileSystems."/boot/efi" = {
-      device = "/dev/disk/by-uuid/${devices.efi.uuid}";
-      fsType = "vfat";
+    fileSystems = makeMounts {
+      encryptedDeviceUuid = devices.encrypted.uuid;
+      efiDeviceUuid = devices.efi.uuid;
+      keyFile = "/keyfile.bin";
     };
 
     # opt in state
