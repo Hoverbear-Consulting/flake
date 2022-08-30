@@ -55,7 +55,8 @@ sgdisk ${TARGET_DEVICE} -t 2:8309
 sgdisk ${TARGET_DEVICE} -c 2:encrypt
 
 cryptsetup luksFormat --type luks1 ${ROOT_PARTITION}
-cryptsetup open ${ROOT_PARITION} ${CRYPT_NAME}
+cryptsetup luksAddKey ${ROOT_PARTITION} keyfile.bin
+cryptsetup luksOpen ${ROOT_PARITION} ${CRYPT_NAME} -d keyfile.bin
 
 mkfs.btrfs -L ${PERSIST_NAME} /dev/mapper/${CRYPT_NAME}
 mount -o compress=zstd,lazytime /dev/mapper/${CRYPT_NAME} /mnt/ -v
@@ -63,6 +64,8 @@ mount -o compress=zstd,lazytime /dev/mapper/${CRYPT_NAME} /mnt/ -v
 mkfs.vfat -F 32 ${EFI_PARTITION}
 mkdir -p /mnt/boot/efi
 mount ${EFI_PARTITION} /mnt/boot/efi
+mkdir -p /mnt/etc/secrets/initrd/
+mv keyfile.bin /mnt/etc/secrets/initrd/keyfile.bin
 ```
 
 ## Architect

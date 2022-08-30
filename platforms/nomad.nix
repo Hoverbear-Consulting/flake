@@ -31,7 +31,12 @@ in
   boot.initrd.luks.devices = {
     encrypt = {
       device = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
+      keyFile = "/keyfile.bin";
+      allowDiscards = true;
     };
+  };
+  boot.initrd.luks.secrets = {
+    "keyfile.bin" = "/etc/secrets/initrd/keyfile.bin";
   };
 
   fileSystems."/" = {
@@ -40,6 +45,7 @@ in
     encrypted.enable = true;
     encrypted.label = devices.encrypted.label;
     encrypted.blkDev = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
+    encrypted.keyfile = "/keyfile.bin";
     options = [
       "compress=zstd"
       "lazytime"
