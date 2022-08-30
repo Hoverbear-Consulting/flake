@@ -45,7 +45,7 @@ in
     encrypted.enable = true;
     encrypted.label = devices.encrypted.label;
     encrypted.blkDev = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
-    encrypted.keyfile = "/keyfile.bin";
+    encrypted.keyFile = "/keyfile.bin";
     options = [
       "compress=zstd"
       "lazytime"
