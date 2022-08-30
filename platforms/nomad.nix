@@ -11,6 +11,7 @@ in
   ];
 
   config = {
+    services.xserver.displayManager.autoLogin.user = "ana";
     boot.kernel.sysctl = {
       "dev.i915.perf_stream_paranoid" = 0;
     };

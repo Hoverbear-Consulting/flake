@@ -18,6 +18,7 @@ in
   ];
 
   config = {
+    services.xserver.displayManager.autoLogin.user = "ana";
     boot.kernelParams = [
       # PCIE scaling tends to lock GPUs, jnettlet suggests...
       # "amdgpu.pcie_gen_cap=0x4"

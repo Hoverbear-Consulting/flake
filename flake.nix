@@ -82,8 +82,8 @@
               home-manager.nixosModules.home-manager
               traits.overlay
               traits.base
+              traits.workstation
               services.openssh
-              users.ana
             ];
           };
           x86_64Base = {
@@ -92,8 +92,8 @@
               home-manager.nixosModules.home-manager
               traits.overlay
               traits.base
+              traits.workstation
               services.openssh
-              users.ana
             ];
           };
         in
@@ -115,8 +115,8 @@
             modules = aarch64Base.modules ++ [
               platforms.gizmo
               traits.machine
-              traits.workstation
               traits.hardened
+              users.ana
             ];
           };
           architect = nixpkgs.lib.nixosSystem {
@@ -124,8 +124,8 @@
             modules = x86_64Base.modules ++ [
               platforms.architect
               traits.machine
-              traits.workstation
               traits.hardened
+              users.ana
             ];
           };
           nomad = nixpkgs.lib.nixosSystem {
@@ -133,9 +133,9 @@
             modules = x86_64Base.modules ++ [
               platforms.nomad
               traits.machine
-              traits.workstation
               traits.hardened
               traits.gaming
+              users.ana
             ];
           };
           wsl = nixpkgs.lib.nixosSystem {
@@ -154,7 +154,7 @@
         platforms.architect = ./platforms/architect.nix;
         platforms.nomad = ./platforms/nomad.nix;
         platforms.iso-minimal = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix";
-        platforms.iso = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-plasma5.nix";
+        platforms.iso = "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix";
         traits.overlay = { nixpkgs.overlays = [ self.overlays.default ]; };
         traits.base = ./traits/base.nix;
         traits.machine = ./traits/machine.nix;
