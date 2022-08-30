@@ -98,6 +98,18 @@
           };
         in
         with self.nixosModules; {
+          x86_64IsoImage = nixpkgs.lib.nixosSystem {
+            inherit (x86_64Base) system;
+            modules = x86_64Base.modules ++ [
+              platforms.iso
+            ];
+          };
+          aarch64IsoImage = nixpkgs.lib.nixosSystem {
+            inherit (aarch64Base) system;
+            modules = aarch64Base.modules ++ [
+              platforms.iso-minimal
+            ];
+          };
           gizmo = nixpkgs.lib.nixosSystem {
             inherit (aarch64Base) system;
             modules = aarch64Base.modules ++ [
@@ -105,12 +117,6 @@
               traits.machine
               traits.workstation
               traits.hardened
-            ];
-          };
-          gizmoIsoImage = nixpkgs.lib.nixosSystem {
-            inherit (aarch64Base) system;
-            modules = aarch64Base.modules ++ [
-              platforms.iso-minimal
             ];
           };
           architect = nixpkgs.lib.nixosSystem {
@@ -122,12 +128,6 @@
               traits.hardened
             ];
           };
-          architectIsoImage = nixpkgs.lib.nixosSystem {
-            inherit (x86_64Base) system;
-            modules = x86_64Base.modules ++ [
-              platforms.iso
-            ];
-          };
           nomad = nixpkgs.lib.nixosSystem {
             inherit (x86_64Base) system;
             modules = x86_64Base.modules ++ [
@@ -136,12 +136,6 @@
               traits.workstation
               traits.hardened
               traits.gaming
-            ];
-          };
-          nomadIsoImage = nixpkgs.lib.nixosSystem {
-            inherit (x86_64Base) system;
-            modules = x86_64Base.modules ++ [
-              platforms.iso
             ];
           };
           wsl = nixpkgs.lib.nixosSystem {

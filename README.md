@@ -114,7 +114,7 @@ Requires:
 Build a recovery image:
 
 ```bash
-nix build github:hoverbear-consulting/flake#nixosConfigurations.architectIsoImage.config.system.build.isoImage --out-link isoImage
+nix build github:hoverbear-consulting/flake#nixosConfigurations.x86_64IsoImage.config.system.build.isoImage --out-link isoImage
 ```
 
 Flash it to a USB:
@@ -177,7 +177,7 @@ Requires:
 Build the recovery image:
 
 ```bash
-nix build github:hoverbear-consulting/flake#nixosConfigurations.gizmoIsoImage.config.system.build.isoImage --out-link isoImage
+nix build github:hoverbear-consulting/flake#nixosConfigurations.aarch64IsoImage.config.system.build.isoImage --out-link isoImage
 ```
 
 Fetch the SolidRun provided UEFI:
@@ -240,7 +240,7 @@ Requires:
 Build a recovery image:
 
 ```bash
-nix build github:hoverbear-consulting/flake#nixosConfigurations.nomadIsoImage.config.system.build.isoImage --out-link isoImage
+nix build github:hoverbear-consulting/flake#nixosConfigurations.x86_64IsoImage.config.system.build.isoImage --out-link isoImage
 ```
 
 Flash it to a USB:
