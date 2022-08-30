@@ -2,13 +2,17 @@
 
 let
   devices = {
-    encrypted = rec {
+    encrypted = {
       uuid = "aece3690-cfbb-480e-8598-1074074563d2";
       label = "nomad";
     };
-    boot = rec {
+    boot = {
       uuid = "0059-6D54";
       label = "boot";
+    };
+    efi = {
+      uuid = "..";
+      label = "efi";
     };
   };
 in
@@ -24,6 +28,9 @@ in
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.grub.device = "nodev";
   boot.loader.grub.configurationLimit = 10;
+  boot.loader.grub.enableCryptodisk = true;
+  boot.loader.efi.efiSysMountPoint = "/efi";
+  boot.loader.efi.canTouchEfiVariables = true;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.initrd.luks.devices = {
     nomad = {
@@ -42,8 +49,8 @@ in
       "lazytime"
     ];
   };
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/${devices.boot.uuid}";
+  fileSystems."/efi" = {
+    device = "/dev/disk/by-uuid/${devices.efi.uuid}";
     fsType = "vfat";
   };
 

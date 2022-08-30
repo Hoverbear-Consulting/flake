@@ -22,13 +22,46 @@ You can use this in your own flakes:
 General dogma:
 
 * Only UEFI, with a 512MB+ FAT32 partition on the `/boot` block device.
-* F2FS based root block devices (in a `dm-crypt`).
+* BTRFS based root block devices (in a `dm-crypt`).
 * Firewalled except port 22.
-* Preconfigured, ready to use, global (`nvim`) editor and shell (`sh`) configuration.
+* Preconfigured, ready to use, global (`nvim`) editor and shell (`bash`) configuration.
 * Somewhat hardened hardware nodes.
 * Relaxed user access control.
-* `nix-direnv`/`envrc` support for `use nix`/`use flake`.
 * Nix features `nix-command` and `flake` adopted.
+
+## Partitioning
+
+The machines share a common partitioning strategy, once setting the required environment variables, follow these steps:
+
+```bash
+export TARGET_DEVICE=/dev/null
+export BOOT_PARTITION=/dev/null
+export ROOT_PARTITION=/dev/null
+export CRYPT_NAME=null
+
+umount ${TARGET_DEVICE}
+sgdisk -Z ${TARGET_DEVICE}
+sgdisk -o ${TARGET_DEVICE}
+partprobe
+
+sgdisk ${TARGET_DEVICE} -n 1:0:+512M
+sgdisk ${TARGET_DEVICE} -t 1:ef00
+sgdisk ${TARGET_DEVICE} -c 1:EFI ${TARGET_DEVICE}
+
+sgdisk ${TARGET_DEVICE} -n 2:0:0 ${TARGET_DEVICE}
+sgdisk ${TARGET_DEVICE} -t 2:8309 ${TARGET_DEVICE}
+sgdisk ${TARGET_DEVICE} -c 2:${CRYPT_NAME} ${TARGET_DEVICE}
+
+cryptsetup luksFormat ${ROOT_PARTITION}
+cryptsetup open ${ROOT_PARITION} ${CRYPT_NAME}
+
+mkfs.btrfs -L ${CRYPT_NAME} /dev/mapper/${CRYPT_NAME}
+mount -o compress=zstd,lazytime /dev/mapper/${CRYPT_NAME} /mnt/ -v
+
+mkfs.vfat -F 32 ${BOOT_PARTITION}
+mkdir -p /mnt/efi
+mount ${BOOT_PARTITION} /mnt/efi
+```
 
 ## Architect
 
@@ -67,44 +100,23 @@ sudo cp -vi isoImage/iso/*.iso $ARCHITECT_USB
 Start the machine, or reboot it. Once logged in, partion, format, and mount the NVMe disk:
 
 ```bash
-umount /dev/nvme1n1
-sgdisk -Z /dev/nvme1n1
-sgdisk -o /dev/nvme1n1
-partprobe
-
-sgdisk /dev/nvme1n1 -n 1:0:+512M
-sgdisk /dev/nvme1n1 -t 1:ef00
-sgdisk /dev/nvme1n1 -c 1:EFI /dev/nvme1n1
-
-sgdisk /dev/nvme1n1 -n 2:0:0 /dev/nvme1n1
-sgdisk /dev/nvme1n1 -t 2:8300 /dev/nvme1n1
-sgdisk /dev/nvme1n1 -c 2:pool /dev/nvme1n1
-
-export BOOT_DEVICE=/dev/nvme1n1p1
-export ROOT_DEVICE=/dev/nvme1n1p2
+export TARGET_DEVICE=/dev/nvme1n1
+export BOOT_PARTITION=/dev/nvme1n1p1
+export ROOT_PARTITION=/dev/nvme1n1p2
 export CRYPT_NAME=architect
-
-cryptsetup luksFormat --type luks1 ${ROOT_DEVICE}
-cryptsetup open ${ROOT_DEVICE} ${CRYPT_NAME}
-
-mkfs.f2fs -l root -O extra_attr,inode_checksum,sb_checksum,compression,encrypt /dev/mapper/${CRYPT_NAME} -f
-mount -o compress_algorithm=zstd,atgc,lazytime /dev/mapper/${CRYPT_NAME} /mnt/ -v
-
-mkfs.vfat -F 32 ${BOOT_DEVICE}
-mkdir -p /mnt/boot
-mount ${BOOT_DEVICE} /mnt/boot
 ```
 
-Install the system:
+Then, **follow the [Partitioning](#partitioning) section.**
+
+After, install the system:
 
 ```bash
 nixos-install --flake github:hoverbear-consulting/flake#architect --impure
 ```
 
-
 ## Gizmo
 
-A headless aarch64 server.
+An aarch64 server/thin client.
 
 * [SolidRun HoneyComb LX2K][parts-lx2k]
   + [16 core Cortex A72][chips-arm-cortex-a72]
@@ -149,12 +161,13 @@ xz --decompress uefi.img.xz
 Flash them:
 
 ```bash
-GIZMO_SD=/dev/null
-GIZMO_USB=/dev/null
-umount $GIZMO_SD
-sudo cp -vi uefi.img $GIZMO_SD
-umount $GIZMO_USB
-sudo cp -vi isoImage/iso/*.iso $GIZMO_USB
+export GIZMO_SD=/dev/null
+export GIZMO_USB=/dev/null
+
+umount ${GIZMO_SD}
+sudo cp -vi uefi.img ${GIZMO_SD}
+umount ${GIZMO_USB}
+sudo cp -vi isoImage/iso/*.iso ${GIZMO_USB}
 ```
 
 ### Bootstrap
@@ -168,35 +181,15 @@ sudo nix run nixpkgs#picocom -- /dev/ttyUSB0 -b 115200
 Start the machine, or reboot it. Once logged in, partion, format, and mount the NVMe disk:
 
 ```bash
-sgdisk -Z /dev/nvme0n1
-sgdisk -o /dev/nvme0n1
-partprobe
-
-sgdisk /dev/nvme0n1 -n 1:0:+512M
-sgdisk /dev/nvme0n1 -t 1:ef00
-sgdisk /dev/nvme0n1 -c 1:EFI /dev/nvme0n1
-
-sgdisk /dev/nvme0n1 -n 2:0:0 /dev/nvme0n1
-sgdisk /dev/nvme0n1 -t 2:8300 /dev/nvme0n1
-sgdisk /dev/nvme0n1 -c 2:gizmo /dev/nvme0n1
-
-export BOOT_DEVICE=/dev/nvme0n1p1
-export ROOT_DEVICE=/dev/nvme0n1p2
+export TARGET_DEVICE=/dev/nvme0n1
+export BOOT_PARTITION=/dev/nvme0n1p1
+export ROOT_PARTITION=/dev/nvme0n1p2
 export CRYPT_NAME=gizmo
-
-cryptsetup luksFormat --type luks1 ${ROOT_DEVICE}
-cryptsetup open ${ROOT_DEVICE} ${CRYPT_NAME}
-
-mkfs.f2fs -l root -O extra_attr,inode_checksum,sb_checksum,compression,encrypt /dev/mapper/${CRYPT_NAME} -f
-mount -o compress_algorithm=zstd,whint_mode=fs-based,atgc,lazytime /dev/mapper/${CRYPT_NAME} /mnt/ -v
-
-mkfs.vfat -F 32 ${BOOT_DEVICE}
-mkdir -p /mnt/boot
-mount ${BOOT_DEVICE} /mnt/boot
 ```
 
+Then, **follow the [Partitioning](#partitioning) section.**
 
-Install the system:
+After, install the system:
 
 ```bash
 nixos-install --flake github:hoverbear-consulting/flake#gizmo --impure
@@ -235,35 +228,14 @@ sudo cp -vi isoImage/iso/*.iso $NOMAD_USB
 Start the machine, or reboot it. Once logged in, partion, format, and mount the NVMe disk:
 
 ```bash
-umount /dev/nvme0n1
-sgdisk -Z /dev/nvme0n1
-sgdisk -o /dev/nvme0n1
-partprobe
-
-sgdisk /dev/nvme0n1 -n 1:0:+512M
-sgdisk /dev/nvme0n1 -t 1:ef00
-sgdisk /dev/nvme0n1 -c 1:EFI /dev/nvme0n1
-
-sgdisk /dev/nvme0n1 -n 2:0:0 /dev/nvme0n1
-sgdisk /dev/nvme0n1 -t 2:8300 /dev/nvme0n1
-sgdisk /dev/nvme0n1 -c 2:nomad /dev/nvme0n1
-
-export BOOT_DEVICE=/dev/nvme0n1p1
-export ROOT_DEVICE=/dev/nvme0n1p2
+export TARGET_DEVICE=/dev/nvme0n1
+export BOOT_PARTITION=/dev/nvme0n1p1
+export ROOT_PARTITION=/dev/nvme0n1p2
 export CRYPT_NAME=nomad
-
-cryptsetup luksFormat --type luks1 ${ROOT_DEVICE}
-cryptsetup open ${ROOT_DEVICE} ${CRYPT_NAME}
-
-mkfs.btrfs -L nomad /dev/mapper/${CRYPT_NAME}
-mount -o compress=zstd,lazytime /dev/mapper/${CRYPT_NAME} /mnt/ -v
-
-mkfs.vfat -F 32 ${BOOT_DEVICE}
-mkdir -p /mnt/boot
-mount ${BOOT_DEVICE} /mnt/boot
 ```
+Then, **follow the [Partitioning](#partitioning) section.**
 
-Install the system:
+After, install the system:
 
 ```bash
 nixos-install --flake github:hoverbear-consulting/flake#nomad --impure
