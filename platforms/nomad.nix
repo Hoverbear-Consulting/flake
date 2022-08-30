@@ -26,7 +26,6 @@ in
   boot.loader.grub.configurationLimit = 10;
   boot.loader.grub.enableCryptodisk = true;
   boot.loader.efi.efiSysMountPoint = "/efi";
-  boot.loader.efi.canTouchEfiVariables = true;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.initrd.luks.devices = {
     nomad = {
