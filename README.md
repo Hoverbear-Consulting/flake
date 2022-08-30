@@ -75,7 +75,8 @@ mkdir -p /mnt/persist
 mount -o subvol=persist,compress=zstd,lazytime /dev/mapper/encrypt /mnt/persist
 mkdir -p /mnt/var/log
 mount -o subvol=log,compress=zstd,lazytime /dev/mapper/encrypt /mnt/var/log
-
+mkdir -p /mnt/boot
+mount -o subvol=boot,compress=zstd,lazytime /dev/mapper/encrypt /mnt/boot
 
 mkfs.vfat -F 32 ${EFI_PARTITION}
 mkdir -p /mnt/boot/efi

@@ -3,11 +3,11 @@
 let
   devices = {
     encrypted = {
-      uuid = "20aa0374-602e-4691-8983-c2da891544a0";
+      uuid = "042de80f-f3ec-4e01-8c10-9b43436d301d";
       label = "encrypt";
     };
     efi = {
-      uuid = "6FA9-1C46";
+      uuid = "9805-1C26";
       label = "efi";
     };
   };
@@ -54,14 +54,14 @@ in
       "lazytime"
     ];
   };
-  filesystems."/home" = {
+  fileSystems."/home" = {
     device = "/dev/mapper/${devices.encrypted.label}";
-    fstype = "btrfs";
+    fsType = "btrfs";
     encrypted = {
       enable = true;
       label = devices.encrypted.label;
-      blkdev = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
-      keyfile = "/keyfile.bin";
+      blkDev = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
+      keyFile = "/keyfile.bin";
     };
     options = [
       "subvol=home"
@@ -95,6 +95,22 @@ in
     };
     options = [
       "subvol=persist"
+      "compress=zstd"
+      "lazytime"
+    ];
+  };
+  fileSystems."/boot" = {
+    device = "/dev/mapper/${devices.encrypted.label}";
+    fsType = "btrfs";
+    encrypted = {
+      enable = true;
+      label = devices.encrypted.label;
+      blkDev = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
+      keyFile = "/keyfile.bin";
+    };
+    neededForBoot = true;
+    options = [
+      "subvol=boot"
       "compress=zstd"
       "lazytime"
     ];
@@ -133,6 +149,7 @@ in
     "L /var/lib/NetworkManager/secret_key - - - - /persist/var/lib/NetworkManager/secret_key"
     "L /var/lib/NetworkManager/seen-bssids - - - - /persist/var/lib/NetworkManager/seen-bssids"
     "L /var/lib/NetworkManager/timestamps - - - - /persist/var/lib/NetworkManager/timestamps"
+    "L /etc/secrets - - - - /persist/secrets"
   ];
   security.sudo.extraConfig = ''
     # rollback results in sudo lectures after each reboot
@@ -143,7 +160,7 @@ in
 
     # We first mount the btrfs root to /mnt
     # so we can manipulate btrfs subvolumes.
-    mount -o subvol=/ /dev/mapper/enc /mnt
+    mount -o subvol=/ /dev/mapper/encrypt /mnt
 
     # While we're tempted to just delete /root and create
     # a new snapshot from /root-blank, /root is already
@@ -171,7 +188,7 @@ in
     btrfs subvolume delete /mnt/root
 
     echo "restoring blank /root subvolume..."
-    btrfs subvolume snapshot /mnt/root-blank /mnt/root
+    btrfs subvolume snapshot /mnt/snapshots/root/blank /mnt/root
 
     # Once we're done rolling back to a blank snapshot,
     # we can unmount /mnt and continue on the boot process.
