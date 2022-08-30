@@ -1,23 +1,23 @@
 /*
-A trait for boxxen which game
+  A trait for boxxen which game
 
-Includes both gaming related packages as well as bleeding edge wine.
+  Includes both gaming related packages as well as bleeding edge wine.
 
-## Important note
+  ## Important note
 
-After install you should run:
+  After install you should run:
 
-```bash
-winetricks corefonts
-winetricks vcrun2005sp1
-winetricks d3dx9
-winetricks d3dx10
-winetricks dxvk
+  ```bash
+  winetricks corefonts
+  winetricks vcrun2005sp1
+  winetricks d3dx9
+  winetricks d3dx10
+  winetricks dxvk
 
-winecfg
-```
+  winecfg
+  ```
 
-Under "Applications" ensure the Windows version is "Windows 10"
+  Under "Applications" ensure the Windows version is "Windows 10"
 
 
 */
@@ -33,7 +33,7 @@ Under "Applications" ensure the Windows version is "Windows 10"
       winetricks
     ];
     hardware.opengl.driSupport32Bit = true;
-    
+
     environment.variables = {
       WINEDEBUG = "-all";
       WINEESYNC = "1";
