@@ -55,7 +55,10 @@ sgdisk ${TARGET_DEVICE} -t 2:8309
 sgdisk ${TARGET_DEVICE} -c 2:encrypt
 
 cryptsetup luksFormat --type luks1 ${ROOT_PARTITION}
-cryptsetup luksAddKey ${ROOT_PARTITION} keyfile.bin
+
+dd if=/dev/urandom of=./keyfile.bin bs=1024 count=4
+cryptsetup luksAddKey ${ROOT_PARTITION} ./keyfile.bin
+
 cryptsetup luksOpen ${ROOT_PARITION} ${CRYPT_NAME} -d keyfile.bin
 
 mkfs.btrfs -L ${PERSIST_NAME} /dev/mapper/${CRYPT_NAME}
@@ -65,7 +68,8 @@ mkfs.vfat -F 32 ${EFI_PARTITION}
 mkdir -p /mnt/boot/efi
 mount ${EFI_PARTITION} /mnt/boot/efi
 mkdir -p /mnt/etc/secrets/initrd/
-mv keyfile.bin /mnt/etc/secrets/initrd/keyfile.bin
+mv ./keyfile.bin /mnt/etc/secrets/initrd/keyfile.bin
+chmod 000 /mnt/etc/secrets/initrd/keyfile.bin
 ```
 
 ## Architect

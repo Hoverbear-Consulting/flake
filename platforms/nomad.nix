@@ -35,7 +35,7 @@ in
       allowDiscards = true;
     };
   };
-  boot.initrd.luks.secrets = {
+  boot.initrd.secrets = {
     "keyfile.bin" = "/etc/secrets/initrd/keyfile.bin";
   };
 
