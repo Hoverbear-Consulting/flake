@@ -22,7 +22,7 @@ in
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.useOSProber = true;
   boot.loader.grub.efiInstallAsRemovable = true;
-  boot.loader.grub.device = "nodev";
+  boot.loader.grub.device = "/dev/disk/by-uuid/${devices.efi.uuid}";
   boot.loader.grub.configurationLimit = 10;
   boot.loader.grub.enableCryptodisk = true;
   boot.loader.efi.efiSysMountPoint = "/efi";
@@ -44,7 +44,7 @@ in
       "lazytime"
     ];
   };
-  fileSystems."/efi" = {
+  fileSystems."/EFI" = {
     device = "/dev/disk/by-uuid/${devices.efi.uuid}";
     fsType = "vfat";
   };
