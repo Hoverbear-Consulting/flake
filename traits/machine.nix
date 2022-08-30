@@ -14,13 +14,29 @@
     boot.kernelModules = [
       "coretemp"
     ];
-    services.openssh.enable = true;
-    services.openssh.passwordAuthentication = false;
+    boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.loader.grub.enable = true;
+    boot.loader.grub.efiSupport = true;
+    boot.loader.grub.useOSProber = true;
+    boot.loader.grub.efiInstallAsRemovable = true;
+    boot.loader.grub.device = "nodev";
+    boot.loader.grub.version = 2;
+    boot.loader.grub.configurationLimit = 10;
+    boot.loader.grub.enableCryptodisk = true;
+    boot.binfmt.emulatedSystems = (if pkgs.stdenv.isx86_64 then [
+      "aarch64-linux"
+    ] else if pkgs.stdenv.is_aarch64 then [
+      "x86_64"
+    ] else []);
 
-    networking.firewall.allowedTCPPorts = [ 22 ];
-    networking.firewall.allowedUDPPorts = [ 22 ];
-
-    #services.tlp.enable = true;
     powerManagement.cpuFreqGovernor = "ondemand";
+    
+    networking.networkmanager.enable = true;
+    
+    programs.nm-applet.enable = true;
+    
+    hardware.bluetooth.enable = true;
+
+    swapDevices = [ ];
   };
 }

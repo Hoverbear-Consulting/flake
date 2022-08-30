@@ -7,9 +7,6 @@
     services.xserver.displayManager.autoLogin.enable = true;
     services.xserver.displayManager.autoLogin.user = "ana";
     services.xserver.desktopManager.gnome.enable = true;
-    # services.xserver.desktopManager.xfce.thunarPlugins = with pkgs; [
-    #   xfce.thunar-archive-plugin
-    # ];
 
     networking.wireless.enable = false; # For Network Manager
 

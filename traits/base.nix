@@ -2,9 +2,10 @@
 
 {
   config = {
-    fileSystems."/scratch" = { fsType = "tmpfs"; };
-
     time.timeZone = "America/Vancouver";
+    # Windows wants hardware clock in local time instead of UTC
+    time.hardwareClockInLocalTime = true;
+
     i18n.defaultLocale = "en_CA.UTF-8";
 
     environment.systemPackages = with pkgs; [
@@ -40,6 +41,8 @@
       fio
       smartmontools
       neovimConfigured
+      rnix-lsp
+      graphviz
     ];
     environment.shellAliases = { };
     environment.variables = {
@@ -68,12 +71,19 @@
     '';
 
     security.sudo.wheelNeedsPassword = false;
+    security.sudo.extraConfig = ''
+      Defaults lecture = never
+    '';
 
     # Use edge NixOS.
     nix.extraOptions = ''
       experimental-features = nix-command flakes
     '';
     nix.package = pkgs.nixUnstable;
+
+    home-manager.useGlobalPkgs = true;
+    home-manager.useUserPackages = true;
+    home-manager.users.ana = ./../users/ana/home.nix;
 
     nixpkgs.config.allowUnfree = true;
 

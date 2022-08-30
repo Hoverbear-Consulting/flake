@@ -73,48 +73,25 @@
           }
         );
 
-      nixosConfigurations =
+        nixosConfigurations =
         let
-          gizmoBase = {
+          # Shared config between both the liveimage and real system
+          aarch64Base = {
             system = "aarch64-linux";
             modules = with self.nixosModules; [
+              home-manager.nixosModules.home-manager
               traits.overlay
               traits.base
-              traits.hardened
-              traits.machine
-              traits.tools
               services.openssh
               users.ana
             ];
           };
-          architectBase = {
-            system = "x86_64-linux";
-            modules = with self.nixosModules; [
-              traits.overlay
-              traits.base
-              traits.hardened
-              traits.machine
-              traits.tools
-              services.openssh
-              users.ana
-            ];
-          };
-          nomadBase = {
+          x86_64Base = {
             system = "x86_64-linux";
             modules = with self.nixosModules; [
               home-manager.nixosModules.home-manager
-              {
-                config = {
-                  home-manager.useGlobalPkgs = true;
-                  home-manager.useUserPackages = true;
-                  home-manager.users.ana = ./users/ana/home.nix;
-                };
-              }
               traits.overlay
               traits.base
-              traits.hardened
-              traits.machine
-              traits.tools
               services.openssh
               users.ana
             ];
@@ -122,50 +99,53 @@
         in
         with self.nixosModules; {
           gizmo = nixpkgs.lib.nixosSystem {
-            inherit (gizmoBase) system;
-            modules = gizmoBase.modules ++ [
+            inherit (aarch64Base) system;
+            modules = aarch64Base.modules ++ [
               platforms.gizmo
+              traits.machine
               traits.workstation
+              traits.hardened
             ];
           };
           gizmoIsoImage = nixpkgs.lib.nixosSystem {
-            inherit (gizmoBase) system;
-            modules = gizmoBase.modules ++ [
+            inherit (aarch64Base) system;
+            modules = aarch64Base.modules ++ [
               platforms.iso-minimal
             ];
           };
           architect = nixpkgs.lib.nixosSystem {
-            inherit (architectBase) system;
-            modules = architectBase.modules ++ [
+            inherit (x86_64Base) system;
+            modules = x86_64Base.modules ++ [
               platforms.architect
+              traits.machine
               traits.workstation
+              traits.hardened
             ];
           };
           architectIsoImage = nixpkgs.lib.nixosSystem {
-            inherit (architectBase) system;
-            modules = architectBase.modules ++ [
+            inherit (x86_64Base) system;
+            modules = x86_64Base.modules ++ [
               platforms.iso
             ];
           };
           nomad = nixpkgs.lib.nixosSystem {
-            inherit (nomadBase) system;
-            modules = nomadBase.modules ++ [
+            inherit (x86_64Base) system;
+            modules = x86_64Base.modules ++ [
               platforms.nomad
+              traits.machine
               traits.workstation
+              traits.hardened
             ];
           };
           nomadIsoImage = nixpkgs.lib.nixosSystem {
-            inherit (nomadBase) system;
-            modules = nomadBase.modules ++ [
+            inherit (x86_64Base) system;
+            modules = x86_64Base.modules ++ [
               platforms.iso
             ];
           };
           wsl = nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            modules = [
-              traits.overlay
-              traits.base
-              traits.tools
+            inherit (x86_64Base) system;
+            modules = x86_64Base.modules ++ [
               nixos-wsl.nixosModule
               platforms.wsl
             ];
@@ -183,7 +163,6 @@
         traits.overlay = { nixpkgs.overlays = [ self.overlays.default ]; };
         traits.base = ./traits/base.nix;
         traits.machine = ./traits/machine.nix;
-        traits.tools = ./traits/tools.nix;
         traits.jetbrains = ./traits/jetbrains.nix;
         traits.hardened = ./traits/hardened.nix;
         traits.sourceBuild = ./traits/source-build.nix;
