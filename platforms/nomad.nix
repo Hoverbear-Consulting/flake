@@ -3,15 +3,11 @@
 let
   devices = {
     encrypted = {
-      uuid = "aece3690-cfbb-480e-8598-1074074563d2";
-      label = "nomad";
-    };
-    boot = {
-      uuid = "0059-6D54";
-      label = "boot";
+      uuid = "aaeb8192-42cb-46f6-9f5e-6a43159b112b";
+      label = "crypt";
     };
     efi = {
-      uuid = "..";
+      uuid = "A7AA-311F";
       label = "efi";
     };
   };

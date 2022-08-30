@@ -35,7 +35,7 @@ The machines share a common partitioning strategy, once setting the required env
 
 ```bash
 export TARGET_DEVICE=/dev/null
-export BOOT_PARTITION=/dev/null
+export EFI_PARTITION=/dev/null
 export ROOT_PARTITION=/dev/null
 export CRYPT_NAME=null
 
@@ -44,13 +44,13 @@ sgdisk -Z ${TARGET_DEVICE}
 sgdisk -o ${TARGET_DEVICE}
 partprobe
 
-sgdisk ${TARGET_DEVICE} -n 1:0:+512M
+sgdisk ${TARGET_DEVICE} -n 1:0:+1G
 sgdisk ${TARGET_DEVICE} -t 1:ef00
-sgdisk ${TARGET_DEVICE} -c 1:EFI ${TARGET_DEVICE}
+sgdisk ${TARGET_DEVICE} -c 1:EFI
 
-sgdisk ${TARGET_DEVICE} -n 2:0:0 ${TARGET_DEVICE}
-sgdisk ${TARGET_DEVICE} -t 2:8309 ${TARGET_DEVICE}
-sgdisk ${TARGET_DEVICE} -c 2:${CRYPT_NAME} ${TARGET_DEVICE}
+sgdisk ${TARGET_DEVICE} -n 2:0:0
+sgdisk ${TARGET_DEVICE} -t 2:8309
+sgdisk ${TARGET_DEVICE} -c 2:${CRYPT_NAME}
 
 cryptsetup luksFormat ${ROOT_PARTITION}
 cryptsetup open ${ROOT_PARITION} ${CRYPT_NAME}
@@ -58,9 +58,9 @@ cryptsetup open ${ROOT_PARITION} ${CRYPT_NAME}
 mkfs.btrfs -L ${CRYPT_NAME} /dev/mapper/${CRYPT_NAME}
 mount -o compress=zstd,lazytime /dev/mapper/${CRYPT_NAME} /mnt/ -v
 
-mkfs.vfat -F 32 ${BOOT_PARTITION}
+mkfs.vfat -F 32 ${EFI_PARTITION}
 mkdir -p /mnt/efi
-mount ${BOOT_PARTITION} /mnt/efi
+mount ${EFI_PARTITION} /mnt/efi
 ```
 
 ## Architect
@@ -101,7 +101,7 @@ Start the machine, or reboot it. Once logged in, partion, format, and mount the 
 
 ```bash
 export TARGET_DEVICE=/dev/nvme1n1
-export BOOT_PARTITION=/dev/nvme1n1p1
+export EFI_PARTITION=/dev/nvme1n1p1
 export ROOT_PARTITION=/dev/nvme1n1p2
 export CRYPT_NAME=architect
 ```
@@ -182,7 +182,7 @@ Start the machine, or reboot it. Once logged in, partion, format, and mount the 
 
 ```bash
 export TARGET_DEVICE=/dev/nvme0n1
-export BOOT_PARTITION=/dev/nvme0n1p1
+export EFI_PARTITION=/dev/nvme0n1p1
 export ROOT_PARTITION=/dev/nvme0n1p2
 export CRYPT_NAME=gizmo
 ```
@@ -229,9 +229,9 @@ Start the machine, or reboot it. Once logged in, partion, format, and mount the 
 
 ```bash
 export TARGET_DEVICE=/dev/nvme0n1
-export BOOT_PARTITION=/dev/nvme0n1p1
+export EFI_PARTITION=/dev/nvme0n1p1
 export ROOT_PARTITION=/dev/nvme0n1p2
-export CRYPT_NAME=nomad
+export CRYPT_NAME=crypt
 ```
 Then, **follow the [Partitioning](#partitioning) section.**
 
