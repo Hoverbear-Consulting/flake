@@ -26,10 +26,10 @@ in
   boot.loader.grub.version = 2;
   boot.loader.grub.configurationLimit = 10;
   boot.loader.grub.enableCryptodisk = true;
-  boot.loader.efi.efiSysMountPoint = "/EFI";
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.initrd.luks.devices = {
-    nomad = {
+    encrypt = {
       device = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
     };
   };
