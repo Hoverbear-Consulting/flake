@@ -31,67 +31,14 @@ General dogma:
 
 ## Partitioning
 
-The machines share a common partitioning strategy, once setting the required environment variables, follow these steps:
+The machines share a common partitioning strategy, once setting the required environment variables, a script assists:
+
+> **WARNING!:** This script will **destroy** any disks and partitions you point it at, and is not designed for uncareful use.
+>
+> Be careful! Please!
 
 ```bash
-export TARGET_DEVICE=/dev/null
-export EFI_PARTITION=/dev/null
-export ROOT_PARTITION=/dev/null
-
-umount ${TARGET_DEVICE}
-sgdisk -Z ${TARGET_DEVICE}
-sgdisk -o ${TARGET_DEVICE}
-partprobe
-
-sgdisk ${TARGET_DEVICE} -n 1:0:+1G
-sgdisk ${TARGET_DEVICE} -t 1:ef00
-sgdisk ${TARGET_DEVICE} -c 1:efi
-
-sgdisk ${TARGET_DEVICE} -n 2:0:0
-sgdisk ${TARGET_DEVICE} -t 2:8309
-sgdisk ${TARGET_DEVICE} -c 2:encrypt
-
-dd if=/dev/urandom of=./keyfile.bin bs=1024 count=4
-cryptsetup luksFormat --type luks1 ${ROOT_PARTITION}
-cryptsetup luksAddKey ${ROOT_PARTITION} ./keyfile.bin
-cryptsetup luksOpen ${ROOT_PARITION} encrypt -d keyfile.bin
-
-mkfs.btrfs /dev/mapper/encrypt
-mount -o compress=zstd,lazytime /dev/mapper/encrypt /mnt/ -v
-btrfs subvolume create /mnt/root
-btrfs subvolume create /mnt/home
-btrfs subvolume create /mnt/nix
-btrfs subvolume create /mnt/persist
-btrfs subvolume create /mnt/log
-mkdir -p /mnt/snapshots/root/
-btrfs subvolume snapshot -r /mnt/root /mnt/snapshots/root/blank
-umount -R /mnt
-mount -o subvol=root,compress=zstd,lazytime /dev/mapper/encrypt /mnt
-mkdir -p /mnt/home
-mount -o subvol=home,compress=zstd,lazytime /dev/mapper/encrypt /mnt/home
-mkdir -p /mnt/nix
-mount -o subvol=nix,compress=zstd,lazytime /dev/mapper/encrypt /mnt/nix
-mkdir -p /mnt/persist
-mount -o subvol=persist,compress=zstd,lazytime /dev/mapper/encrypt /mnt/persist
-mkdir -p /mnt/var/log
-mount -o subvol=log,compress=zstd,lazytime /dev/mapper/encrypt /mnt/var/log
-mkdir -p /mnt/boot
-mount -o subvol=boot,compress=zstd,lazytime /dev/mapper/encrypt /mnt/boot
-
-mkfs.vfat -F 32 ${EFI_PARTITION}
-mkdir -p /mnt/boot/efi
-mount ${EFI_PARTITION} /mnt/boot/efi
-
-mkdir -p /mnt/etc/secrets/initrd/
-mv ./keyfile.bin /mnt/etc/secrets/initrd/keyfile.bin
-chmod 000 /mnt/etc/secrets/initrd/keyfile.bin
-
-touch /mnt/persist/var/lib/NetworkManager/secret_key
-touch /mnt/persist/var/lib/NetworkManager/seen-bssids
-touch /mnt/persist/var/lib/NetworkManager/timestamps
-mkdir -p /mnt/persist/etc/NetworkManager/system-connections
-mkdir -p /mnt/persist/var/lib/bluetooth
-mkdir -p /mnt/persist/etc/ssh
+nix run github:hoverbear-consulting/flake#unsafe-bootstrap
 ```
 
 ## Architect
