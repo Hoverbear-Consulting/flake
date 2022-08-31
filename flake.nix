@@ -35,6 +35,8 @@
           in
           {
             inherit (pkgs) neovimConfigured vscodeConfigured;
+
+            unsafe-bootstrap = pkgs.callPackage ./packages/unsafe-bootstrap { };
           });
 
       devShells = forAllSystems
