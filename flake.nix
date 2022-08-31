@@ -107,7 +107,13 @@
           aarch64IsoImage = nixpkgs.lib.nixosSystem {
             inherit (aarch64Base) system;
             modules = aarch64Base.modules ++ [
-              platforms.iso-minimal
+              platforms.iso
+              {
+                config = {
+                  virtualisation.vmware.guest.enable = nixpkgs.lib.mkForce false;
+                  services.xe-guest-utilities.enable = nixpkgs.lib.mkForce false;
+                };
+              }
             ];
           };
           gizmo = nixpkgs.lib.nixosSystem {

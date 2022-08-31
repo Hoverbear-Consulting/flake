@@ -40,7 +40,7 @@
       chromium
       spotify
       obs-studio
-    ] else if stdenv.isaarch64 then [
+    ] else if stdenv.isAarch64 then [
       spotifyd
     ] else [ ]);
 
