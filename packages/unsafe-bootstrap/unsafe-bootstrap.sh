@@ -1,3 +1,5 @@
+set -e
+
 BLUE=34
 CYAN=36
 RED=31
@@ -42,9 +44,9 @@ This process is highly experimental and will absolutely toss your machine into t
 gum confirm "Are you ready to have a really bad time?" || (echo "Okay! Then, toodles!" && exit 1)
 
 
-gum style --bold --foreground ${RED} "Destroying existing partitions on \`TARGET_DEVICE=${TARGET_DEVICE}\` in 10..."
+gum style --bold --foreground "${RED}" "Destroying existing partitions on \`TARGET_DEVICE=${TARGET_DEVICE}\` in 10..."
 sleep 10
-gum style --bold --foreground ${RED} "Let's gooooo!!!"
+gum style --bold --foreground "${RED}" "Let's gooooo!!!"
 
 umount "${TARGET_DEVICE}"
 sgdisk -Z "${TARGET_DEVICE}"
@@ -59,10 +61,8 @@ sgdisk "${TARGET_DEVICE}" -n 2:0:0
 sgdisk "${TARGET_DEVICE}" -t 2:8309
 sgdisk "${TARGET_DEVICE}" -c 2:encrypt
 
-dd if=/dev/urandom of=./keyfile.bin bs=1024 count=4
 cryptsetup luksFormat "${ROOT_PARTITION}"
-cryptsetup luksAddKey "${ROOT_PARTITION}" ./keyfile.bin
-cryptsetup luksOpen "${ROOT_PARTITION}" encrypt -d keyfile.bin
+cryptsetup luksOpen "${ROOT_PARTITION}" encrypt
 
 mkfs.btrfs /dev/mapper/encrypt
 mount -o compress=zstd,lazytime /dev/mapper/encrypt /mnt/ -v
@@ -97,5 +97,5 @@ mkdir -p /mnt/persist/etc/NetworkManager/system-connections
 mkdir -p /mnt/persist/var/lib/bluetooth
 mkdir -p /mnt/persist/etc/ssh
 
-gum style --foreground ${GREEN} "Done! Review the following block listing for the UUIDs to update the platform with."
+gum style --foreground "${GREEN}" "Done! Review the following block listing for the UUIDs to update the platform with."
 lsblk -o name,mountpoint,uuid
