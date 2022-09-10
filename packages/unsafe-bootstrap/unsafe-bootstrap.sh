@@ -86,12 +86,10 @@ mkdir -pv /mnt/persist
 mount -o subvol=persist,compress=zstd,lazytime /dev/mapper/encrypt /mnt/persist
 mkdir -pv /mnt/var/log
 mount -o subvol=log,compress=zstd,lazytime /dev/mapper/encrypt /mnt/var/log
-mkdir -pv /mnt/boot
-mount -o subvol=boot,compress=zstd,lazytime /dev/mapper/encrypt /mnt/boot
 
 mkfs.vfat -F 32 "${EFI_PARTITION}"
-mkdir -p /mnt/boot/efi
-mount "${EFI_PARTITION}" /mnt/boot/efi
+mkdir -p /mnt/boot
+mount "${EFI_PARTITION}" /mnt/boot
 
 mkdir -pv /mnt/persist/var/lib/NetworkManager/
 touch /mnt/persist/var/lib/NetworkManager/secret_key

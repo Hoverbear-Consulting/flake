@@ -91,7 +91,7 @@
       "lazytime"
     ];
   };
-  "/boot/efi" = {
+  "/boot" = {
     device = "/dev/disk/by-label/${efiDeviceLabel}";
     fsType = "vfat";
   };
