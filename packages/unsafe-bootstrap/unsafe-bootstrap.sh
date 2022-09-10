@@ -1,4 +1,4 @@
-set -xe
+set -e
 
 BLUE=34
 CYAN=36
@@ -93,12 +93,13 @@ mkfs.vfat -F 32 "${EFI_PARTITION}"
 mkdir -p /mnt/boot/efi
 mount "${EFI_PARTITION}" /mnt/boot/efi
 
+mkdir -pv /mnt/persist/var/lib/NetworkManager/
 touch /mnt/persist/var/lib/NetworkManager/secret_key
 touch /mnt/persist/var/lib/NetworkManager/seen-bssids
 touch /mnt/persist/var/lib/NetworkManager/timestamps
-mkdir -p /mnt/persist/etc/NetworkManager/system-connections
-mkdir -p /mnt/persist/var/lib/bluetooth
-mkdir -p /mnt/persist/etc/ssh
+mkdir -pv /mnt/persist/etc/NetworkManager/system-connections
+mkdir -pv /mnt/persist/var/lib/bluetooth
+mkdir -pv /mnt/persist/etc/ssh
 
 gum style --foreground "${GREEN}" "Done! Review the following block listing for the UUIDs to update the platform with."
 lsblk -o name,mountpoint,uuid
