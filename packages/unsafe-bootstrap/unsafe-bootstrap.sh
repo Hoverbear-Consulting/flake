@@ -73,6 +73,7 @@ btrfs subvolume create /mnt/home
 btrfs subvolume create /mnt/nix
 btrfs subvolume create /mnt/persist
 btrfs subvolume create /mnt/log
+btrfs subvolume create /mnt/boot
 mkdir -p /mnt/snapshots/root/
 btrfs subvolume snapshot -r /mnt/root /mnt/snapshots/root/blank
 umount -R /mnt
@@ -85,10 +86,12 @@ mkdir -pv /mnt/persist
 mount -o subvol=persist,compress=zstd,lazytime /dev/mapper/encrypt /mnt/persist
 mkdir -pv /mnt/var/log
 mount -o subvol=log,compress=zstd,lazytime /dev/mapper/encrypt /mnt/var/log
+mkdir -pv /mnt/boot
+mount -o subvol=boot,compress=zstd,lazytime /dev/mapper/encrypt /mnt/boot
 
 mkfs.vfat -F 32 "${EFI_PARTITION}"
-mkdir -p /mnt/boot
-mount "${EFI_PARTITION}" /mnt/boot
+mkdir -p /mnt/efi
+mount "${EFI_PARTITION}" /mnt/efi
 
 mkdir -pv /mnt/persist/var/lib/NetworkManager/
 touch /mnt/persist/var/lib/NetworkManager/secret_key

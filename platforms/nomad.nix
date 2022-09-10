@@ -17,7 +17,7 @@ in
     };
     boot.loader.efi.efiSysMountPoint = "/boot";
     fileSystems = makeMounts {
-      inherit encryptedDevice encryptedDeviceLabel efiDeviceLabel;
+      inherit encryptedDevice encryptedDeviceLabel efiDevice;
     };
 
     networking.hostName = "nomad";
