@@ -4,7 +4,7 @@ BLUE=34
 CYAN=36
 RED=31
 
-lsblk -o name,mountpoint,uuid
+lsblk -o name,mountpoint,size,uuid,vendor
 
 if test -z "${TARGET_DEVICE-}"; then
 	TARGET_DEVICE=$(gum input --prompt "What is the target device? (TARGET_DEVICE): " --placeholder "/dev/nvme?n?")
