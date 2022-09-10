@@ -55,6 +55,7 @@
       label = encryptedDeviceLabel;
       blkDev = encryptedDevice;
     };
+    neededForBoot = true;
     options = [
       "subvol=persist"
       "compress=zstd"

@@ -46,7 +46,7 @@ sudo nix run github:hoverbear-consulting/flake#unsafe-bootstrap
 After install, set the password for `ana`:
 
 ```bash
-echo -n "ana:$(nix run nixpkgs#mkpasswd -- --stdin --method=sha-512)" >> /mnt/persist/encrypted-passwords/ana
+nix run nixpkgs#mkpasswd -- --stdin --method=sha-512 > /mnt/persist/encrypted-passwords/ana
 ```
 
 ## Architect
