@@ -48,8 +48,8 @@ gum style --bold --foreground "${RED}" "Destroying existing partitions on \`TARG
 sleep 10
 gum style --bold --foreground "${RED}" "Let's gooooo!!!"
 
-umount -r "${TARGET_DEVICE}" || true
 umount -r /mnt || true
+umount -r "${TARGET_DEVICE}" || true
 cryptsetup luksClose encrypt || true
 sgdisk -Z "${TARGET_DEVICE}"
 sgdisk -o "${TARGET_DEVICE}"
