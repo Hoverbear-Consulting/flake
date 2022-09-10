@@ -14,6 +14,10 @@ in
   config = {
     boot.initrd.kernelModules = [ "amdgpu" ];
     services.xserver.videoDrivers = [ "amdgpu" ];
+    hardware.opengl.extraPackages = with pkgs; [
+      rocm-opencl-icd
+      rocm-runtime
+    ];
 
     fileSystems = makeMounts {
       inherit encryptedDevice encryptedDeviceLabel efiDevice;

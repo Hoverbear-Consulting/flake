@@ -10,12 +10,16 @@
     services.xserver.displayManager.autoLogin.enable = true;
     services.xserver.displayManager.autoLogin.user = "ana";
     services.xserver.desktopManager.gnome.enable = true;
-
+    
+    # So gtk themes can be set
+    programs.dconf.enable = true;
+    services.dbus.packages = with pkgs; [ dconf ];
+    
     hardware.opengl.driSupport = true;
     #hardware.steam-hardware.enable = true;
     #hardware.xpadneo.enable = true;
 
-    # fonts.fontconfig.enable = true;
+    fonts.fontconfig.enable = true;
     fonts.enableDefaultFonts = true;
     fonts.fonts = with pkgs; [
       noto-fonts
@@ -35,9 +39,9 @@
       zotero
       inkscape
       gimp
+      gnome.gnome-tweaks
     ] ++ (if stdenv.isx86_64 then [
       kicad
-      vscodeConfigured
       chromium
       spotify
       obs-studio

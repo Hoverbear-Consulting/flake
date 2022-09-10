@@ -21,7 +21,6 @@
     {
       overlays.default = final: prev: {
         neovimConfigured = final.callPackage ./packages/neovimConfigured { };
-        vscodeConfigured = final.callPackage ./packages/vscode.nix { };
       };
 
       packages = forAllSystems
@@ -34,7 +33,7 @@
             };
           in
           {
-            inherit (pkgs) neovimConfigured vscodeConfigured;
+            inherit (pkgs) neovimConfigured;
 
             unsafe-bootstrap = pkgs.callPackage ./packages/unsafe-bootstrap { };
           });
