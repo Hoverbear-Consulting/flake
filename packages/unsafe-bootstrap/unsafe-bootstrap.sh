@@ -73,7 +73,6 @@ btrfs subvolume create /mnt/home
 btrfs subvolume create /mnt/nix
 btrfs subvolume create /mnt/persist
 btrfs subvolume create /mnt/log
-btrfs subvolume create /mnt/boot
 mkdir -p /mnt/snapshots/root/
 btrfs subvolume snapshot -r /mnt/root /mnt/snapshots/root/blank
 umount -R /mnt
