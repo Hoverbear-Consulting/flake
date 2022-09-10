@@ -5,6 +5,7 @@
     home-manager.users.ana = ./home.nix;
     users.users.ana = {
       isNormalUser = true;
+      initialPassword = "initial";
       home = "/home/ana";
       createHome = true;
       extraGroups = [ "wheel" "disk" "networkmanager" ];
