@@ -75,15 +75,15 @@ mkdir -p /mnt/snapshots/root/
 btrfs subvolume snapshot -r /mnt/root /mnt/snapshots/root/blank
 umount -R /mnt
 mount -o subvol=root,compress=zstd,lazytime /dev/mapper/encrypt /mnt
-mkdir -p /mnt/home
+mkdir -pv /mnt/home
 mount -o subvol=home,compress=zstd,lazytime /dev/mapper/encrypt /mnt/home
-mkdir -p /mnt/nix
+mkdir -pv /mnt/nix
 mount -o subvol=nix,compress=zstd,lazytime /dev/mapper/encrypt /mnt/nix
-mkdir -p /mnt/persist
+mkdir -pv /mnt/persist
 mount -o subvol=persist,compress=zstd,lazytime /dev/mapper/encrypt /mnt/persist
-mkdir -p /mnt/var/log
+mkdir -pv /mnt/var/log
 mount -o subvol=log,compress=zstd,lazytime /dev/mapper/encrypt /mnt/var/log
-mkdir -p /mnt/boot
+mkdir -pv /mnt/boot
 mount -o subvol=boot,compress=zstd,lazytime /dev/mapper/encrypt /mnt/boot
 
 mkfs.vfat -F 32 "${EFI_PARTITION}"

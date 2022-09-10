@@ -1,4 +1,4 @@
-{ writeShellApplication, bash, gum, cryptsetup, gptfdisk, btrfs-progs, ... }:
+{ writeShellApplication, bash, gum, cryptsetup, gptfdisk, btrfs-progs, dosfstools, ... }:
 
 writeShellApplication {
   name = "unsafe-bootstrap";
@@ -8,7 +8,7 @@ writeShellApplication {
     cryptsetup
     gptfdisk
     btrfs-progs
-
+    dosfstools
   ];
   text = builtins.readFile ./unsafe-bootstrap.sh;
 }
