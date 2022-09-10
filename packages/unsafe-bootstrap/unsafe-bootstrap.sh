@@ -48,7 +48,7 @@ gum style --bold --foreground "${RED}" "Destroying existing partitions on \`TARG
 sleep 10
 gum style --bold --foreground "${RED}" "Let's gooooo!!!"
 
-umount "${TARGET_DEVICE}"
+umount -r "${TARGET_DEVICE}" || true
 sgdisk -Z "${TARGET_DEVICE}"
 sgdisk -o "${TARGET_DEVICE}"
 partprobe
