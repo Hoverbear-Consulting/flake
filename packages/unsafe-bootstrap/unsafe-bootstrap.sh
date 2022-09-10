@@ -44,6 +44,7 @@ gum confirm "Are you ready to have a really bad time?" || (echo "Okay! Then, too
 
 gum style --bold --foreground ${RED} "Destroying existing partitions on \`TARGET_DEVICE=${TARGET_DEVICE}\` in 10..."
 sleep 10
+gum style --bold --foreground ${RED} "Let's gooooo!!!"
 
 umount "${TARGET_DEVICE}"
 sgdisk -Z "${TARGET_DEVICE}"
@@ -59,7 +60,7 @@ sgdisk "${TARGET_DEVICE}" -t 2:8309
 sgdisk "${TARGET_DEVICE}" -c 2:encrypt
 
 dd if=/dev/urandom of=./keyfile.bin bs=1024 count=4
-cryptsetup luksFormat --type luks1 "${ROOT_PARTITION}"
+cryptsetup luksFormat "${ROOT_PARTITION}"
 cryptsetup luksAddKey "${ROOT_PARTITION}" ./keyfile.bin
 cryptsetup luksOpen "${ROOT_PARTITION}" encrypt -d keyfile.bin
 
@@ -88,10 +89,6 @@ mount -o subvol=boot,compress=zstd,lazytime /dev/mapper/encrypt /mnt/boot
 mkfs.vfat -F 32 "${EFI_PARTITION}"
 mkdir -p /mnt/boot/efi
 mount "${EFI_PARTITION}" /mnt/boot/efi
-
-mkdir -p /mnt/etc/secrets/initrd/
-mv ./keyfile.bin /mnt/etc/secrets/initrd/keyfile.bin
-chmod 000 /mnt/etc/secrets/initrd/keyfile.bin
 
 touch /mnt/persist/var/lib/NetworkManager/secret_key
 touch /mnt/persist/var/lib/NetworkManager/seen-bssids

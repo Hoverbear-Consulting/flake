@@ -5,6 +5,8 @@ writeShellApplication {
   runtimeInputs = [
     bash
     gum
+    cryptsetup
+
   ];
   text = builtins.readFile ./unsafe-bootstrap.sh;
 }
