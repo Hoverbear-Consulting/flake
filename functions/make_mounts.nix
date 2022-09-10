@@ -2,7 +2,7 @@
   Make a mount tree for adding to `fileSystems`
 
 */
-{ encryptedDeviceLabel, efiDeviceLabel }:
+{ encryptedDeviceLabel, encryptedDevice, efiDevice }:
 
 {
   "/" = {
@@ -11,7 +11,7 @@
     encrypted = {
       enable = true;
       label = encryptedDeviceLabel;
-      blkDev = "/dev/disk/by-label/${encryptedDeviceLabel}";
+      blkDev = encryptedDevice;
     };
     options = [
       "subvol=root"
@@ -25,7 +25,7 @@
     encrypted = {
       enable = true;
       label = encryptedDeviceLabel;
-      blkDev = "/dev/disk/by-label/${encryptedDeviceLabel}";
+      blkDev = encryptedDevice;
     };
     options = [
       "subvol=home"
@@ -39,7 +39,7 @@
     encrypted = {
       enable = true;
       label = encryptedDeviceLabel;
-      blkDev = "/dev/disk/by-uuid/${encryptedDeviceLabel}";
+      blkDev = encryptedDevice;
     };
     options = [
       "subvol=nix"
@@ -53,7 +53,7 @@
     encrypted = {
       enable = true;
       label = encryptedDeviceLabel;
-      blkDev = "/dev/disk/by-label/${encryptedDeviceLabel}";
+      blkDev = encryptedDevice;
     };
     options = [
       "subvol=persist"
@@ -67,7 +67,7 @@
     encrypted = {
       enable = true;
       label = encryptedDeviceLabel;
-      blkDev = "/dev/disk/by-label/${encryptedDeviceLabel}";
+      blkDev = encryptedDevice;
     };
     neededForBoot = true;
     options = [
@@ -77,7 +77,7 @@
     ];
   };
   "/boot" = {
-    device = "/dev/disk/by-label/${efiDeviceLabel}";
+    device = efiDevice;
     fsType = "vfat";
   };
 }

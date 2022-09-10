@@ -2,7 +2,8 @@
 
 let
   encryptedDeviceLabel = "encrypt";
-  efiDeviceLabel = "efi";
+  encryptedDevice = "/dev/nvme0n1p2";
+  efiDevice = "/dev/nvme0n1p1";
   makeMounts = import ./../functions/make_mounts.nix;
 in
 {
@@ -16,7 +17,7 @@ in
     };
     boot.loader.efi.efiSysMountPoint = "/boot";
     fileSystems = makeMounts {
-      inherit encryptedDeviceLabel efiDeviceLabel;
+      inherit encryptedDevice encryptedDeviceLabel efiDeviceLabel;
     };
 
     networking.hostName = "nomad";
