@@ -104,7 +104,5 @@ touch /mnt/persist/var/lib/NetworkManager/timestamps
 mkdir -pv /mnt/persist/etc/NetworkManager/system-connections
 mkdir -pv /mnt/persist/var/lib/bluetooth
 mkdir -pv /mnt/persist/etc/ssh
-touch /mnt/persist/etc/shadow
-
 gum style --foreground "${CYAN}" "Done! Review the following block listing for the UUIDs to update the platform with."
 lsblk -o name,mountpoint,uuid

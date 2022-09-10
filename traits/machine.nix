@@ -19,6 +19,7 @@
     ];
     boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.loader.systemd-boot.enable = true;
+    boot.loader.systemd-boot.editor = true;
     boot.binfmt.emulatedSystems = (if pkgs.stdenv.isx86_64 then [
       "aarch64-linux"
     ] else if pkgs.stdenv.isAarch64 then [
@@ -50,7 +51,6 @@
       adjtime.source = "/persist/etc/adjtime";
       # NIXOS.source = "/persist/etc/NIXOS";
       machine-id.source = "/persist/etc/machine-id";
-      shadow.source = "/persist/etc/shadow";
     };
     systemd.tmpfiles.rules = [
       "L /var/lib/NetworkManager/secret_key - - - - /persist/var/lib/NetworkManager/secret_key"
