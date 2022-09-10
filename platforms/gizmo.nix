@@ -1,16 +1,10 @@
 { config, pkgs, lib, modulesPath, ... }:
 
 let
-  devices = {
-    encrypted = rec {
-      uuid = "f74df5fc-7632-4e47-a481-9fd346cfad71";
-      label = "gizmo";
-    };
-    boot = rec {
-      uuid = "D41A-2BB7";
-      label = "boot";
-    };
-  };
+  encryptedDeviceLabel = "encrypt";
+  encryptedDevice = "/dev/nvme0n1p2";
+  efiDevice = "/dev/nvme0n1p1";
+  makeMounts = import ./../functions/make_mounts.nix;
 in
 {
   imports = [
@@ -37,29 +31,11 @@ in
     boot.kernelModules = [
       "amc6821" # via sensors-detect
     ];
-    boot.initrd.luks.devices = {
-      gizmo = {
-        device = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
-      };
-    };
     boot.initrd.kernelModules = [ "amdgpu" ];
     services.xserver.videoDrivers = [ "amdgpu" ];
 
-    fileSystems."/" = {
-      device = "/dev/mapper/${devices.encrypted.label}";
-      fsType = "f2fs";
-      encrypted.enable = true;
-      encrypted.label = devices.encrypted.label;
-      encrypted.blkDev = "/dev/disk/by-uuid/${devices.encrypted.uuid}";
-      options = [
-        "compress_algorithm=zstd"
-        "atgc"
-        "lazytime"
-      ];
-    };
-    fileSystems."/boot" = {
-      device = "/dev/disk/by-uuid/${devices.boot.uuid}";
-      fsType = "vfat";
+    fileSystems = makeMounts {
+      inherit encryptedDevice encryptedDeviceLabel efiDevice;
     };
 
     networking.hostName = "gizmo";

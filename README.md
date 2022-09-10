@@ -127,7 +127,7 @@ Build the recovery image:
 nix build github:hoverbear-consulting/flake#nixosConfigurations.aarch64IsoImage.config.system.build.isoImage --out-link isoImage
 ```
 
-Fetch the SolidRun provided UEFI:
+Fetch the SolidRun provided UEFI (from https://images.solid-run.com/LX2k/lx2160a_uefi):
 
 ```bash
 curl https://solid-run-images.sos-de-fra-1.exo.io/LX2k/lx2160a_uefi/lx2160acex7_2000_700_3200_8_5_2_sd_ee5c233.img.xz -o uefi.img.xz
@@ -208,13 +208,13 @@ export TARGET_DEVICE=/dev/nvme0n1
 export EFI_PARTITION=/dev/nvme0n1p1
 export ROOT_PARTITION=/dev/nvme0n1p2
 ```
+
 Then, **follow the [Partitioning](#partitioning) section.**
 
 After, install the system:
 
 ```bash
-export NIXOS_INSTALL_BOOTLOADER=true
-mkdir /mnt/mnt && mount --bind /mnt /mnt/
+sudo bootctl --install-
 sudo nixos-install --flake github:hoverbear-consulting/flake#nomad --impure
 ```
 

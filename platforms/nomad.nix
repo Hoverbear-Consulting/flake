@@ -15,7 +15,6 @@ in
     boot.kernel.sysctl = {
       "dev.i915.perf_stream_paranoid" = 0;
     };
-    boot.loader.efi.efiSysMountPoint = "/efi";
     fileSystems = makeMounts {
       inherit encryptedDevice encryptedDeviceLabel efiDevice;
     };

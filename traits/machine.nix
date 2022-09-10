@@ -20,6 +20,7 @@
     boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.loader.systemd-boot.enable = true;
     boot.loader.systemd-boot.editor = true;
+    boot.loader.efi.efiSysMountPoint = "/efi";
     boot.binfmt.emulatedSystems = (if pkgs.stdenv.isx86_64 then [
       "aarch64-linux"
     ] else if pkgs.stdenv.isAarch64 then [
