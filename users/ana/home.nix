@@ -84,12 +84,6 @@
         sha256 = "g+LfgjAnSuSj/nSmlPdB0t29kqTmegZB5B1cYzP8kCI=";
       }
       {
-        name = "Bookmarks";
-        publisher = "alefragnani";
-        version = "13.3.1";
-        sha256 = "4IZCPNk7uBqPw/FKT5ypU2QxadQzYfwbGxxT/bUnKdE=";
-      }
-      {
         name = "todo-tree";
         publisher = "Gruntfuggly";
         version = "0.0.215";
