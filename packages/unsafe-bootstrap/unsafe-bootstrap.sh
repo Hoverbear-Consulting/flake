@@ -93,6 +93,10 @@ mkfs.vfat -F 32 "${EFI_PARTITION}"
 mkdir -p /mnt/efi
 mount "${EFI_PARTITION}" /mnt/efi
 
+# Workaround https://github.com/NixOS/nixpkgs/issues/73404
+mkdir -p /mnt/mnt
+mount --bind /mnt /mnt/mnt
+
 mkdir -pv /mnt/persist/var/lib/NetworkManager/
 touch /mnt/persist/var/lib/NetworkManager/secret_key
 touch /mnt/persist/var/lib/NetworkManager/seen-bssids
