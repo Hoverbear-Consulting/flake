@@ -213,7 +213,9 @@ Then, **follow the [Partitioning](#partitioning) section.**
 After, install the system:
 
 ```bash
-nixos-install --flake github:hoverbear-consulting/flake#nomad --impure
+export NIXOS_INSTALL_BOOTLOADER=true
+mkdir /mnt/mnt && mount --bind /mnt /mnt/
+sudo nixos-install --flake github:hoverbear-consulting/flake#nomad --impure
 ```
 
 
