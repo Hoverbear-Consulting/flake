@@ -5,9 +5,9 @@
     home-manager.users.ana = ./home.nix;
     users.users.ana = {
       isNormalUser = true;
-      initialPassword = "initial";
       home = "/home/ana";
       createHome = true;
+      passwordFile = "/persist/encrypted-passwords/ana";
       extraGroups = [ "wheel" "disk" "networkmanager" ];
       openssh.authorizedKeys.keys = [
         "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCvKO9upe4YHkSC4ImJW/5QQRQG+m6vOFfzOy5mtTiZ+X1sJmoAJBn5ZqGO/ag1tp789yCpFk4RKOpfi4WPLYG7rW6ETc0d3fjOB9xCnFnWinvjL2TIGBnL6XjXNFjKgCBy9h1Vw6ePefH0nTQF2qXCc4vWXn9g3gPDwut664/FLN7nsiUj3mpA699ELGgvx4UOpmt1IBPVysFC/TodKf6ARyNvz3e/iGIjXkYy3KYti1t8SSjGWntuk2jpUaXVufvw1Mv9swj1haBgXf3F0kMXHY7H5GPLFmrQj3fS+oPfra4U3ATqx2L1u3w6wFJCNxXQU16GfQl8/ZAYE2745n+UWZeEhEHk/dYM3EzRTVTP4QLWtb473QGkvzRRdoXQkY/YZijOotMQJu3UkVFJ1hxyEpVSBY6yHwHin2uVzvhesQSxc9JAD0qnkxD1xlUvJ3SUIPwnZgY0qJR5lm+KdijMFxRzbCEzm/jypAyAwR6oUf6M4RRxki4fEl/E5sX0iWs= ana@architect"

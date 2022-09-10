@@ -27,6 +27,8 @@
       # "x86_64-linux"
     ] else [ ]);
 
+    users.mutableUsers = false;
+
     powerManagement.cpuFreqGovernor = "ondemand";
 
     networking.networkmanager.enable = true;

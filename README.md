@@ -38,7 +38,15 @@ The machines share a common partitioning strategy, once setting the required env
 > Be careful! Please!
 
 ```bash
-nix run github:hoverbear-consulting/flake#unsafe-bootstrap
+sudo nix run github:hoverbear-consulting/flake#unsafe-bootstrap
+```
+
+## Post-install
+
+After install, set the password for `ana`:
+
+```bash
+echo -n "ana:$(nix run nixpkgs#mkpasswd -- --stdin --method=sha-512)" >> /mnt/persist/encrypted-passwords/ana
 ```
 
 ## Architect
@@ -88,7 +96,8 @@ Then, **follow the [Partitioning](#partitioning) section.**
 After, install the system:
 
 ```bash
-nixos-install --flake github:hoverbear-consulting/flake#architect --impure
+sudo bootctl install --esp-path=/mnt/efi
+sudo nixos-install --flake github:hoverbear-consulting/flake#architect --impure
 ```
 
 ## Gizmo
@@ -168,7 +177,8 @@ Then, **follow the [Partitioning](#partitioning) section.**
 After, install the system:
 
 ```bash
-nixos-install --flake github:hoverbear-consulting/flake#gizmo --impure
+sudo bootctl install --esp-path=/mnt/efi
+sudo nixos-install --flake github:hoverbear-consulting/flake#gizmo --impure
 ```
 
 ## Nomad
@@ -214,7 +224,7 @@ Then, **follow the [Partitioning](#partitioning) section.**
 After, install the system:
 
 ```bash
-sudo bootctl --install-
+sudo bootctl install --esp-path=/mnt/efi
 sudo nixos-install --flake github:hoverbear-consulting/flake#nomad --impure
 ```
 
