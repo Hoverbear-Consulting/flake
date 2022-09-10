@@ -61,21 +61,6 @@
       "lazytime"
     ];
   };
-  "/boot" = {
-    device = "/dev/mapper/${encryptedDeviceLabel}";
-    fsType = "btrfs";
-    encrypted = {
-      enable = true;
-      label = encryptedDeviceLabel;
-      blkDev = "/dev/disk/by-label/${encryptedDeviceLabel}";
-    };
-    neededForBoot = true;
-    options = [
-      "subvol=boot"
-      "compress=zstd"
-      "lazytime"
-    ];
-  };
   "/var/log" = {
     device = "/dev/mapper/${encryptedDeviceLabel}";
     fsType = "btrfs";
