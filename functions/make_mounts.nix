@@ -1,32 +1,17 @@
 /*
-  Make a mount tree for adding to `fileSystems`, eg:
-
-  ```nix
-  {
-  fileSystems = (import make_mounts.nix) {
-  encryptedDeviceUuid: "boop";
-  efiDeviceUuid: "swoop";
-  keyFile: "/beep";
-  };
-  }
-  ```
+  Make a mount tree for adding to `fileSystems`
 
 */
-{ encryptedDeviceUuid, efiDeviceUuid, keyFile }:
+{ encryptedDeviceLabel, efiDeviceLabel }:
 
-let
-  # Don't forget to change traits.machine to check the right mapper
-  encryptLabel = "encrypt";
-in
 {
   "/" = {
-    device = "/dev/mapper/${encryptLabel}";
+    device = "/dev/mapper/${encryptedDeviceLabel}";
     fsType = "btrfs";
     encrypted = {
       enable = true;
-      label = encryptLabel;
-      blkDev = "/dev/disk/by-uuid/${encryptedDeviceUuid}";
-      keyFile = keyFile;
+      label = encryptedDeviceLabel;
+      blkDev = "/dev/disk/by-label/${encryptedDeviceLabel}";
     };
     options = [
       "subvol=root"
@@ -35,13 +20,12 @@ in
     ];
   };
   "/home" = {
-    device = "/dev/mapper/${encryptLabel}";
+    device = "/dev/mapper/${encryptedDeviceLabel}";
     fsType = "btrfs";
     encrypted = {
       enable = true;
-      label = encryptLabel;
-      blkDev = "/dev/disk/by-uuid/${encryptedDeviceUuid}";
-      keyFile = keyFile;
+      label = encryptedDeviceLabel;
+      blkDev = "/dev/disk/by-label/${encryptedDeviceLabel}";
     };
     options = [
       "subvol=home"
@@ -50,13 +34,12 @@ in
     ];
   };
   "/nix" = {
-    device = "/dev/mapper/${encryptLabel}";
+    device = "/dev/mapper/${encryptedDeviceLabel}";
     fsType = "btrfs";
     encrypted = {
       enable = true;
-      label = encryptLabel;
-      blkDev = "/dev/disk/by-uuid/${encryptedDeviceUuid}";
-      keyFile = keyFile;
+      label = encryptedDeviceLabel;
+      blkDev = "/dev/disk/by-uuid/${encryptedDeviceLabel}";
     };
     options = [
       "subvol=nix"
@@ -65,13 +48,12 @@ in
     ];
   };
   "/persist" = {
-    device = "/dev/mapper/${encryptLabel}";
+    device = "/dev/mapper/${encryptedDeviceLabel}";
     fsType = "btrfs";
     encrypted = {
       enable = true;
-      label = encryptLabel;
-      blkDev = "/dev/disk/by-uuid/${encryptedDeviceUuid}";
-      keyFile = keyFile;
+      label = encryptedDeviceLabel;
+      blkDev = "/dev/disk/by-label/${encryptedDeviceLabel}";
     };
     options = [
       "subvol=persist"
@@ -80,13 +62,12 @@ in
     ];
   };
   "/boot" = {
-    device = "/dev/mapper/${encryptLabel}";
+    device = "/dev/mapper/${encryptedDeviceLabel}";
     fsType = "btrfs";
     encrypted = {
       enable = true;
-      label = encryptLabel;
-      blkDev = "/dev/disk/by-uuid/${encryptedDeviceUuid}";
-      keyFile = keyFile;
+      label = encryptedDeviceLabel;
+      blkDev = "/dev/disk/by-label/${encryptedDeviceLabel}";
     };
     neededForBoot = true;
     options = [
@@ -96,13 +77,12 @@ in
     ];
   };
   "/var/log" = {
-    device = "/dev/mapper/${encryptLabel}";
+    device = "/dev/mapper/${encryptedDeviceLabel}";
     fsType = "btrfs";
     encrypted = {
       enable = true;
-      label = encryptLabel;
-      blkDev = "/dev/disk/by-uuid/${encryptedDeviceUuid}";
-      keyFile = keyFile;
+      label = encryptedDeviceLabel;
+      blkDev = "/dev/disk/by-label/${encryptedDeviceLabel}";
     };
     neededForBoot = true;
     options = [
@@ -112,7 +92,7 @@ in
     ];
   };
   "/boot/efi" = {
-    device = "/dev/disk/by-uuid/${efiDeviceUuid}";
+    device = "/dev/disk/by-label/${efiDeviceLabel}";
     fsType = "vfat";
   };
 }

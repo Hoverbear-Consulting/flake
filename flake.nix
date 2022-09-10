@@ -15,7 +15,7 @@
 
   outputs = { self, nixpkgs, nixos-wsl, home-manager }:
     let
-      supportedSystems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ];
+      supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
     in
     {
@@ -84,7 +84,6 @@
               home-manager.nixosModules.home-manager
               traits.overlay
               traits.base
-              traits.workstation
               services.openssh
             ];
           };
@@ -94,7 +93,6 @@
               home-manager.nixosModules.home-manager
               traits.overlay
               traits.base
-              traits.workstation
               services.openssh
             ];
           };
@@ -123,6 +121,7 @@
             modules = aarch64Base.modules ++ [
               platforms.gizmo
               traits.machine
+              traits.workstation
               traits.hardened
               users.ana
             ];
@@ -132,6 +131,7 @@
             modules = x86_64Base.modules ++ [
               platforms.architect
               traits.machine
+              traits.workstation
               traits.hardened
               users.ana
             ];
@@ -141,6 +141,7 @@
             modules = x86_64Base.modules ++ [
               platforms.nomad
               traits.machine
+              traits.workstation
               traits.hardened
               traits.gaming
               users.ana

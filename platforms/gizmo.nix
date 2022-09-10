@@ -18,7 +18,6 @@ in
   ];
 
   config = {
-    services.xserver.displayManager.autoLogin.user = "ana";
     boot.kernelParams = [
       # PCIE scaling tends to lock GPUs, jnettlet suggests...
       # "amdgpu.pcie_gen_cap=0x4"
@@ -90,9 +89,9 @@ in
       nixpkgs.localSystem.system = "aarch64-linux";
       nixpkgs.localSystem.platform = (lib.systems.elaborate "aarch64-linux") // {
       sys.gcc = {
-        fpu = "neon";
-        cpu = "cortex-a72";
-        arch = "armv8-a+crc+crypto";
+      fpu = "neon";
+      cpu = "cortex-a72";
+      arch = "armv8-a+crc+crypto";
       };
       };
     */
@@ -130,6 +129,6 @@ in
       extraFlags = [ "-ftree-vectorize" ];
       };
       };
-      */
+    */
   };
 }

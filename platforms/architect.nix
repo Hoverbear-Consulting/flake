@@ -18,7 +18,6 @@ in
   ];
 
   config = {
-    services.xserver.displayManager.autoLogin.user = "ana";
     boot.initrd.luks.devices = {
       architect = {
         device = "/dev/disk/by-uuid/${devices.encrypted.uuid}";

@@ -2,7 +2,7 @@
 
 {
   config = {
-    home-manager.users.ana = ./../users/ana/home.nix;
+    home-manager.users.ana = ./home.nix;
     users.users.ana = {
       isNormalUser = true;
       home = "/home/ana";

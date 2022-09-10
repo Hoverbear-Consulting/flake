@@ -1,8 +1,8 @@
 { config, pkgs, lib, modulesPath, ... }:
 
 let
-  encryptedDeviceUuid = "042de80f-f3ec-4e01-8c10-9b43436d301d";
-  efiDeviceUuid = "9805-1C26";
+  encryptedDeviceLabel = "encrypt";
+  efiDeviceLabel = "efi";
   makeMounts = import ./../functions/make_mounts.nix;
 in
 {
@@ -11,14 +11,13 @@ in
   ];
 
   config = {
-    services.xserver.displayManager.autoLogin.user = "ana";
     boot.kernel.sysctl = {
       "dev.i915.perf_stream_paranoid" = 0;
     };
     boot.loader.efi.efiSysMountPoint = "/boot/efi";
     boot.initrd.luks.devices = {
       encrypt = {
-        device = "/dev/disk/by-uuid/${encryptedDeviceUuid}";
+        device = "/dev/disk/by-uuid/${encryptedDeviceLabel}";
         keyFile = "/keyfile.bin";
         allowDiscards = true;
       };
@@ -28,8 +27,7 @@ in
     };
 
     fileSystems = makeMounts {
-      inherit encryptedDeviceUuid efiDeviceUuid;
-      keyFile = "/keyfile.bin";
+      inherit encryptedDeviceLabel efiDeviceLabel;
     };
 
     networking.hostName = "nomad";

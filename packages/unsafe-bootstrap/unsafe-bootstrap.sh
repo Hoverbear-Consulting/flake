@@ -51,7 +51,7 @@ gum style --bold --foreground "${RED}" "Let's gooooo!!!"
 umount -r "${TARGET_DEVICE}" || true
 sgdisk -Z "${TARGET_DEVICE}"
 sgdisk -o "${TARGET_DEVICE}"
-partprobe
+partprobe || true
 
 sgdisk "${TARGET_DEVICE}" -n 1:0:+1G
 sgdisk "${TARGET_DEVICE}" -t 1:ef00
@@ -64,7 +64,7 @@ sgdisk "${TARGET_DEVICE}" -c 2:encrypt
 cryptsetup luksFormat "${ROOT_PARTITION}"
 cryptsetup luksOpen "${ROOT_PARTITION}" encrypt
 
-mkfs.btrfs /dev/mapper/encrypt
+mkfs.btrfs --label tree /dev/mapper/encrypt
 mount -o compress=zstd,lazytime /dev/mapper/encrypt /mnt/ -v
 btrfs subvolume create /mnt/root
 btrfs subvolume create /mnt/home
