@@ -124,7 +124,7 @@ Requires:
 Build the recovery image:
 
 ```bash
-nix build github:hoverbear-consulting/flake#nixosConfigurations.aarch64IsoImage.config.system.build.isoImage --out-link isoImage
+nix build github:hoverbear-consulting/flake#nixosConfigurations.honeycombIsoImage.config.system.build.isoImage --out-link isoImage
 ```
 
 Fetch the SolidRun provided UEFI (from https://images.solid-run.com/LX2k/lx2160a_uefi):

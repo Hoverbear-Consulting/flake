@@ -116,6 +116,19 @@
               }
             ];
           };
+          honeycombIsoImage = nixpkgs.lib.nixosSystem {
+            inherit (aarch64Base) system;
+            modules = aarch64Base.modules ++ [
+              platforms.iso
+              traits.honeycomb_lx2k
+              {
+                config = {
+                  virtualisation.vmware.guest.enable = nixpkgs.lib.mkForce false;
+                  services.xe-guest-utilities.enable = nixpkgs.lib.mkForce false;
+                };
+              }
+            ];
+          };
           gizmo = nixpkgs.lib.nixosSystem {
             inherit (aarch64Base) system;
             modules = aarch64Base.modules ++ [
@@ -171,6 +184,7 @@
         traits.jetbrains = ./traits/jetbrains.nix;
         traits.hardened = ./traits/hardened.nix;
         traits.sourceBuild = ./traits/source-build.nix;
+        traits.honeycomb_lx2k = ./traits/honeycomb_lx2k.nix;
         services.postgres = ./services/postgres.nix;
         services.openssh = ./services/openssh.nix;
         # This trait is unfriendly to being bundled with platform-iso
