@@ -1,4 +1,4 @@
-{ writeShellApplication, bash, gum, cryptsetup, fdisk, btrfs-progs, ... }:
+{ writeShellApplication, bash, gum, cryptsetup, gptfdisk, btrfs-progs, ... }:
 
 writeShellApplication {
   name = "unsafe-bootstrap";
@@ -6,7 +6,7 @@ writeShellApplication {
     bash
     gum
     cryptsetup
-    fdisk
+    gptfdisk
     btrfs-progs
 
   ];
