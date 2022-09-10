@@ -133,6 +133,7 @@
             inherit (aarch64Base) system;
             modules = aarch64Base.modules ++ [
               platforms.gizmo
+              traits.honeycomb_lx2k
               traits.machine
               traits.workstation
               traits.hardened
