@@ -45,6 +45,7 @@
         "trayIconsReloaded@selfmade.pl"
       ];
     };
+    # `gsettings get org.gnome.shell.extensions.user-theme name`
     "org/gnome/shell/extensions/user-theme" = {
       name = "palenight";
     };

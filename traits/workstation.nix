@@ -9,6 +9,7 @@
     services.xserver.displayManager.gdm.enable = true;
     services.xserver.displayManager.autoLogin.enable = true;
     services.xserver.displayManager.autoLogin.user = "ana";
+    services.xserver.displayManager.gdm.autoLogin.delay = 3;
     services.xserver.desktopManager.gnome.enable = true;
     
     # So gtk themes can be set
