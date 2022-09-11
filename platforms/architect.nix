@@ -19,6 +19,14 @@ in
       inherit encryptedDevice encryptedDeviceLabel efiDevice;
     };
 
+    # This doesn't seem to work...
+    /* environment.etc."crypttab" = {
+      enable = true;
+      text = ''
+      encrypt /dev/nvme1n1p2 - fido2-device=auto
+      '';
+    }; */
+
     networking.hostName = "architect";
     networking.domain = "hoverbear.home";
   };

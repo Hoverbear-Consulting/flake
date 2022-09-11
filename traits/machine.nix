@@ -27,6 +27,14 @@
       # "x86_64-linux"
     ] else [ ]);
 
+    # http://0pointer.net/blog/unlocking-luks2-volumes-with-tpm2-fido2-pkcs11-security-hardware-on-systemd-248.html
+    # security.pam.u2f.enable = true;
+    # security.pam.u2f.cue = true;
+    # security.pam.u2f.control = "optional";
+    boot.initrd.systemd.enable = true;
+    # boot.initrd.luks.fido2Support = true;
+    boot.initrd.luks.mitigateDMAAttacks = true;
+
     users.mutableUsers = false;
 
     powerManagement.cpuFreqGovernor = "ondemand";

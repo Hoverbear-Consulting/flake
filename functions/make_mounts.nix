@@ -68,7 +68,7 @@
     encrypted = {
       enable = true;
       label = encryptedDeviceLabel;
-      blkDev = "/dev/disk/by-label/${encryptedDeviceLabel}";
+      blkDev = encryptedDevice;
     };
     neededForBoot = true;
     options = [
