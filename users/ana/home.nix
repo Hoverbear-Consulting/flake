@@ -35,7 +35,7 @@
       '';
     };
   };
-  
+
   dconf.settings = {
     "org/gnome/shell" = {
       disable-user-extensions = false;
@@ -58,7 +58,7 @@
   home.sessionVariables.GTK_THEME = "palenight";
 
   programs.fish.enable = true;
-  
+
   programs.vscode = {
     enable = true;
     package = pkgs.vscode;

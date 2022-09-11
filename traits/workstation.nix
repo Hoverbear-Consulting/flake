@@ -11,11 +11,11 @@
     services.xserver.displayManager.autoLogin.user = "ana";
     services.xserver.displayManager.gdm.autoLogin.delay = 3;
     services.xserver.desktopManager.gnome.enable = true;
-    
+
     # So gtk themes can be set
     programs.dconf.enable = true;
     services.dbus.packages = with pkgs; [ dconf ];
-    
+
     hardware.opengl.driSupport = true;
     #hardware.steam-hardware.enable = true;
     #hardware.xpadneo.enable = true;
