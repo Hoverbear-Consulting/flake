@@ -49,6 +49,23 @@ After install, set the password for `ana`:
 nix run nixpkgs#mkpasswd -- --stdin --method=sha-512 > /mnt/persist/encrypted-passwords/ana
 ```
 
+### Yubikeys
+
+For Yubikeys, use U2F:
+
+```bash
+mkdir -p $HOME/.config/Yubico/
+pamu2fcfg >> $HOME/.config/Yubico/u2f_keys
+```
+
+For more keys, just do the same thing.
+
+To use these keys on the `dm-crypt`:
+
+```bash
+systemd-cryptenroll --fido2-device=auto $ROOT_PARTITION
+```
+
 ## Architect
 
 An x86_64 workstation & gaming rig.

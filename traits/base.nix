@@ -77,6 +77,9 @@
     security.sudo.extraConfig = ''
       Defaults lecture = never
     '';
+    security.pam.u2f.enable = true;
+    security.pam.u2f.cue = true;
+    security.pam.u2f.control = "sufficient";
 
     # Use edge NixOS.
     nix.extraOptions = ''
