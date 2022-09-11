@@ -9,6 +9,25 @@
     services.xserver.displayManager.gdm.enable = true;
     services.xserver.displayManager.autoLogin.enable = false;
     services.xserver.desktopManager.gnome.enable = true;
+    environment.gnome.excludePackages = (with pkgs; [
+      gnome-photos
+      gnome-tour
+    ]) ++ (with pkgs.gnome; [
+      cheese # webcam tool
+      gnome-music
+      gedit # text editor
+      epiphany # web browser
+      geary # email reader
+      gnome-characters
+      tali # poker game
+      iagno # go game
+      hitori # sudoku game
+      atomix # puzzle game
+      yelp # Help view
+      gnome-contacts
+      gnome-initial-setup
+    ]);
+
 
     # So gtk themes can be set
     programs.dconf.enable = true;
@@ -39,6 +58,8 @@
       inkscape
       gimp
       gnome.gnome-tweaks
+      gnome.gnome-characters
+      gnome.gnome-boxes
     ] ++ (if stdenv.isx86_64 then [
       kicad
       chromium

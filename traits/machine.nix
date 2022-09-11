@@ -41,6 +41,51 @@
 
     networking.networkmanager.enable = true;
     networking.wireless.enable = false; # For Network Manager
+    networking.firewall.enable = false; # use nftables instead
+    networking.nftables.enable = true;
+    networking.nftables.ruleset = ''
+      # Check out https://wiki.nftables.org/ for better documentation.
+      # Table for both IPv4 and IPv6.
+      table inet filter {
+        # Block all incomming connections traffic except SSH and "ping".
+        chain input {
+          type filter hook input priority 0;
+      
+          # accept any localhost traffic
+          iifname lo accept
+      
+          # accept traffic originated from us
+          ct state {established, related} accept
+      
+          # ICMP
+          # routers may also want: mld-listener-query, nd-router-solicit
+          ip6 nexthdr icmpv6 icmpv6 type { destination-unreachable, packet-too-big, time-exceeded, parameter-problem, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert } accept
+          ip protocol icmp icmp type { destination-unreachable, router-advertisement, time-exceeded, parameter-problem } accept
+      
+          # allow "ping"
+          ip6 nexthdr icmpv6 icmpv6 type echo-request accept
+          ip protocol icmp icmp type echo-request accept
+      
+          # accept SSH connections (required for a server)
+          tcp dport 22 accept
+      
+          # count and drop any other traffic
+          counter drop
+        }
+      
+        # Allow all outgoing connections.
+        chain output {
+          type filter hook output priority 0;
+          accept
+        }
+      
+        chain forward {
+          type filter hook forward priority 0;
+          accept
+        }
+      }
+  '';
+
     programs.nm-applet.enable = true;
     hardware.bluetooth.enable = true;
 
@@ -53,6 +98,10 @@
     };
     security.rtkit.enable = true;
     hardware.pulseaudio.enable = false;
+
+    virtualisation.libvirtd.enable = true;
+    virtualisation.spiceUSBRedirection.enable = true; # Note that this allows users arbitrary access to USB devices. 
+    virtualisation.libvirtd.qemu.ovmf.enable = true;
 
     # opt in state
     # From https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html
