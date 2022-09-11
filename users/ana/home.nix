@@ -36,6 +36,7 @@
     };
   };
 
+  # Use `dconf watch /` to track stateful changes you are doing and store them here.
   dconf.settings = {
     "org/gnome/shell" = {
       disable-user-extensions = false;
@@ -43,17 +44,45 @@
       enabled-extensions = [
         "user-theme@gnome-shell-extensions.gcampax.github.com"
         "trayIconsReloaded@selfmade.pl"
+        "Vitals@CoreCoding.com"
+        "dash-to-panel@jderose9.github.com"
+        "sound-output-device-chooser@kgshank.net"
+        "space-bar@luchrioh"
       ];
+      favorite-apps = [ "firefox.desktop" "code.desktop" "org.gnome.Terminal.desktop" "spotify.desktop" "org.gnome.Nautilus.desktop" ];
+    };
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
     };
     # `gsettings get org.gnome.shell.extensions.user-theme name`
     "org/gnome/shell/extensions/user-theme" = {
       name = "palenight";
+    };
+    "org/gnome/desktop/wm/preferences" = {
+      workspace-names = [ "Main" ];
+    };
+    "org/gnome/shell/extensions/vitals" = {
+      show-storage = false;
+      show-voltage = false;
+    };
+    "org/gnome/desktop/background" = {
+      picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/vnc-l.png";
+      picture-uri-dark = "file:///run/current-system/sw/share/backgrounds/gnome/vnc-d.png";
+    };
+    "org/gnome/desktop/screensaver" = {
+      picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/vnc-d.png";
+      primary-color = "#3465a4";
+      secondary-color = "#000000";
     };
   };
 
   home.packages = with pkgs; [
     gnomeExtensions.user-themes
     gnomeExtensions.tray-icons-reloaded
+    gnomeExtensions.vitals
+    gnomeExtensions.dash-to-panel
+    gnomeExtensions.sound-output-device-chooser
+    gnomeExtensions.space-bar
   ];
   home.sessionVariables.GTK_THEME = "palenight";
 
