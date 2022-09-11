@@ -146,6 +146,7 @@
               traits.machine
               traits.workstation
               traits.hardened
+              traits.gaming
               users.ana
             ];
           };
@@ -156,7 +157,6 @@
               traits.machine
               traits.workstation
               traits.hardened
-              traits.gaming
               users.ana
             ];
           };

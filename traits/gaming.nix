@@ -17,7 +17,7 @@
   winecfg
   ```
 
-  Under "Applications" ensure the Windows version is "Windows 10"
+  In `winecfg` under "Applications" ensure the Windows version is "Windows 10"
 
 
 */
@@ -30,7 +30,9 @@
     environment.systemPackages = with pkgs; [
       wineWowPackages.staging
       wineWowPackages.waylandFull
+      wineWowPackages.fonts
       winetricks
+      mono
     ];
     hardware.opengl.driSupport32Bit = true;
 
