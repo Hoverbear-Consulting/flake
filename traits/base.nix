@@ -24,7 +24,6 @@
       htop
       bat
       grex
-      broot
       bottom
       fd
       sd
@@ -88,6 +87,9 @@
     home-manager.useUserPackages = true;
 
     nixpkgs.config.allowUnfree = true;
+    nix.settings = {
+      build-max-jobs = "auto";
+    };
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions

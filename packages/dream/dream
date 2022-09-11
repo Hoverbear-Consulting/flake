@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+
+import torch
+from diffusers import StableDiffusionPipeline
+
+def dummy(images, **kwargs):
+    return images, False
+
+device = "cuda"
+
+pipe = StableDiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v1-4", 
+    revision="fp16",
+    # torch_dtype=torch.float16,
+    use_auth_token=True
+)
+pipe = pipe.to(device)
+pipe.safety_checker = dummy     # Disable prude mode
+
+prompt = "a photo of an astronaut riding a horse on mars"
+with torch.autocast(device):
+    image = pipe(prompt).images[0]  
+
+image.save("astronaut_rides_horse.png")

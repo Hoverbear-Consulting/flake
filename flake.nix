@@ -32,10 +32,21 @@
               config.allowUnfree = true;
             };
           in
-          {
+          rec {
             inherit (pkgs) neovimConfigured;
 
             unsafe-bootstrap = pkgs.callPackage ./packages/unsafe-bootstrap { };
+            python310Packages.torch-vulkan = pkgs.callPackage ./packages/python-modules/torch-vulkan { };
+            python310Packages.diffusers = pkgs.callPackage ./packages/python-modules/diffusers {
+              # inherit (python310Packages) torch-vulkan;
+             };
+            python310Packages.huggingface_hub = pkgs.callPackage ./packages/python-modules/huggingface_hub { };
+            dream = pkgs.callPackage ./packages/dream {
+              # inherit (python310Packages) torch-vulkan;
+              diffusers = pkgs.callPackage ./packages/python-modules/diffusers {
+                # inherit (python310Packages) torch-vulkan;
+              };
+            };
           });
 
       devShells = forAllSystems
@@ -49,7 +60,6 @@
           {
             default = pkgs.mkShell
               {
-                inputsFrom = with pkgs; [ ];
                 buildInputs = with pkgs; [
                   nixpkgs-fmt
                 ];
