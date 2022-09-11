@@ -2,7 +2,8 @@
   description = "Hoverbear's Flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "/home/ana/git/nixos/nixpkgs";
     nixos-wsl = {
       url = "github:hoverbear-consulting/NixOS-WSL/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,6 +31,7 @@
               inherit system;
               overlays = [ self.overlays.default ];
               config.allowUnfree = true;
+              config.allowUnsupportedSystem = true;
             };
           in
           rec {

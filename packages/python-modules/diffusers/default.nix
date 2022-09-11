@@ -24,7 +24,8 @@ python310Packages.buildPythonPackage rec {
     numpy
     transformers
     cudatoolkit
-    torch-bin
+    #torch-bin
+    (torch.override { cudaSupport = true; })
   ];
 
   # Tests require network access.

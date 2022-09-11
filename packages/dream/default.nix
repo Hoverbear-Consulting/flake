@@ -50,7 +50,8 @@ python310.pkgs.buildPythonApplication rec {
     datasets
     filelock
     numpy
-    torch-bin
+    #torch-bin
+    (torch.override { cudaSupport = true; })
     transformers
     diffusers
     ftfy
