@@ -49,7 +49,7 @@
         "sound-output-device-chooser@kgshank.net"
         "space-bar@luchrioh"
       ];
-      favorite-apps = [ "firefox.desktop" "code.desktop" "org.gnome.Terminal.desktop" "spotify.desktop" "org.gnome.Nautilus.desktop" ];
+      favorite-apps = [ "firefox.desktop" "code.desktop" "org.gnome.Terminal.desktop" "spotify.desktop" "virt-manager.desktop" "org.gnome.Nautilus.desktop" ];
     };
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
@@ -121,6 +121,10 @@
       }
     ];
   };
+
+  xdg.configFile."libvirt/qemu.conf".text = ''
+    nvram = ["/run/libvirt/nix-ovmf/OVMF_CODE.fd:/run/libvirt/nix-ovmf/OVMF_VARS.fd"]
+  '';
 
   programs.home-manager.enable = true;
   home.stateVersion = "22.05";

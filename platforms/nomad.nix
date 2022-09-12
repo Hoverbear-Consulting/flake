@@ -12,6 +12,7 @@ in
   ];
 
   config = {
+    boot.kernelModules = [ "kvm-intel" ];
     boot.kernel.sysctl = {
       "dev.i915.perf_stream_paranoid" = 0;
     };

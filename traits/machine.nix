@@ -16,6 +16,7 @@
     ];
     boot.kernelModules = [
       "coretemp"
+      "vfio-pci"
     ];
     boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.loader.systemd-boot.enable = true;
@@ -41,8 +42,11 @@
 
     networking.networkmanager.enable = true;
     networking.wireless.enable = false; # For Network Manager
-    networking.firewall.enable = false; # use nftables instead
-    networking.nftables.enable = true;
+    networking.firewall.enable = true;
+    # For libvirt: https://releases.nixos.org/nix-dev/2016-January/019069.html
+    networking.firewall.checkReversePath = false;
+
+    /* networking.nftables.enable = true;
     networking.nftables.ruleset = ''
       # Check out https://wiki.nftables.org/ for better documentation.
       # Table for both IPv4 and IPv6.
@@ -84,7 +88,7 @@
           accept
         }
       }
-  '';
+  ''; */
 
     programs.nm-applet.enable = true;
     hardware.bluetooth.enable = true;
@@ -100,8 +104,14 @@
     hardware.pulseaudio.enable = false;
 
     virtualisation.libvirtd.enable = true;
+    virtualisation.libvirtd.onBoot = "ignore";
     virtualisation.spiceUSBRedirection.enable = true; # Note that this allows users arbitrary access to USB devices. 
     virtualisation.libvirtd.qemu.ovmf.enable = true;
+    virtualisation.libvirtd.qemu.ovmf.packages = [ pkgs.OVMFFull.fd ];
+    virtualisation.libvirtd.qemu.swtpm.enable = true;
+    virtualisation.libvirtd.qemu.swtpm.package = pkgs.swtpm;
+    virtualisation.libvirtd.qemu.runAsRoot = false;
+    environment.sessionVariables.LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
 
     # opt in state
     # From https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html

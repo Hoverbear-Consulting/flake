@@ -13,6 +13,7 @@ in
 
   config = {
     boot.initrd.kernelModules = [ "amdgpu" ];
+    boot.kernelModules = [ "kvm-amd" ];
     services.xserver.videoDrivers = [ "amdgpu" ];
 
     fileSystems = makeMounts {

@@ -57,9 +57,9 @@
       zotero
       inkscape
       gimp
+      virt-manager
       gnome.gnome-tweaks
       gnome.gnome-characters
-      gnome.gnome-boxes
     ] ++ (if stdenv.isx86_64 then [
       kicad
       chromium

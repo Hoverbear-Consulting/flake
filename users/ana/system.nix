@@ -8,7 +8,7 @@
       home = "/home/ana";
       createHome = true;
       passwordFile = "/persist/encrypted-passwords/ana";
-      extraGroups = [ "wheel" "disk" "networkmanager" ];
+      extraGroups = [ "wheel" "disk" "networkmanager" "libvirtd" "qemu-libvirtd" "kvm"];
       openssh.authorizedKeys.keys = [
         "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDVkA7kB9DDbjmU93LaGz7h2uco4hCJx7xT7OJ9YkoXzcFqIiXhBITx9s3+OJSlWkeJ51nShgZXTLgDPaW8uU1TS7vwqVwGbe35rSPCyAxjYzY7ZMKi3u9PTb73cI6CfmWg9uU5ox3g3dUF5xNm5CsKulCd/eXASYgaiEH8AQ8R1nrr4M7A92ZzxepzhETjCVYdz8fT4f35Pfs/Sn70h9uxfZ7SCbQ3jhGuWpEhgfEBwqRpqeMRSXUQwE88ThKn++iXfENVzPJKP4TT+bX36oHlH7c1Wex5e3uHd/elDbq3Q+h3b7T3QUlH5AdKk6SkHnPn6NSdHoU+gWiMDdeCipPdpJZAkJlTmACq62JcmT3trIbNi3Q92Oh+lvonaN17d6sAmNx5om82R84qrzPusom4YIIfLRekbPFzPDvdR8ZDJPaXM8jDv+JwMhMlM0Iqb2tXB9RQ0Gz1DJX45dEnVbjyIJGbYwUnwjzK1LaahKd9HKuLlloMaAfw3H4jnzOeiSU= ana@architect"
         "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC/+nG+yQbZREeShNJeyZcOpqT5YQ3tGNk8SWopT10qmv9+qynaVSwTvTeWj/i5l6EH/yrImt8rofFIh1e9x20Vs2iAkTozaTOPqgbw7n1gerUO5gXTdhLUbndrhZ0BYIOIZf1xCYOsLtzQdj9/RRZdZW+E60tuLU6QObcwFPTWIWKjA78j1sfl0ZF2iPBnKYAstU5KpX+h+rs8wGL56V98IKrmv4WWNAsmRnnrWSHsCdHcQT6R82b5ZgYjG7rd+2tCPYNVOIkAlJAOQcFCa2DNiCNpQGaKtJSTJtrHZZPfBHttbk+axK8QhIFNR/ULZQtW25uIS9ciP9bl9CsfbRymxf0oCdLNZAqunnvIdC5I4Dn9wmpaz5/4YUaGsmjXUxrY0zLsaENOk8qZ1W3L8IoeQwqCXU/87PWlE6d+ErrUEJhEK7a3mVckQeIdH+u97mLo76TJnrLAtA3OJCt9/m0/uEYeN4+z8g5ypXmRGPKHVb84dYj7LuTKKCA1NyvwE4k= ana@gizmo"
