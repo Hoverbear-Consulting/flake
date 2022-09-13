@@ -262,7 +262,12 @@ Ensure the Windows install has WSL(2) enabled:
 
 ```powershell
 Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux"
-Enable-WindowsOptionalFeature -Online -FeatureName "VirtualMachinePlatform" 
+Enable-WindowsOptionalFeature -Online -FeatureName "VirtualMachinePlatform"
+```
+
+Reboot. Then, [install the kernel update](https://docs.microsoft.com/en-gb/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package)
+
+```powershell
 wsl --set-default-version 2
 ```
 
