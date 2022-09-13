@@ -269,6 +269,7 @@ Reboot. Then, [install the kernel update](https://docs.microsoft.com/en-gb/windo
 
 ```powershell
 wsl --set-default-version 2
+wsl --update
 ```
 
 ### Bootstrap
@@ -279,12 +280,6 @@ Import the tarball:
 ```powershell
 wsl --import nixos .\nixos\ tarBall/tarball/nixos-system-x86_64-linux.tar.gz --version 2
 wsl --set-default nixos
-```
-
-Then, inside the WSL container:
-
-```bash
-/nix/var/nix/profiles/system/activate
 ```
 
 Ctrl+D to log out, then re-enter with `wsl -d nixos`. This should result in a working user shell.
