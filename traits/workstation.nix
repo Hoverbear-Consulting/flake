@@ -60,6 +60,7 @@
       virt-manager
       gnome.gnome-tweaks
       gnome.gnome-characters
+      openrgb
     ] ++ (if stdenv.isx86_64 then [
       kicad
       chromium

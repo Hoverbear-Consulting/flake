@@ -106,6 +106,7 @@
     virtualisation.libvirtd.enable = true;
     virtualisation.libvirtd.onBoot = "ignore";
     virtualisation.spiceUSBRedirection.enable = true; # Note that this allows users arbitrary access to USB devices. 
+    virtualisation.libvirtd.qemu.package = pkgs.qemu_full;
     virtualisation.libvirtd.qemu.ovmf.enable = true;
     virtualisation.libvirtd.qemu.ovmf.packages = [ pkgs.OVMFFull.fd ];
     virtualisation.libvirtd.qemu.swtpm.enable = true;

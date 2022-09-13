@@ -12,8 +12,9 @@ in
   ];
 
   config = {
+    boot.kernelParams = [ "amd_iommu=on" "iommu=pt" "iommu=1" "rd.driver.pre=vfio-pci" ];
     boot.initrd.kernelModules = [ "amdgpu" ];
-    boot.kernelModules = [ "kvm-amd" ];
+    boot.kernelModules = [ "tap" "kvm-amd" "i2c-piix4" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
     services.xserver.videoDrivers = [ "amdgpu" ];
 
     fileSystems = makeMounts {

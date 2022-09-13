@@ -46,6 +46,7 @@
       neovimConfigured
       rnix-lsp
       graphviz
+      simple-http-server
     ];
     environment.shellAliases = { };
     environment.variables = {

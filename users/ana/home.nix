@@ -63,7 +63,12 @@
     };
     "org/gnome/shell/extensions/vitals" = {
       show-storage = false;
-      show-voltage = false;
+      show-voltage = true;
+      show-memory = true;
+      show-fan = true;
+      show-temperature = true;
+      show-processor = true;
+      show-network = true;
     };
     "org/gnome/desktop/background" = {
       picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/vnc-l.png";
@@ -100,18 +105,18 @@
       github.vscode-pull-request-github
       editorconfig.editorconfig
       matklad.rust-analyzer
+      mkhl.direnv
+      jock.svg
+      usernamehw.errorlens
+      vadimcn.vscode-lldb
+      bungcip.better-toml
+      ms-python.python
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
         name = "material-palenight-theme";
         publisher = "whizkydee";
         version = "2.0.2";
         sha256 = "sha256-//EpXe+kKloqbMIZ8kstUKdYB490tQBBilB3Z9FfBNI=";
-      }
-      {
-        name = "better-toml";
-        publisher = "bungcip";
-        version = "0.3.2";
-        sha256 = "g+LfgjAnSuSj/nSmlPdB0t29kqTmegZB5B1cYzP8kCI=";
       }
       {
         name = "todo-tree";
