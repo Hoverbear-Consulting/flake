@@ -105,14 +105,16 @@
 
     virtualisation.libvirtd.enable = true;
     virtualisation.libvirtd.onBoot = "ignore";
-    virtualisation.spiceUSBRedirection.enable = true; # Note that this allows users arbitrary access to USB devices. 
     virtualisation.libvirtd.qemu.package = pkgs.qemu_full;
     virtualisation.libvirtd.qemu.ovmf.enable = true;
     virtualisation.libvirtd.qemu.ovmf.packages = [ pkgs.OVMFFull.fd ];
     virtualisation.libvirtd.qemu.swtpm.enable = true;
     virtualisation.libvirtd.qemu.swtpm.package = pkgs.swtpm;
     virtualisation.libvirtd.qemu.runAsRoot = false;
+    virtualisation.spiceUSBRedirection.enable = true; # Note that this allows users arbitrary access to USB devices. 
     environment.sessionVariables.LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
+
+    virtualisation.podman.enable = true;
 
     # opt in state
     # From https://mt-caret.github.io/blog/posts/2020-06-29-optin-state.html

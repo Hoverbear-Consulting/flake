@@ -98,6 +98,7 @@
     package = pkgs.vscode;
     userSettings = {
       "workbench.colorTheme" = "Palenight Operator";
+      "editor.formatOnSave" = true;
     };
     extensions = with pkgs.vscode-extensions; [
       bbenoist.nix
