@@ -47,7 +47,7 @@
     networking.firewall.checkReversePath = false;
 
     /* networking.nftables.enable = true;
-    networking.nftables.ruleset = ''
+      networking.nftables.ruleset = ''
       # Check out https://wiki.nftables.org/ for better documentation.
       # Table for both IPv4 and IPv6.
       table inet filter {
@@ -88,7 +88,7 @@
           accept
         }
       }
-  ''; */
+    ''; */
 
     programs.nm-applet.enable = true;
     hardware.bluetooth.enable = true;
@@ -107,7 +107,7 @@
     virtualisation.libvirtd.onBoot = "ignore";
     virtualisation.libvirtd.qemu.package = pkgs.qemu_full;
     virtualisation.libvirtd.qemu.ovmf.enable = true;
-    virtualisation.libvirtd.qemu.ovmf.packages = [ pkgs.OVMFFull.fd ];
+    virtualisation.libvirtd.qemu.ovmf.packages = if pkgs.stdenv.isx86_64 then [ pkgs.OVMFFull.fd ] else [ pkgs.OVMF.fd ];
     virtualisation.libvirtd.qemu.swtpm.enable = true;
     virtualisation.libvirtd.qemu.swtpm.package = pkgs.swtpm;
     virtualisation.libvirtd.qemu.runAsRoot = false;

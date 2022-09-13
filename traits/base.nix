@@ -78,7 +78,7 @@
     security.sudo.extraConfig = ''
       Defaults lecture = never
     '';
-    
+
     # Use edge NixOS.
     nix.extraOptions = ''
       experimental-features = nix-command flakes

@@ -111,7 +111,7 @@
       usernamehw.errorlens
       vadimcn.vscode-lldb
       bungcip.better-toml
-      ms-python.python
+
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
         name = "material-palenight-theme";
@@ -125,7 +125,9 @@
         version = "0.0.215";
         sha256 = "sha256-WK9J6TvmMCLoqeKWh5FVp1mNAXPWVmRvi/iFuLWMylM=";
       }
-    ];
+    ] ++ (if pkgs.stdenv.isx86_64 then with pkgs.vscode-extensions; [
+      ms-python.python
+    ] else [ ]);
   };
 
   xdg.configFile."libvirt/qemu.conf".text = ''
