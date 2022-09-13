@@ -255,7 +255,7 @@ A system for on Windows (WSL2).
 Build the tarball:
 
 ```bash
-nix build github:hoverbear-consulting/flake#nixosConfigurations.wsl.config.system.build.tarball --out-link tarBall
+nix build github:hoverbear-consulting/flake#nixosConfigurations.wsl.config.system.build.installer --out-link installer
 ```
 
 Ensure the Windows install has WSL(2) enabled:
@@ -282,7 +282,19 @@ wsl --import nixos .\nixos\ tarBall/tarball/nixos-system-x86_64-linux.tar.gz --v
 wsl --set-default nixos
 ```
 
-Ctrl+D to log out, then re-enter with `wsl -d nixos`. This should result in a working user shell.
+Then enter first setup.
+
+```powershell
+wsl
+```
+
+This may hang at `Opimtizing Store`, give it a minute, then Ctrl+C and run `wsl` again. It should work.
+
+If you do experience that, rebuild the install and it seems to fix it:
+
+```bash
+nixos-rebuild switch --flake github:hoverbear-consulting/flake#wsl
+```
 
 
 [hoverbear-consulting]: https://hoverbear.org
