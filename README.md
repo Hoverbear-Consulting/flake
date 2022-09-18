@@ -262,8 +262,14 @@ Ensure the Windows install has WSL(2) enabled:
 
 ```powershell
 Enable-WindowsOptionalFeature -Online -FeatureName "Microsoft-Windows-Subsystem-Linux"
-Enable-WindowsOptionalFeature -Online -FeatureName "VirtualMachinePlatform" 
+Enable-WindowsOptionalFeature -Online -FeatureName "VirtualMachinePlatform"
+```
+
+Reboot. Then, [install the kernel update](https://docs.microsoft.com/en-gb/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package)
+
+```powershell
 wsl --set-default-version 2
+wsl --update
 ```
 
 ### Bootstrap
@@ -276,13 +282,19 @@ wsl --import nixos nixos-wsl-installer.tar.gz --version 2
 wsl --set-default nixos
 ```
 
-Then, inside the WSL container:
+Then enter first setup.
 
-```bash
-/nix/var/nix/profiles/system/activate
+```powershell
+wsl
 ```
 
-Ctrl+D to log out, then re-enter with `wsl -d nixos`. This should result in a working user shell.
+This may hang at `Opimtizing Store`, give it a minute, then Ctrl+C and run `wsl` again. It should work.
+
+If you do experience that, rebuild the install and it seems to fix it:
+
+```bash
+nixos-rebuild switch --flake github:hoverbear-consulting/flake#wsl
+```
 
 
 [hoverbear-consulting]: https://hoverbear.org
