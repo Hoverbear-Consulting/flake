@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-wsl = {
-      url = "github:hoverbear-consulting/NixOS-WSL/master";
+      url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
@@ -80,6 +80,7 @@
           aarch64Base = {
             system = "aarch64-linux";
             modules = with self.nixosModules; [
+              ({ config = { nix.registry.nixpkgs.flake = nixpkgs; }; })
               home-manager.nixosModules.home-manager
               traits.overlay
               traits.base
@@ -89,6 +90,7 @@
           x86_64Base = {
             system = "x86_64-linux";
             modules = with self.nixosModules; [
+              ({ config = { nix.registry.nixpkgs.flake = nixpkgs; }; })
               home-manager.nixosModules.home-manager
               traits.overlay
               traits.base
@@ -163,8 +165,9 @@
           wsl = nixpkgs.lib.nixosSystem {
             inherit (x86_64Base) system;
             modules = x86_64Base.modules ++ [
-              nixos-wsl.nixosModule
+              nixos-wsl.nixosModules.wsl
               platforms.wsl
+              users.ana
             ];
           };
         };

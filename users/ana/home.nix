@@ -53,6 +53,7 @@
     };
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
+      enable-hot-corners = false;
     };
     # `gsettings get org.gnome.shell.extensions.user-theme name`
     "org/gnome/shell/extensions/user-theme" = {
@@ -98,7 +99,8 @@
     package = pkgs.vscode;
     userSettings = {
       "workbench.colorTheme" = "Palenight Operator";
-      "editor.formatOnSave" = true;
+      "terminal.integrated.scrollback" = 10000;
+      # "editor.formatOnSave" = true;
     };
     extensions = with pkgs.vscode-extensions; [
       bbenoist.nix

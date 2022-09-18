@@ -255,7 +255,7 @@ A system for on Windows (WSL2).
 Build the tarball:
 
 ```bash
-nix build github:hoverbear-consulting/flake#nixosConfigurations.wsl.config.system.build.tarball --out-link tarBall
+nix build github:hoverbear-consulting/flake#nixosConfigurations.wsl.config.system.build.installer --out-link installer
 ```
 
 Ensure the Windows install has WSL(2) enabled:
@@ -272,7 +272,7 @@ Import the tarball:
 
 
 ```powershell
-wsl --import nixos .\nixos\ tarBall/tarball/nixos-system-x86_64-linux.tar.gz --version 2
+wsl --import nixos nixos-wsl-installer.tar.gz --version 2
 wsl --set-default nixos
 ```
 

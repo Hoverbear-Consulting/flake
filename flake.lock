@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1650374568,
+        "narHash": "sha256-Z+s0J8/r907g149rllvwhb4pKi8Wam5ij0st8PwAh+E=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "b4a34015c698c7793d592d66adbab377907a2be8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "locked": {
         "lastModified": 1617631617,
@@ -38,22 +54,22 @@
     },
     "nixos-wsl": {
       "inputs": {
+        "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1640738012,
-        "narHash": "sha256-qKl5oF/XOntvz+Z8gcZYxSv6kQZIBXES3yGJOt+uRT8=",
-        "owner": "hoverbear-consulting",
+        "lastModified": 1661772734,
+        "narHash": "sha256-DkvAaLDg9D6O0i2MzUknaf/U078K4KWAZaJQmNC/tL8=",
+        "owner": "nix-community",
         "repo": "NixOS-WSL",
-        "rev": "7097fb26010f0a2ed5ef8cc53a51ffa970be5e72",
+        "rev": "c1b0259313f661cf74051c916cf3bb4f061ce11f",
         "type": "github"
       },
       "original": {
-        "owner": "hoverbear-consulting",
-        "ref": "master",
+        "owner": "nix-community",
         "repo": "NixOS-WSL",
         "type": "github"
       }

@@ -36,6 +36,7 @@
       abduco
       dvtm
       neovim-remote
+      ntfs3g
       # nvme-cli
       # nvmet-cli
       # libhugetlbfs # This has a build failure.
