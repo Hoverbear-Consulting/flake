@@ -192,7 +192,7 @@
         services.openssh = ./services/openssh.nix;
         # This trait is unfriendly to being bundled with platform-iso
         traits.workstation = ./traits/workstation.nix;
-        users.ana = ./users/ana/system.nix;
+        users.ana = ./users/ana;
       };
 
       checks = forAllSystems (system:

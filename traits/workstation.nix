@@ -31,7 +31,6 @@
 
     # So gtk themes can be set
     programs.dconf.enable = true;
-    services.dbus.packages = with pkgs; [ dconf ];
 
     hardware.opengl.driSupport = true;
     #hardware.steam-hardware.enable = true;

@@ -36,7 +36,7 @@
     };
   };
 
-  # Use `dconf watch /` to track stateful changes you are doing and store them here.
+  # Use `dconf watch /` to track stateful changes you are doing, then set them here.
   dconf.settings = {
     "org/gnome/shell" = {
       disable-user-extensions = false;
@@ -113,7 +113,6 @@
       usernamehw.errorlens
       vadimcn.vscode-lldb
       bungcip.better-toml
-
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
         name = "material-palenight-theme";
