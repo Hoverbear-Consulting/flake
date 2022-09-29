@@ -32,7 +32,12 @@
     # So gtk themes can be set
     programs.dconf.enable = true;
 
+    hardware.opengl.enable = true;
     hardware.opengl.driSupport = true;
+    hardware.opengl.extraPackages = with pkgs; [ libvdpau vdpauinfo libvdpau-va-gl ];
+    environment.variables = {
+      VDPAU_DRIVER = "radeonsi";
+    };
     #hardware.steam-hardware.enable = true;
     #hardware.xpadneo.enable = true;
 
@@ -60,11 +65,19 @@
       gnome.gnome-tweaks
       gnome.gnome-characters
       openrgb
+      libva-utils
+      vdpauinfo
+      ffmpeg
     ] ++ (if stdenv.isx86_64 then [
       kicad
       chromium
       spotify
       obs-studio
+      obs-studio-plugins.obs-gstreamer
+      obs-studio-plugins.obs-vkcapture
+      obs-studio-plugins.obs-pipewire-audio-capture
+      obs-studio-plugins.obs-multi-rtmp
+      obs-studio-plugins.obs-move-transition
     ] else if stdenv.isAarch64 then [
       spotifyd
     ] else [ ]);
