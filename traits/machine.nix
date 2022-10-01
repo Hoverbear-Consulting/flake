@@ -17,6 +17,8 @@
     boot.kernelModules = [
       "coretemp"
       "vfio-pci"
+      "i2c-dev"
+      "i2c-piix"
     ];
     boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.loader.systemd-boot.enable = true;
@@ -36,6 +38,11 @@
     # boot.initrd.luks.fido2Support = true;
     boot.initrd.luks.mitigateDMAAttacks = true;
 
+    environment.sessionVariables.LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
+    environment.systemPackages = with pkgs; [
+      i2c-tools
+    ];
+
     users.mutableUsers = false;
 
     powerManagement.cpuFreqGovernor = "ondemand";
@@ -46,52 +53,7 @@
     # For libvirt: https://releases.nixos.org/nix-dev/2016-January/019069.html
     networking.firewall.checkReversePath = false;
 
-    /* networking.nftables.enable = true;
-      networking.nftables.ruleset = ''
-      # Check out https://wiki.nftables.org/ for better documentation.
-      # Table for both IPv4 and IPv6.
-      table inet filter {
-        # Block all incomming connections traffic except SSH and "ping".
-        chain input {
-          type filter hook input priority 0;
-      
-          # accept any localhost traffic
-          iifname lo accept
-      
-          # accept traffic originated from us
-          ct state {established, related} accept
-      
-          # ICMP
-          # routers may also want: mld-listener-query, nd-router-solicit
-          ip6 nexthdr icmpv6 icmpv6 type { destination-unreachable, packet-too-big, time-exceeded, parameter-problem, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert } accept
-          ip protocol icmp icmp type { destination-unreachable, router-advertisement, time-exceeded, parameter-problem } accept
-      
-          # allow "ping"
-          ip6 nexthdr icmpv6 icmpv6 type echo-request accept
-          ip protocol icmp icmp type echo-request accept
-      
-          # accept SSH connections (required for a server)
-          tcp dport 22 accept
-      
-          # count and drop any other traffic
-          counter drop
-        }
-      
-        # Allow all outgoing connections.
-        chain output {
-          type filter hook output priority 0;
-          accept
-        }
-      
-        chain forward {
-          type filter hook forward priority 0;
-          accept
-        }
-      }
-    ''; */
-
     programs.nm-applet.enable = true;
-    hardware.bluetooth.enable = true;
 
     sound.enable = true;
     services.pipewire = {
@@ -100,8 +62,13 @@
       alsa.support32Bit = true;
       pulse.enable = true;
     };
+
     security.rtkit.enable = true;
+    
     hardware.pulseaudio.enable = false;
+    hardware.i2c.enable = true;
+    hardware.hackrf.enable = true;
+    hardware.bluetooth.enable = true;
 
     virtualisation.libvirtd.enable = true;
     virtualisation.libvirtd.onBoot = "ignore";
@@ -112,8 +79,6 @@
     virtualisation.libvirtd.qemu.swtpm.package = pkgs.swtpm;
     virtualisation.libvirtd.qemu.runAsRoot = false;
     virtualisation.spiceUSBRedirection.enable = true; # Note that this allows users arbitrary access to USB devices. 
-    environment.sessionVariables.LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
-
     virtualisation.podman.enable = true;
 
     # opt in state

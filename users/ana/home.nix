@@ -113,6 +113,7 @@
       usernamehw.errorlens
       vadimcn.vscode-lldb
       bungcip.better-toml
+      ms-vscode.cpptools
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
         name = "material-palenight-theme";
@@ -125,6 +126,12 @@
         publisher = "Gruntfuggly";
         version = "0.0.215";
         sha256 = "sha256-WK9J6TvmMCLoqeKWh5FVp1mNAXPWVmRvi/iFuLWMylM=";
+      }
+      {
+        name = "hexeditor";
+        publisher = "ms-vscode";
+        version = "1.9.8";
+        sha256 = "sha256-XgRD2rDSLf1uYBm5gBmLzT9oLCpBmhtfoabKBekldhg=";
       }
     ] ++ (if pkgs.stdenv.isx86_64 then with pkgs.vscode-extensions; [
       ms-python.python
