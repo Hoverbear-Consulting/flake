@@ -18,11 +18,11 @@
     },
     "flake-utils": {
       "locked": {
-        "lastModified": 1617631617,
-        "narHash": "sha256-PARRCz55qN3gy07VJZIlFeOX420d0nGF0RzGI/9hVlw=",
+        "lastModified": 1659877975,
+        "narHash": "sha256-zllb8aq3YO3h8B/U0/J1WBgAL8EX5yWf5pMj3G0NAmc=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "b2c27d1a81b0dc266270fa8aeecebbd1807fc610",
+        "rev": "c0e246b9b83f637f4681389ecabcb2681b4f3af0",
         "type": "github"
       },
       "original": {
@@ -61,15 +61,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1661772734,
-        "narHash": "sha256-DkvAaLDg9D6O0i2MzUknaf/U078K4KWAZaJQmNC/tL8=",
-        "owner": "nix-community",
+        "lastModified": 1664352197,
+        "narHash": "sha256-3FiZk2muotMi1XUvdQUYwrcD6jjE1e5sYtNTzJ2XjJs=",
+        "owner": "K900",
         "repo": "NixOS-WSL",
-        "rev": "c1b0259313f661cf74051c916cf3bb4f061ce11f",
+        "rev": "e1aaebf83c7ed1ce30a53357d8afffb979eab80d",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
+        "owner": "K900",
+        "ref": "native-systemd",
         "repo": "NixOS-WSL",
         "type": "github"
       }

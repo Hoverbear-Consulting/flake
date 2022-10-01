@@ -63,6 +63,7 @@
     };
     "org/gnome/desktop/wm/preferences" = {
       workspace-names = [ "Main" ];
+      button-layout = "appmenu:minimize,maximize,close";
     };
     "org/gnome/shell/extensions/vitals" = {
       show-storage = false;

@@ -4,7 +4,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-wsl = {
-      url = "github:nix-community/NixOS-WSL";
+      # url = "github:nix-community/NixOS-WSL";
+      url = "github:K900/NixOS-WSL/native-systemd";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {

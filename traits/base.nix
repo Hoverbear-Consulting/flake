@@ -10,6 +10,7 @@
     time.hardwareClockInLocalTime = true;
 
     i18n.defaultLocale = "en_CA.UTF-8";
+    i18n.supportedLocales = [ "all" ];
 
     environment.systemPackages = with pkgs; [
       # Shell utilities
