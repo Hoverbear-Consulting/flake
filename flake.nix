@@ -137,6 +137,7 @@
               traits.honeycomb_lx2k
               traits.machine
               traits.workstation
+              traits.gnome
               traits.hardened
               users.ana
             ];
@@ -147,6 +148,7 @@
               platforms.architect
               traits.machine
               traits.workstation
+              traits.gnome
               traits.hardened
               traits.gaming
               users.ana
@@ -158,6 +160,7 @@
               platforms.nomad
               traits.machine
               traits.workstation
+              traits.gnome
               traits.hardened
               users.ana
             ];
@@ -184,6 +187,7 @@
         traits.base = ./traits/base.nix;
         traits.machine = ./traits/machine.nix;
         traits.gaming = ./traits/gaming.nix;
+        traits.gnome = ./traits/gnome.nix;
         traits.jetbrains = ./traits/jetbrains.nix;
         traits.hardened = ./traits/hardened.nix;
         traits.sourceBuild = ./traits/source-build.nix;

@@ -38,6 +38,8 @@ in
       rocm-runtime
     ]; */
 
+    # No spotify on aarch, so use spotifydOoo
+    systemd.services.spotifyd.enable = true;
 
     fileSystems = makeMounts {
       inherit encryptedDevice encryptedDeviceLabel efiDevice;

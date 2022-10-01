@@ -5,33 +5,6 @@
 
 {
   config = {
-    services.xserver.enable = true;
-    services.xserver.displayManager.gdm.enable = true;
-    services.xserver.displayManager.autoLogin.enable = false;
-    services.xserver.desktopManager.gnome.enable = true;
-    environment.gnome.excludePackages = (with pkgs; [
-      gnome-photos
-      gnome-tour
-    ]) ++ (with pkgs.gnome; [
-      cheese # webcam tool
-      gnome-music
-      gedit # text editor
-      epiphany # web browser
-      geary # email reader
-      gnome-characters
-      tali # poker game
-      iagno # go game
-      hitori # sudoku game
-      atomix # puzzle game
-      yelp # Help view
-      gnome-contacts
-      gnome-initial-setup
-    ]);
-
-
-    # So gtk themes can be set
-    programs.dconf.enable = true;
-
     hardware.video.hidpi.enable = true;
     hardware.opengl.enable = true;
     hardware.opengl.driSupport = true;
@@ -50,8 +23,6 @@
       fira-code
       fira-code-symbols
     ];
-
-    systemd.services.spotifyd.enable = true;
 
     # These should only be GUI applications that are desired systemwide
     environment.variables = {
