@@ -31,10 +31,9 @@
     environment.systemPackages = with pkgs; [
       gnome.gnome-tweaks
       gnome.gnome-characters
-    ]
+    ];
 
     programs.dconf.enable = true;
-
   };
 }
 

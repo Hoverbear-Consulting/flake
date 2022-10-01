@@ -29,32 +29,14 @@
       VDPAU_DRIVER = "radeonsi";
     };
     environment.systemPackages = with pkgs; [
-      firefox
-      neovimConfigured
-      zotero
-      inkscape
-      gimp
       virt-manager
-      gnome.gnome-tweaks
-      gnome.gnome-characters
       openrgb
       libva-utils
       vdpauinfo
       ffmpeg
       openrgb
-    ] ++ (if stdenv.isx86_64 then [
-      kicad
-      chromium
-      spotify
-      obs-studio
-      obs-studio-plugins.obs-gstreamer
-      obs-studio-plugins.obs-vkcapture
-      obs-studio-plugins.obs-pipewire-audio-capture
-      obs-studio-plugins.obs-multi-rtmp
-      obs-studio-plugins.obs-move-transition
-    ] else if stdenv.isAarch64 then [
-      spotifyd
-    ] else [ ]);
+      neovimConfigured
+    ];
 
     services.udev.packages = with pkgs; [ openrgb ];
     services.printing.enable = true;

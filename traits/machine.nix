@@ -64,7 +64,7 @@
     };
 
     security.rtkit.enable = true;
-    
+
     hardware.pulseaudio.enable = false;
     hardware.i2c.enable = true;
     hardware.hackrf.enable = true;

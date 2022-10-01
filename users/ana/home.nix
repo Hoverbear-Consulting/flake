@@ -3,6 +3,8 @@
 {
   home.username = "ana";
   home.homeDirectory = "/home/ana";
+  home.sessionVariables.GTK_THEME = "palenight";
+
 
   programs.git = {
     enable = true;
@@ -89,10 +91,23 @@
     gnomeExtensions.dash-to-panel
     gnomeExtensions.sound-output-device-chooser
     gnomeExtensions.space-bar
-  ];
-  home.sessionVariables.GTK_THEME = "palenight";
-
-  programs.fish.enable = true;
+    firefox
+    neovimConfigured
+    inkscape
+    gimp
+  ] ++ (if stdenv.isx86_64 then [
+    kicad
+    chromium
+    spotify
+    obs-studio
+    obs-studio-plugins.obs-gstreamer
+    obs-studio-plugins.obs-vkcapture
+    obs-studio-plugins.obs-pipewire-audio-capture
+    obs-studio-plugins.obs-multi-rtmp
+    obs-studio-plugins.obs-move-transition
+  ] else if stdenv.isAarch64 then [
+    spotifyd
+  ] else [ ]);
 
   programs.vscode = {
     enable = true;
@@ -100,6 +115,7 @@
     userSettings = {
       "workbench.colorTheme" = "Palenight Operator";
       "terminal.integrated.scrollback" = 10000;
+      "editor.fontFamily" = "Jetbrains Mono";
       # "editor.formatOnSave" = true;
     };
     extensions = with pkgs.vscode-extensions; [
@@ -113,7 +129,6 @@
       usernamehw.errorlens
       vadimcn.vscode-lldb
       bungcip.better-toml
-      ms-vscode.cpptools
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
         name = "material-palenight-theme";
@@ -135,8 +150,21 @@
       }
     ] ++ (if pkgs.stdenv.isx86_64 then with pkgs.vscode-extensions; [
       ms-python.python
+      ms-vscode.cpptools
     ] else [ ]);
   };
+
+  programs.fish.enable = true;
+  programs.fish.shellInit = ''
+    function fish_greeting
+      ${pkgs.neofetch}/bin/neofetch --config ${../../config/neofetch/config}
+    end
+  '';
+  programs.fish.interactiveShellInit = ''
+    source "${pkgs.fzf}/share/fzf/key-bindings.fish"
+    ${pkgs.direnv}/bin/direnv hook fish | source
+    ${pkgs.starship}/bin/starship init fish | source
+  '';
 
   xdg.configFile."libvirt/qemu.conf".text = ''
     nvram = ["/run/libvirt/nix-ovmf/OVMF_CODE.fd:/run/libvirt/nix-ovmf/OVMF_VARS.fd"]
