@@ -96,6 +96,7 @@
     neovimConfigured
     inkscape
     gimp
+    fix-vscode
   ] ++ (if stdenv.isx86_64 then [
     kicad
     chromium
