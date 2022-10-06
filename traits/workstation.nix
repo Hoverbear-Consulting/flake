@@ -13,7 +13,13 @@
     #hardware.steam-hardware.enable = true;
     #hardware.xpadneo.enable = true;
 
-    fonts.fontconfig.enable = true;
+    fonts.fontconfig = {
+      enable = true;
+      antialias = true;
+      hinting.enable = true;
+      hinting.style = "hintfull";
+    };
+
     fonts.enableDefaultFonts = true;
     fonts.fonts = with pkgs; [
       noto-fonts
