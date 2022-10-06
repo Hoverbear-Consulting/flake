@@ -116,7 +116,8 @@
     userSettings = {
       "workbench.colorTheme" = "Palenight Operator";
       "terminal.integrated.scrollback" = 10000;
-      "editor.fontFamily" = "JetBrains Mono";
+      "editor.fontFamily" = "Jetbrains Mono";
+      "telemetry.telemetryLevel" = "off";
       # "editor.formatOnSave" = true;
     };
     extensions = with pkgs.vscode-extensions; [
