@@ -119,6 +119,7 @@
       "terminal.integrated.scrollback" = 10000;
       "editor.fontFamily" = "Jetbrains Mono";
       "telemetry.telemetryLevel" = "off";
+      "remote.SSH.useLocalServer" = true;
       # "editor.formatOnSave" = true;
     };
     extensions = with pkgs.vscode-extensions; [

@@ -5,5 +5,6 @@ writeShellApplication {
   runtimeInputs = [
     patchelf
   ];
+  checkPhase = "";
   text = builtins.readFile ./fix-vscode.sh;
 }
