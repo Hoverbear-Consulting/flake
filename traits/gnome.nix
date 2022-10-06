@@ -33,6 +33,8 @@
       gnome.gnome-characters
     ];
 
+    services.gnome.gnome-keyring.enable = true;
+
     programs.dconf.enable = true;
   };
 }
