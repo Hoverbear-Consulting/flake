@@ -32,7 +32,7 @@
 
     # These should only be GUI applications that are desired systemwide
     environment.variables = {
-      VDPAU_DRIVER = "radeonsi";
+      # VDPAU_DRIVER = "radeonsi";
     };
     environment.systemPackages = with pkgs; [
       virt-manager

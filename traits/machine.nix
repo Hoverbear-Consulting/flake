@@ -27,7 +27,7 @@
     boot.binfmt.emulatedSystems = (if pkgs.stdenv.isx86_64 then [
       "aarch64-linux"
     ] else if pkgs.stdenv.isAarch64 then [
-      # "x86_64-linux"
+      "x86_64-linux"
     ] else [ ]);
 
     # http://0pointer.net/blog/unlocking-luks2-volumes-with-tpm2-fido2-pkcs11-security-hardware-on-systemd-248.html
