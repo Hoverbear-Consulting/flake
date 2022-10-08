@@ -42,6 +42,7 @@
   dconf.settings = {
     "org/gnome/shell" = {
       disable-user-extensions = false;
+      disable-extension-version-validation = true;
       # `gnome-extensions list` for a list
       enabled-extensions = [
         "user-theme@gnome-shell-extensions.gcampax.github.com"
@@ -119,7 +120,7 @@
       "terminal.integrated.scrollback" = 10000;
       "editor.fontFamily" = "Jetbrains Mono";
       "telemetry.telemetryLevel" = "off";
-      "remote.SSH.useLocalServer" = true;
+      "remote.SSH.useLocalServer" = false;
       # "editor.formatOnSave" = true;
     };
     extensions = with pkgs.vscode-extensions; [
