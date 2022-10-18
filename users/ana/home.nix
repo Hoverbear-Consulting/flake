@@ -10,6 +10,11 @@
     enable = true;
     userName = "Ana Hobden";
     userEmail = "operator@hoverbear.org";
+    extraConfig = {
+      init = {
+        defaultBranch = "main";
+      };
+    };
   };
 
   gtk = {
@@ -118,10 +123,13 @@
     userSettings = {
       "workbench.colorTheme" = "Palenight Operator";
       "terminal.integrated.scrollback" = 10000;
+      "terminal.integrated.fontFamily" = "Jetbrains Mono";
+      "terminal.integrated.fontSize" = 16;
       "editor.fontFamily" = "Jetbrains Mono";
       "telemetry.telemetryLevel" = "off";
       "remote.SSH.useLocalServer" = false;
-      # "editor.formatOnSave" = true;
+      "editor.fontSize" = 18;
+      "editor.formatOnSave" = true;
     };
     extensions = with pkgs.vscode-extensions; [
       bbenoist.nix

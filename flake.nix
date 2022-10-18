@@ -12,9 +12,12 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    pickup = {
+      url = "github:determinatesystems/pickup.nix";
+    };
   };
 
-  outputs = { self, nixpkgs, nixos-wsl, home-manager }:
+  outputs = { self, nixpkgs, nixos-wsl, home-manager, pickup }:
     let
       supportedSystems = [ "x86_64-linux" "aarch64-linux" ];
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
@@ -149,6 +152,7 @@
             inherit (x86_64Base) system;
             modules = x86_64Base.modules ++ [
               platforms.architect
+              pickup.nixosModules.hook
               traits.machine
               traits.workstation
               traits.gnome

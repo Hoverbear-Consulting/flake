@@ -91,11 +91,27 @@
         "type": "github"
       }
     },
+    "pickup": {
+      "locked": {
+        "lastModified": 1665161836,
+        "narHash": "sha256-058JEPGFiRUnRS3hr+OhDwV+i+wjwQqctI3okHb1dog=",
+        "owner": "determinatesystems",
+        "repo": "pickup.nix",
+        "rev": "8a067e661972adaea0e792d02a0abf59249cff70",
+        "type": "github"
+      },
+      "original": {
+        "owner": "determinatesystems",
+        "repo": "pickup.nix",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "nixos-wsl": "nixos-wsl",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "pickup": "pickup"
       }
     },
     "utils": {

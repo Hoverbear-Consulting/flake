@@ -9,6 +9,7 @@ in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
+    # "${modulesPath}/profiles/qemu-guest.nix"
   ];
 
   config = {
@@ -31,6 +32,9 @@ in
       encrypt /dev/nvme1n1p2 - fido2-device=auto
       '';
     }; */
+
+    nix.distributedBuilds = true;
+    nix.settings.builders = [ "@/etc/nix/machines" ];
 
     networking.hostName = "architect";
     networking.domain = "hoverbear.home";
