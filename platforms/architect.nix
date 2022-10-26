@@ -33,8 +33,8 @@ in
       '';
     }; */
 
-    nix.distributedBuilds = true;
-    nix.settings.builders = [ "@/etc/nix/machines" ];
+    # nix.distributedBuilds = true;
+    # nix.settings.builders = [ "@/etc/nix/machines" ];
 
     networking.hostName = "architect";
     networking.domain = "hoverbear.home";

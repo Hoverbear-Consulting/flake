@@ -81,11 +81,11 @@
       show-network = true;
     };
     "org/gnome/desktop/background" = {
-      picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/vnc-l.png";
-      picture-uri-dark = "file:///run/current-system/sw/share/backgrounds/gnome/vnc-d.png";
+      picture-uri = "file://${./saturn.jpg}";
+      picture-uri-dark = "file://${./saturn.jpg}";
     };
     "org/gnome/desktop/screensaver" = {
-      picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/vnc-d.png";
+      picture-uri = "file://${./saturn.jpg}";
       primary-color = "#3465a4";
       secondary-color = "#000000";
     };
