@@ -54,7 +54,7 @@
         "trayIconsReloaded@selfmade.pl"
         "Vitals@CoreCoding.com"
         "dash-to-panel@jderose9.github.com"
-        "sound-output-device-chooser@kgshank.net"
+        # "sound-output-device-chooser@kgshank.net"
         "space-bar@luchrioh"
       ];
       favorite-apps = [ "firefox.desktop" "code.desktop" "org.gnome.Terminal.desktop" "spotify.desktop" "virt-manager.desktop" "org.gnome.Nautilus.desktop" ];
@@ -96,7 +96,7 @@
     gnomeExtensions.tray-icons-reloaded
     gnomeExtensions.vitals
     gnomeExtensions.dash-to-panel
-    gnomeExtensions.sound-output-device-chooser
+    # gnomeExtensions.sound-output-device-chooser
     gnomeExtensions.space-bar
     firefox
     neovimConfigured
@@ -104,7 +104,7 @@
     gimp
     fix-vscode
   ] ++ (if stdenv.isx86_64 then [
-    kicad
+    # kicad
     chromium
     spotify
     obs-studio
