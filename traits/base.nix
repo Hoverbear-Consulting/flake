@@ -85,7 +85,7 @@
     nix.extraOptions = ''
       experimental-features = nix-command flakes
     '';
-    nix.package = pkgs.nixUnstable;
+    # nix.package = pkgs.nixUnstable;
 
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;

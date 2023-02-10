@@ -49,7 +49,7 @@
       "page_alloc.shuffle=1"
     ];
 
-    services.openssh.permitRootLogin = lib.mkForce "no";
+    services.openssh.settings.permitRootLogin = lib.mkForce "no";
     services.fail2ban.enable = true;
 
     # I quite often want http servers...

@@ -32,9 +32,11 @@ in
       encrypt /dev/nvme1n1p2 - fido2-device=auto
       '';
     }; */
+  
+    virtualisation.docker.enable = true;
 
-    # nix.distributedBuilds = true;
-    # nix.settings.builders = [ "@/etc/nix/machines" ];
+    nix.distributedBuilds = true;
+    nix.settings.builders = [ "@/etc/nix/machines" ];
 
     networking.hostName = "architect";
     networking.domain = "hoverbear.home";
