@@ -103,6 +103,8 @@
     inkscape
     gimp
     fix-vscode
+    asciinema
+    agg
   ] ++ (if stdenv.isx86_64 then [
     # kicad
     chromium
