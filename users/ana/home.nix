@@ -100,6 +100,7 @@
     gnomeExtensions.space-bar
     firefox
     neovimConfigured
+    helix
     inkscape
     gimp
     fix-vscode

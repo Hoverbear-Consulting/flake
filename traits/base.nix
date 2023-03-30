@@ -34,9 +34,6 @@
       tokei
       bandwhich
       lsd
-      abduco
-      dvtm
-      neovim-remote
       ntfs3g
       # nvme-cli
       # nvmet-cli
@@ -46,6 +43,7 @@
       fio
       smartmontools
       neovimConfigured
+      helix
       rnix-lsp
       graphviz
       simple-http-server
