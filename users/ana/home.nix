@@ -110,12 +110,6 @@
     # kicad
     chromium
     spotify
-    obs-studio
-    obs-studio-plugins.obs-gstreamer
-    obs-studio-plugins.obs-vkcapture
-    obs-studio-plugins.obs-pipewire-audio-capture
-    obs-studio-plugins.obs-multi-rtmp
-    obs-studio-plugins.obs-move-transition
   ] else if stdenv.isAarch64 then [
     spotifyd
   ] else [ ]);
@@ -123,6 +117,10 @@
   programs.vscode = {
     enable = true;
     package = pkgs.vscode;
+    
+    # Workaround https://github.com/nix-community/home-manager/issues/3507
+    mutableExtensionsDir = false;
+
     userSettings = {
       "workbench.colorTheme" = "Palenight Operator";
       "terminal.integrated.scrollback" = 10000;
@@ -133,6 +131,7 @@
       "remote.SSH.useLocalServer" = false;
       "editor.fontSize" = 18;
       "editor.formatOnSave" = true;
+      "workbench.startupEditor" = "none";
     };
     extensions = with pkgs.vscode-extensions; [
       bbenoist.nix
@@ -164,11 +163,26 @@
         version = "1.9.8";
         sha256 = "sha256-XgRD2rDSLf1uYBm5gBmLzT9oLCpBmhtfoabKBekldhg=";
       }
+      {
+        name = "vscode-postgresql";
+        publisher = "ms-ossdata";
+        version = "0.3.0";
+        sha256 = "sha256-k6aUXuFMzALampcFVTWrW3xp0E+LgN4Jtv4qHbYuVws=";
+      }
     ] ++ (if pkgs.stdenv.isx86_64 then with pkgs.vscode-extensions; [
       ms-python.python
       ms-vscode.cpptools
     ] else [ ]);
   };
+
+  programs.obs-studio.enable = true;
+  programs.obs-studio.plugins = with pkgs; [
+    obs-studio-plugins.obs-gstreamer
+    obs-studio-plugins.obs-vkcapture
+    obs-studio-plugins.obs-pipewire-audio-capture
+    obs-studio-plugins.obs-multi-rtmp
+    obs-studio-plugins.obs-move-transition
+  ];
 
   programs.fish.enable = true;
   programs.fish.shellInit = ''

@@ -155,6 +155,7 @@
               traits.hardened
               traits.gaming
               users.ana
+              services.postgres
             ];
           };
           nomad = nixpkgs.lib.nixosSystem {

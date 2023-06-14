@@ -5,7 +5,6 @@
 
 {
   config = {
-    hardware.video.hidpi.enable = true;
     hardware.opengl.enable = true;
     hardware.opengl.driSupport = true;
     hardware.opengl.extraPackages = with pkgs; [ libvdpau vdpauinfo libvdpau-va-gl ];

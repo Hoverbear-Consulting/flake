@@ -17,9 +17,17 @@ in
     boot.initrd.kernelModules = [ "amdgpu" ];
     boot.kernelModules = [ "tap" "kvm-amd" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
 
-    services.xserver.videoDrivers = [ "amdgpu" ];
+    services.xserver.videoDrivers = [ "modesetting" ];
 
     hardware.cpu.amd.updateMicrocode = true;
+
+    hardware.opengl.driSupport = true;
+    hardware.opengl.extraPackages = with pkgs; [
+      # rocm-opencl-icd
+      # rocm-runtime
+      amdvlk
+    ];
+    environment.variables.VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/amd_icd64.json";
 
     fileSystems = makeMounts {
       inherit encryptedDevice encryptedDeviceLabel efiDevice;

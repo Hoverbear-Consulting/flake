@@ -26,6 +26,7 @@
 {
   config = {
     programs.steam.enable = true;
+    programs.steam.gamescopeSession.enable = true;
     # These should only be GUI applications that are desired systemwide
     environment.systemPackages = with pkgs; [
       wineWowPackages.staging

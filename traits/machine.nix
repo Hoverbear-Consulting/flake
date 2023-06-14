@@ -21,8 +21,10 @@
       "i2c-piix"
     ];
     boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.loader.timeout = 30;
     boot.loader.systemd-boot.enable = true;
     boot.loader.systemd-boot.editor = true;
+    boot.loader.systemd-boot.configurationLimit = 10;
     boot.loader.efi.efiSysMountPoint = "/efi";
     boot.binfmt.emulatedSystems = (if pkgs.stdenv.isx86_64 then [
       "aarch64-linux"

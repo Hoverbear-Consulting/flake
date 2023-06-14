@@ -47,6 +47,7 @@
       rnix-lsp
       graphviz
       simple-http-server
+      clinfo
     ];
     environment.shellAliases = { };
     environment.variables = {
@@ -73,6 +74,7 @@
       source "${pkgs.fzf}/share/fzf/key-bindings.bash"
       source "${pkgs.fzf}/share/fzf/completion.bash"
     '';
+    programs.fish.enable = true;
 
     security.sudo.wheelNeedsPassword = false;
     security.sudo.extraConfig = ''
@@ -82,6 +84,7 @@
     # Use edge NixOS.
     nix.extraOptions = ''
       experimental-features = nix-command flakes
+      builders-use-substitutes = true
     '';
     # nix.package = pkgs.nixUnstable;
 

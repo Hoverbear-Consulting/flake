@@ -3,8 +3,8 @@
 {
   config = {
     services.openssh.enable = true;
-    services.openssh.settings.passwordAuthentication = false;
-    services.openssh.settings.permitRootLogin = lib.mkForce "no";
+    services.openssh.settings.PasswordAuthentication = false;
+    services.openssh.settings.PermitRootLogin = "no";
 
     networking.firewall.allowedTCPPorts = [ 22 ];
     networking.firewall.allowedUDPPorts = [ 22 ];

@@ -9,6 +9,6 @@
   services.postgresql.initialScript = pkgs.writeText "bootstrap" ''
     CREATE ROLE root WITH LOGIN;
     CREATE DATABASE root;
-    GRANT ALL PRIVILEGES ON DATABASE root TO root;
+    GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO root;
   '';
 }
